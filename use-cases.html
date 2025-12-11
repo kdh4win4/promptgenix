@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PromptGenix – Use Cases</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #111827;
+      background: #0b1020;
+    }
+    header {
+      padding: 24px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 10, 25, 0.9);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: #e5e7eb;
+    }
+    header nav a {
+      margin-left: 18px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      color: #9ca3af;
+    }
+    header nav a:hover {
+      color: #fbbf24;
+    }
+    .hero {
+      padding: 60px 8% 40px;
+    }
+    .hero-title {
+      font-size: 2.2rem;
+      line-height: 1.2;
+      color: #f9fafb;
+      margin-bottom: 10px;
+    }
+    .hero-subtitle {
+      font-size: 1.0rem;
+      color: #d1d5db;
+      max-width: 720px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      margin-bottom: 12px;
+    }
+    section {
+      padding: 40px 8%;
+    }
+    section h2 {
+      font-size: 1.6rem;
+      margin: 0 0 18px;
+      color: #f9fafb;
+    }
+    section p, section li {
+      color: #d1d5db;
+      font-size: 0.95rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+    }
+    .card {
+      background: #020617;
+      border-radius: 18px;
+      padding: 20px 22px;
+      border: 1px solid #1f2937;
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #f9fafb;
+    }
+    .label {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid #4b5563;
+      color: #e5e7eb;
+    }
+    a.btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+      text-decoration: none;
+    }
+    a.btn:hover {
+      border-color: #fbbf24;
+      color: #fbbf24;
+    }
+    footer {
+      padding: 20px 8% 30px;
+      border-top: 1px solid #1f2937;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+      background: #020617;
+    }
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PromptGenix</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#problem">Problem</a>
+    <a href="index.html#solution">Platform</a>
+    <a href="use-cases.html">Use Cases</a>
+    <a href="index.html#sbir">SBIR</a>
+    <a href="index.html#team">Team</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="badge">Example use cases · Phase I focus</div>
+  <h1 class="hero-title">How labs and trials can actually use PromptGenix.</h1>
+  <p class="hero-subtitle">
+    Below are concrete scenarios showing how PromptGenix automates RNA-Seq and flow cytometry analysis
+    and produces interpretable reports for translational research, vaccine studies, and multi-site cohorts.
+  </p>
+</section>
+
+<section>
+  <h2>Use Case 1 · Flow Cytometry Automation for Immune Profiling</h2>
+  <div class="grid-2">
+    <div class="card">
+      <span class="label">Flow cytometry · COMPASS</span>
+      <h3>Question</h3>
+      <p>
+        “In this vaccine or HIV study, which T-cell subsets become more polyfunctional after stimulation,
+        and how consistent is this across participants and sites?”
+      </p>
+      <h3>Current pain points</h3>
+      <ul>
+        <li>Manual gating in FlowJo across thousands of FCS files.</li>
+        <li>Site-to-site batch effects make thresholds non-reproducible.</li>
+        <li>COMPASS analysis requires custom R scripts and manual QC.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>PromptGenix solution</h3>
+      <ul>
+        <li>Automated preprocessing (compensation, transformation, QC) of FCS files.</li>
+        <li>Template-based or ML-assisted gating and batch normalization.</li>
+        <li>Push-button COMPASS workflows with standardized outputs.</li>
+        <li>LLM-generated summary: “CD8+ polyfunctional responses increased in Arm B, especially IFN-γ/TNF-α producers.”</li>
+      </ul>
+      <div class="pill-list">
+        <div class="pill">Vaccine trials</div>
+        <div class="pill">HIV / COVID-19 cohorts</div>
+        <div class="pill">Multi-site studies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Use Case 2 · RNA-Seq & scRNA-Seq for Mechanism Discovery</h2>
+  <div class="grid-2">
+    <div class="card">
+      <span class="label">Bulk RNA-Seq · scRNA-Seq</span>
+      <h3>Question</h3>
+      <p>
+        “Which pathways and cell types change between responders vs. non-responders,
+        or between CD16<sup>+</sup> and CD16<sup>−</sup> γδ T-cell subsets?”
+      </p>
+      <h3>Current pain points</h3>
+      <ul>
+        <li>Fragmented pipelines (STAR/RSEM/DESeq2/edgeR/GSEA) that are hard to reuse.</li>
+        <li>scRNA-Seq analysis (Seurat/scanpy) requires specialized expertise.</li>
+        <li>Results reported as long gene lists that are hard to interpret biologically.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>PromptGenix solution</h3>
+      <ul>
+        <li>Standardized pipelines from raw FASTQ → QC → alignment → quantification → DEG → GSEA/GSVA.</li>
+        <li>Optional scRNA-Seq workflows (Seurat/scanpy) with cell-type annotation.</li>
+        <li>Automated exports of DEG tables, volcano plots, and pathway summaries.</li>
+        <li>LLM-assisted narrative: “Type I IFN and cytotoxicity signatures are enriched in CD16<sup>+</sup> γδ T cells।”</li>
+      </ul>
+      <div class="pill-list">
+        <div class="pill">Responder vs non-responder</div>
+        <div class="pill">Biomarker discovery</div>
+        <div class="pill">Mechanism of action</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Use Case 3 · Integrated NGS + Cytometry for Clinical Trials</h2>
+  <div class="grid-2">
+    <div class="card">
+      <span class="label">Multi-modal · Trial-ready</span>
+      <h3>Question</h3>
+      <p>
+        “Can we generate a unified immunology report per visit/patient that combines
+        RNA-Seq, scRNA-Seq, and flow cytometry results in a format clinicians can read?”
+      </p>
+      <h3>Current pain points</h3>
+      <ul>
+        <li>Each assay analyzed separately, reported in different formats and timelines.</li>
+        <li>No single place that integrates multi-omics signals for the PI or DSMB.</li>
+        <li>Reproducibility and auditability are difficult across protocol amendments.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>PromptGenix solution</h3>
+      <ul>
+        <li>Unified workflow that ingests FASTQ, FCS, and metadata per subject/visit.</li>
+        <li>Generates integrated HTML/PDF reports with key signatures, cell subsets, and safety/efficacy markers.</li>
+        <li>Standardized templates that can be reused across protocols and sites.</li>
+        <li>Phase II vision: user management, audit trails, and deployment in secure VPCs or hospital environments.</li>
+      </ul>
+      <div class="pill-list">
+        <div class="pill">Phase I/II trials</div>
+        <div class="pill">CROs & hospitals</div>
+        <div class="pill">Regulatory-friendly outputs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Interested in a pilot?</h2>
+  <p>
+    PromptGenix is currently planning Phase I development around RNA-Seq and flow cytometry automation with
+    LLM-assisted reporting. If you’d like to explore a pilot using your existing datasets or public cohorts,
+    please get in touch.
+  </p>
+  <a href="index.html#contact" class="btn">Contact the team</a>
+</section>
+
+<footer>
+  © <span id="year"></span> PromptGenix LLC. All rights reserved.
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
