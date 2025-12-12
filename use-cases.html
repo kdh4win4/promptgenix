@@ -192,14 +192,38 @@
       .grid{ grid-template-columns: minmax(0,1fr); }
     }
 
-    @media print{
-      header, footer { display:none !important; }
-      body{ background:#fff; color:#111; }
-      p, li{ color:#111; }
-      .kicker{ color:#111; }
-      .card, .callout{ background:#fff; box-shadow:none; }
-      .section{ max-width:100%; padding:0; }
+  /* Print friendliness */
+  @media print{
+    header, footer { display: none !important; }
+    body{ background:#fff; color:#111; }
+    p, li{ color:#111; }
+    h2{ color:#111; }
+    .box{ border:1px solid #999; background:#fff; }
+    .section{ max-width: 100%; padding: 0; }
+  }
+
+  /* =========================
+     PRINT CONFIG (SBIR PDF)
+     - Website view: unchanged
+     - PDF output: stable 1-page layout
+     ========================= */
+  @media print {
+    @page {
+      size: Letter;
+      margin: 0.5in;
     }
+
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    h1, h2, h3, p, ul, li, .card, .callout {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+  }
+
   </style>
 </head>
 
