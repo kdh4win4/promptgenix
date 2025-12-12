@@ -2,416 +2,246 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – BioAI Automation Platform</title>
+  <title>PromptGenix – SBIR Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PromptGenix SBIR portal: quick navigation to Specific Aims, Approach, Commercialization, Facilities, and Team."/>
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #111827;
-      background: #0b1020;
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#020617;
+      color:#e5e7eb;
+      line-height:1.5;
     }
-    header {
-      padding: 24px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(5, 10, 25, 0.9);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(10px);
+    a{ color:inherit; text-decoration:none; }
+    .page{ min-height:100vh; display:flex; flex-direction:column; }
+
+    header{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(14px);
+      background: rgba(15, 23, 42, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
     }
-    header h1 {
-      margin: 0;
-      font-size: 1.4rem;
-      color: #e5e7eb;
+    .nav{
+      max-width:1120px; margin:0 auto; padding:14px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
     }
-    header nav a {
-      margin-left: 18px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      color: #9ca3af;
+    .nav-left{ display:flex; align-items:center; gap:12px; }
+    .logo-dot{
+      width:28px; height:28px; border-radius:999px;
+      background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
+      box-shadow:0 0 18px rgba(56,189,248,.7);
     }
-    header nav a:hover {
-      color: #fbbf24;
+    .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
+    .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
+
+    .nav-links{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .nav-links a{
+      font-size:.88rem; color:#9ca3af;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.25);
     }
-    .hero {
-      padding: 80px 8% 60px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 40px;
-      align-items: center;
+    .nav-links a:hover{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.35);
     }
-    .hero-title {
-      font-size: 2.6rem;
-      line-height: 1.2;
-      color: #f9fafb;
-      margin-bottom: 16px;
+
+    .btn{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      padding:9px 14px;
+      font-size:.86rem;
+      cursor:pointer;
+      background:transparent;
+      color:#e5e7eb;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
-    .hero-subtitle {
-      font-size: 1.05rem;
-      color: #d1d5db;
-      margin-bottom: 24px;
+    .btn:hover{ background: rgba(148,163,184,0.14); }
+    .btn-primary{
+      border:none;
+      background: linear-gradient(135deg,#22c55e,#22d3ee,#6366f1);
+      color:#020617;
+      font-weight:700;
+      box-shadow:0 0 22px rgba(59,130,246,0.55);
     }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      color: #fbbf24;
-      background: rgba(251, 191, 36, 0.1);
-      border: 1px solid rgba(251, 191, 36, 0.3);
-      margin-bottom: 12px;
+    .btn-primary:hover{ filter:brightness(1.05); }
+
+    main{ flex:1; }
+    .section{
+      max-width:1120px; margin:0 auto;
+      padding:42px 20px 26px;
     }
-    .hero-buttons a {
-      display: inline-block;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      text-decoration: none;
-      margin-right: 10px;
-      margin-bottom: 10px;
+
+    .hero{
+      display:grid;
+      grid-template-columns: minmax(0,1.25fr) minmax(0,1fr);
+      gap:30px; align-items:start;
+      padding-top:34px;
     }
-    .btn-primary {
-      background: linear-gradient(135deg, #fbbf24, #ea580c);
-      color: #111827;
-      font-weight: 600;
+    .badge-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+    .badge{
+      font-size:.7rem; text-transform:uppercase; letter-spacing:.12em;
+      border-radius:999px; padding:5px 11px;
+      border:1px solid rgba(251,191,36,0.6);
+      color:#fed7aa;
+      background: rgba(120,53,15,0.4);
     }
-    .btn-secondary {
-      border: 1px solid #4b5563;
-      color: #e5e7eb;
+    .badge.alt{
+      border-color: rgba(56,189,248,0.7);
+      color:#bae6fd;
+      background: rgba(15,23,42,0.9);
     }
-    .hero-card {
-      background: radial-gradient(circle at top, #1f2937, #020617);
-      border-radius: 24px;
-      padding: 24px;
-      border: 1px solid #374151;
-      color: #e5e7eb;
+
+    .title{
+      font-size: clamp(2.1rem, 3vw + 1.3rem, 2.9rem);
+      font-weight:800; color:#f9fafb;
+      margin: 0 0 12px;
     }
-    .hero-card h3 {
-      margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 1.1rem;
+    .subtitle{
+      font-size:1.02rem;
+      color:#d1d5db;
+      max-width: 44rem;
+      margin:0 0 16px;
     }
-    .hero-card ul {
-      padding-left: 18px;
-      margin: 8px 0 0;
-      font-size: 0.9rem;
-      color: #d1d5db;
+
+    .panel{
+      border-radius:18px;
+      padding:18px;
+      background: radial-gradient(circle at 0 0,#0f172a,#020617 55%);
+      border: 1px solid rgba(148, 163, 184, 0.4);
     }
-    section {
-      padding: 50px 8%;
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:14px;
+      margin-top:18px;
     }
-    section h2 {
-      font-size: 1.6rem;
-      margin: 0 0 18px;
-      color: #f9fafb;
+    .card{
+      border-radius:16px;
+      padding:16px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(55,65,81,0.9);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
     }
-    section p, section li {
-      color: #d1d5db;
-      font-size: 0.95rem;
+    .card h4{ margin:0; font-size:1.02rem; }
+    .card p{ font-size:.88rem; color:#d1d5db; margin-top:8px; }
+    .meta{ font-size:.75rem; color:#9ca3af; margin-top:8px; }
+
+    footer{
+      border-top:1px solid rgba(31,41,55,0.9);
+      padding:16px;
+      font-size:.78rem;
+      color:#6b7280;
+      text-align:center;
     }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 32px;
-    }
-    .card {
-      background: #020617;
-      border-radius: 18px;
-      padding: 20px 22px;
-      border: 1px solid #1f2937;
-    }
-    .card h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 1.1rem;
-      color: #f9fafb;
-    }
-    .pill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      border: 1px solid #4b5563;
-      color: #e5e7eb;
-    }
-    .team {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-    }
-    .team-member h3 {
-      margin: 0 0 4px;
-      font-size: 1.05rem;
-      color: #fbbf24;
-    }
-    .team-member h4 {
-      margin: 0 0 8px;
-      font-size: 0.95rem;
-      color: #e5e7eb;
-      font-weight: 500;
-    }
-    footer {
-      padding: 20px 8% 30px;
-      border-top: 1px solid #1f2937;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #6b7280;
-      background: #020617;
-    }
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .grid-2, .team {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
+
+    @media (max-width: 980px){
+      .hero{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
-<body>
 
+<body>
+<div class="page">
 <header>
-  <h1>PromptGenix</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="#problem">Problem</a>
-    <a href="#solution">Platform</a>
-    <a href="use-cases.html">Use Cases</a>
-    <a href="#sbir">SBIR</a>
-    <a href="#team">Team</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-dot"></div>
+      <div>
+        <div class="brand">PromptGenix</div>
+        <div class="subbrand">SBIR Portal</div>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="sbir.html">SBIR</a>
+      <a href="aims.html">Aims</a>
+      <a href="approach.html">Approach</a>
+      <a href="commercialization.html">Commercialization</a>
+      <a href="facilities.html">Facilities</a>
+      <a href="team.html">Team</a>
+      <a href="use-cases.html">Use Cases</a>
+    </nav>
+  </div>
 </header>
 
-<section class="hero">
+<main>
+<section class="section hero">
   <div>
-    <div class="badge">Women & Minority-Owned BioAI Automation</div>
-    <h2 class="hero-title">
-      End-to-end RNA-Seq & Flow Cytometry analysis, automated and explained.
-    </h2>
-    <p class="hero-subtitle">
-      PromptGenix turns raw FASTQ and FCS files into reproducible, publication-ready
-      reports using automated pipelines and LLM-based scientific interpretation.
+    <div class="badge-row">
+      <span class="badge">Women & Minority-Owned</span>
+      <span class="badge alt">NIH SBIR-ready</span>
+    </div>
+    <h1 class="title">PromptGenix SBIR Portal</h1>
+    <p class="subtitle">
+      Central entry point for reviewers. Navigate Phase I aims, approach, commercialization,
+      facilities, and team — all optimized for rapid review.
     </p>
-    <div class="hero-buttons">
-      <a href="#contact" class="btn-primary">Discuss a pilot</a>
-      <a href="#solution" class="btn-secondary">See how it works</a>
-    </div>
-  </div>
-  <div class="hero-card">
-    <h3>What PromptGenix does</h3>
-    <ul>
-      <li>Automates RNA-Seq, scRNA-seq, and flow cytometry pipelines</li>
-      <li>Runs COMPASS, GSEA/GSVA, and advanced statistics by default</li>
-      <li>Generates clear English summaries of complex immune signatures</li>
-      <li>Deploys securely on local Mac Studio or AWS cloud</li>
-    </ul>
-  </div>
-</section>
-
-<section id="problem">
-  <h2>The Problem</h2>
-  <div class="grid-2">
-    <div>
-      <p>
-        Modern immunology and genomics labs collect terabytes of RNA-seq and flow cytometry data,
-        but analysis still depends on fragmented tools, manual scripts, and a handful of experts.
-        Turnaround time is measured in weeks, not hours, and every project feels like a one-off.
-      </p>
-    </div>
-    <div class="card">
-      <h3>Today's bottlenecks</h3>
-      <ul>
-        <li>Multiple disconnected tools (STAR, RSEM, FlowJo, COMPASS, GSEA)</li>
-        <li>Custom scripts that are hard to reuse and harder to maintain</li>
-        <li>Limited access to biostatistics & bioinformatics experts</li>
-        <li>Scientific interpretation left to overworked PIs and analysts</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="solution">
-  <h2>The PromptGenix Platform</h2>
-  <div class="grid-2">
-    <div class="card">
-      <h3>Automated pipelines</h3>
-      <ul>
-        <li>RNA-Seq: QC → alignment → quantification → DEG → GSEA/GSVA</li>
-        <li>Flow cytometry: preprocessing, auto-gating, batch normalization</li>
-        <li>COMPASS: automated polyfunctionality analysis for vaccines & trials</li>
-        <li>scRNA-seq: Seurat / scanpy integration and cell-type reporting</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>LLM-based interpretation</h3>
-      <ul>
-        <li>Plain-language summaries of pathways and immune signatures</li>
-        <li>Contextualization with disease area and literature</li>
-        <li>Exportable HTML/PDF reports ready for lab meetings or manuscripts</li>
-        <li>Runs locally or on the cloud for secure environments</li>
-      </ul>
-    </div>
+    <a class="btn btn-primary" href="sbir.html">Start SBIR Review</a>
   </div>
 
-  <div class="pill-list">
-    <div class="pill">Python & R pipelines</div>
-    <div class="pill">BioGPT & LangChain</div>
-    <div class="pill">Hybrid local + AWS</div>
-    <div class="pill">Reproducible analytics</div>
-  </div>
-</section>
-
-<section id="usecases">
-  <h2>Who We Serve</h2>
-  <div class="grid-2">
-    <div class="card">
-      <h3>Translational research labs</h3>
-      <ul>
-        <li>Rapid iteration on vaccine and therapeutic studies</li>
-        <li>Standardized analysis across cohorts and sites</li>
-        <li>Automatic documentation for reproducible science</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Hospitals, Biotech & CROs</h3>
-      <ul>
-        <li>Scalable analysis for clinical trials and biomarker discovery</li>
-        <li>Secure deployment with on-premise or VPC options</li>
-        <li>Women- & minority-owned vendor for government contracts</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="team">
-  <h2>Team</h2>
-  <div class="team">
-    <div class="team-member">
-      <h3>Yon Ji, Ph.D.</h3>
-      <h4>CEO & Co-Founder</h4>
-      <p>
-        Molecular and cell biologist with 20+ years of experience across NIAID/NIH,
-        Johns Hopkins, and NCI. Expertise in ChIP-seq, RNA-seq, CRISPR, stem cells,
-        C. elegans and Xenopus models, and cancer biology. Leads strategy,
-        partnerships, and operations for PromptGenix.
-      </p>
-    </div>
-    <div class="team-member">
-      <h3>Dohoon Kim, M.S.</h3>
-      <h4>CTO & Co-Founder</h4>
-      <p>
-        Senior data scientist and computational biologist with 12+ years in infectious
-        disease research at Walter Reed. Specializes in biostatistics, ML, RNA-seq and
-        flow cytometry automation, COMPASS workflows, and LLM-powered
-        bioinformatics agents in R and Python.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section id="sbir">
-  <h2>SBIR Project Overview (For Reviewers)</h2>
-  <div class="card" style="margin-bottom:16px;">
-    <h3>Project Title</h3>
-    <p>
-      <strong>PromptGenix:</strong> An automated, LLM-assisted platform for RNA-Seq and flow cytometry
-      analysis in translational immunology and infectious disease research.
+  <aside class="panel">
+    <strong>Reviewer tip</strong>
+    <p style="font-size:.9rem;color:#cbd5f5;">
+      Each page is designed to print cleanly to a single-page PDF when required.
     </p>
-    <p style="font-size:0.9rem; color:#9ca3af;">
-      Small Business: <strong>PromptGenix LLC</strong> &nbsp;|&nbsp;
-      Proposed PI/Contact: <strong>Dohoon Kim, M.S.</strong> (CTO) &amp; <strong>Yon Ji, Ph.D.</strong> (CEO)
-    </p>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <h3>Unmet Need</h3>
-      <ul>
-        <li>RNA-Seq, scRNA-seq, and flow cytometry data are critical in vaccine and immunology studies, but analysis remains slow, manual, and fragmented across tools.</li>
-        <li>Many labs lack in-house biostatistics/bioinformatics support, leading to long delays and inconsistent pipelines.</li>
-        <li>Existing commercial tools focus on either NGS or cytometry, rarely integrating both with modern ML/LLM-based interpretation.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Innovation & Aims (Phase I)</h3>
-      <ul>
-        <li><strong>Aim 1:</strong> Build a reproducible, containerized pipeline that automates RNA-Seq and flow cytometry analysis (QC → DEG/GSEA → COMPASS) from raw FASTQ/FCS files.</li>
-        <li><strong>Aim 2:</strong> Integrate a domain-tuned LLM that produces clear, reviewer-friendly reports summarizing key immune signatures and pathways.</li>
-        <li><strong>Aim 3:</strong> Validate the platform on publicly available immunology datasets and generate benchmarks vs. current manual workflows.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="grid-2" style="margin-top:24px;">
-    <div class="card">
-      <h3>Approach & Milestones</h3>
-      <ul>
-        <li>Implement modular pipelines in Python/R (Snakemake/Nextflow-ready) for RNA-Seq and flow cytometry, containerized for secure deployment.</li>
-        <li>Develop an LLM “analysis copilot” that links statistical outputs (DEG tables, COMPASS scores, pathways) to concise English summaries.</li>
-        <li>Demonstrate feasibility with 2–3 use cases (e.g., vaccine trial, HIV or COVID-19 cohort) using public data.</li>
-        <li>Deliverables: prototype web UI, reproducible code repository, and example Phase I report packets.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Team & Environment</h3>
-      <ul>
-        <li><strong>Yon Ji, Ph.D. (CEO):</strong> 20+ years in molecular and cell biology (NIH/NIAID, NCI, Johns Hopkins); leads strategy and translational relevance.</li>
-        <li><strong>Dohoon Kim, M.S. (CTO/PI):</strong> 10+ years as data scientist/biostatistician in infectious disease at Walter Reed; expert in RNA-Seq, flow cytometry, COMPASS, and ML.</li>
-        <li>Infrastructure: secure local Mac Studio + cloud (AWS-ready) environment for development and testing.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:24px;">
-    <h3>Phase I Outcomes & Next Steps</h3>
-    <ul>
-      <li>Phase I will produce a working prototype capable of turning raw FASTQ/FCS data into integrated, LLM-assisted reports suitable for lab meetings and manuscripts.</li>
-      <li>Phase II will extend to multi-site clinical trials, add user management and audit trails, and integrate with hospital or CRO data environments.</li>
-      <li>Commercialization strategy focuses on subscriptions for research labs, hospitals, and CROs, with emphasis on government and minority-owned contracts.</li>
-    </ul>
-    <p style="font-size:0.9rem; color:#9ca3af; margin-top:10px;">
-      <strong>For SBIR reviewers:</strong> This page summarizes the proposed Phase I scope. A detailed work plan, budget, and regulatory/compliance discussion are provided in the full application.
-    </p>
-  </div>
+  </aside>
 </section>
 
-  
-<section id="contact">
-  <h2>Contact</h2>
-  <p>
-    PromptGenix is currently preparing pilot collaborations with research labs,
-    hospitals, and biotech partners. If you are interested in automating your
-    RNA-Seq or flow cytometry workflows, we'd love to talk.
-  </p>
-  <p>
-    <strong>Email (CEO)</strong>: jiy@nih.gov<br/>
-    <strong>Email (CTO)</strong>: dk364@georgetown.edu &nbsp;/&nbsp; dohoon.kim1@icloud.com
-  </p>
+<section class="section">
+  <div class="grid">
+    <div class="card">
+      <h4>Specific Aims</h4>
+      <p>Significance, innovation, objectives, and Phase I aims.</p>
+      <div class="meta">aims.html</div>
+      <a class="btn btn-primary" href="aims.html">Open</a>
+    </div>
+    <div class="card">
+      <h4>Approach</h4>
+      <p>Workflow, validation plan, milestones, and risk mitigation.</p>
+      <div class="meta">approach.html</div>
+      <a class="btn btn-primary" href="approach.html">Open</a>
+    </div>
+    <div class="card">
+      <h4>Commercialization</h4>
+      <p>Market need, customers, and go-to-market strategy.</p>
+      <div class="meta">commercialization.html</div>
+      <a class="btn btn-primary" href="commercialization.html">Open</a>
+    </div>
+    <div class="card">
+      <h4>Facilities</h4>
+      <p>Compute environment, software stack, and execution readiness.</p>
+      <div class="meta">facilities.html</div>
+      <a class="btn btn-primary" href="facilities.html">Open</a>
+    </div>
+    <div class="card">
+      <h4>Company & Team</h4>
+      <p>Ownership, leadership, and scientific expertise.</p>
+      <div class="meta">team.html</div>
+      <a class="btn btn-primary" href="team.html">Open</a>
+    </div>
+    <div class="card">
+      <h4>Use Cases</h4>
+      <p>Example RNA-Seq and flow cytometry analyses.</p>
+      <div class="meta">use-cases.html</div>
+      <a class="btn btn-primary" href="use-cases.html">Open</a>
+    </div>
+  </div>
 </section>
+</main>
 
 <footer>
-  © <span id="year"></span> PromptGenix LLC. All rights reserved.
+  PromptGenix &middot; SBIR Portal &middot;
+  <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
 </footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-
+</div>
 </body>
 </html>
