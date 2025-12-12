@@ -2,148 +2,233 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Specific Aims – PromptGenix SBIR Phase I</title>
+  <title>PromptGenix – Specific Aims (Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PromptGenix SBIR Phase I Specific Aims: significance, innovation, objective, central hypothesis, aims, outcomes, impact."/>
   <style>
-    body {
-      margin: 40px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #111827;
-      line-height: 1.45;
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#020617;
+      color:#e5e7eb;
+      line-height:1.45;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .page{ min-height:100vh; display:flex; flex-direction:column; }
+
+    /* Shared header/nav (matches index.html) */
+    header{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(14px);
+      background: rgba(15, 23, 42, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+    .nav{
+      max-width:1120px; margin:0 auto; padding:14px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+    }
+    .nav-left{ display:flex; align-items:center; gap:12px; }
+    .logo-dot{
+      width:28px; height:28px; border-radius:999px;
+      background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
+      box-shadow:0 0 18px rgba(56,189,248,.7);
+    }
+    .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
+    .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
+
+    .nav-links{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .nav-links a{
+      font-size:.88rem; color:#9ca3af;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.25);
+    }
+    .nav-links a:hover{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.35);
+    }
+    .nav-links a.active{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.55);
     }
 
-    h1 {
-      font-size: 1.4rem;
-      margin-bottom: 6px;
+    main{ flex:1; }
+    .section{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 20px;
     }
 
-    h2 {
-      font-size: 1rem;
-      margin-top: 18px;
-      margin-bottom: 4px;
-      letter-spacing: 0.08em;
+    .topline{
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center; justify-content:space-between;
+      padding-top: 16px;
+      margin-bottom: 14px;
+    }
+    .doc-title{
+      font-size: 1.25rem;
+      font-weight: 800;
+      color:#f9fafb;
+      margin: 0;
+    }
+    .meta{
+      font-size:.78rem;
+      color:#9ca3af;
     }
 
-    p {
-      font-size: 0.92rem;
-      margin: 6px 0;
+    h2{
+      font-size: .9rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color:#a5b4fc;
+      margin: 18px 0 8px;
     }
 
-    ul {
-      margin: 6px 0 6px 18px;
-      padding: 0;
-      font-size: 0.92rem;
+    p{
+      margin: 0 0 10px;
+      font-size: .93rem;
+      color:#d1d5db;
     }
 
-    li {
-      margin-bottom: 4px;
+    .box{
+      margin: 10px 0 12px;
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.75);
+    }
+    .box strong{ color:#22c55e; }
+
+    ul{
+      margin: 6px 0 10px;
+      padding-left: 1.1rem;
+      color:#d1d5db;
+      font-size: .92rem;
+    }
+    li{ margin-bottom: 4px; }
+
+    .fine{
+      font-size:.78rem;
+      color:#9ca3af;
+      margin-top: 10px;
     }
 
-    .header {
-      margin-bottom: 16px;
+    footer{
+      border-top:1px solid rgba(31,41,55,0.9);
+      padding:16px;
+      font-size:.78rem;
+      color:#6b7280;
+      text-align:center;
     }
 
-    .meta {
-      font-size: 0.82rem;
-      color: #374151;
-    }
-
-    .box {
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-top: 8px;
-      font-size: 0.9rem;
-      background: #f9fafb;
-    }
-
-    .footer-note {
-      font-size: 0.78rem;
-      color: #4b5563;
-      margin-top: 12px;
+    /* Print friendliness */
+    @media print{
+      header, footer { display:none !important; }
+      body{ background:#fff; color:#111; }
+      p, li{ color:#111; }
+      h2{ color:#111; }
+      .box{ border:1px solid #999; background:#fff; }
+      .section{ max-width: 100%; padding: 0; }
     }
   </style>
 </head>
+
 <body>
-
-  <div class="header">
-    <h1>Specific Aims (Phase I): PromptGenix – BioAI Automation Platform</h1>
-    <div class="meta">
-      PromptGenix LLC (Women & Minority-Owned)<br/>
-      Contact: dohoon.kim1@icloud.com<br/>
-      Website: https://promptgenix.org/sbir.html
+<div class="page">
+  <header>
+    <div class="nav">
+      <div class="nav-left">
+        <div class="logo-dot"></div>
+        <div>
+          <div class="brand">PromptGenix</div>
+          <div class="subbrand">SBIR Portal</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Portal</a>
+        <a href="sbir.html">SBIR</a>
+        <a href="aims.html" class="active">Aims</a>
+        <a href="approach.html">Approach</a>
+        <a href="commercialization.html">Commercialization</a>
+        <a href="facilities.html">Facilities</a>
+        <a href="team.html">Team</a>
+        <a href="use-cases.html">Use Cases</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <h2>SIGNIFICANCE</h2>
-  <p>
-    Immunology and infectious disease research programs routinely generate large volumes of RNA-Seq,
-    single-cell RNA-Seq, and high-dimensional flow cytometry data. Despite major advances in data generation,
-    biological insight remains a bottleneck. Analysis workflows are fragmented across tools, rely heavily on
-    custom scripts, and require scarce bioinformatics expertise. As a result, turnaround times are long,
-    reproducibility is inconsistent, and interpretation often depends on manual literature review by
-    overextended investigators.
-  </p>
-  <p>
-    This gap directly limits the speed and quality of hypothesis generation, experimental design, and
-    decision-making in NIH-funded studies, particularly in resource-constrained academic and government laboratories.
-  </p>
+  <main>
+    <section class="section">
+      <div class="topline">
+        <h1 class="doc-title">Specific Aims (Phase I): PromptGenix – BioAI Automation Platform</h1>
+        <div class="meta">
+          PromptGenix LLC (Women &amp; Minority-Owned) &middot; Contact: dohoon.kim1@icloud.com &middot;
+          Website: promptgenix.org/sbir.html
+        </div>
+      </div>
 
-  <h2>INNOVATION</h2>
-  <p>
-    PromptGenix introduces an integrated BioAI co-investigator that combines end-to-end automated omics
-    pipelines with a literature-aware internal LLM Hypothesis Generator.
-  </p>
-  <p>
-    Unlike existing platforms that stop at statistical results or static summaries, PromptGenix produces
-    ranked, testable biological hypotheses and concrete follow-up experiment suggestions grounded in
-    traceable PubMed-aware reasoning.
-  </p>
+      <h2>Significance</h2>
+      <p>
+        Immunology and infectious disease programs generate large volumes of RNA-Seq, single-cell RNA-Seq,
+        and high-dimensional flow cytometry data, yet analysis often depends on fragmented tools, custom scripts,
+        and scarce expert time. This drives long turnaround, inconsistent reproducibility, and delayed biological interpretation.
+      </p>
+      <p>
+        The bottleneck is not only computation, but scientific synthesis: translating multi-omic outputs into
+        actionable mechanisms, experiment plans, and study decisions.
+      </p>
 
-  <h2>OVERALL OBJECTIVE &amp; CENTRAL HYPOTHESIS</h2>
-  <div class="box">
-    <p><strong>Objective:</strong> Deliver a validated Phase I prototype that automates RNA-Seq and flow
-    cytometry workflows and generates reviewer-ready reports with ranked biological hypotheses and suggested
-    validation experiments.</p>
-    <p><strong>Central hypothesis:</strong> Standardized, reproducible pipelines combined with traceable,
-    literature-aware LLM reasoning will reduce analysis turnaround time and increase interpretability,
-    enabling faster and higher-quality study decisions in immunology and infectious disease research.</p>
-  </div>
+      <h2>Innovation</h2>
+      <p>
+        PromptGenix introduces an integrated BioAI co-investigator that combines end-to-end automated omics pipelines
+        with an internal, literature-aware LLM layer and a <strong>Hypothesis Generator</strong>.
+        Instead of producing only static plots and summaries, PromptGenix ranks mechanistic hypotheses and proposes
+        concrete follow-up experiments grounded in traceable PubMed-aware reasoning.
+      </p>
 
-  <h2>SPECIFIC AIMS</h2>
-  <ul>
-    <li>
-      <strong>Aim 1.</strong> Harden end-to-end automated RNA-Seq and flow cytometry pipelines using public
-      datasets (GEO, SRA, FlowRepository).
-    </li>
-    <li>
-      <strong>Aim 2.</strong> Implement a traceable Hypothesis Generator that ranks biological hypotheses
-      and proposes validation experiments using PubMed-aware reasoning.
-    </li>
-    <li>
-      <strong>Aim 3.</strong> Generate exportable HTML/PDF reports and evaluate usability through 2–3 pilot
-      studies using public or de-identified datasets.
-    </li>
-  </ul>
+      <h2>Overall objective &amp; central hypothesis</h2>
+      <div class="box">
+        <p><strong>Objective:</strong> Deliver a validated, reproducible Phase I prototype that automates RNA-Seq and flow cytometry workflows
+          and generates reviewer-ready reports with ranked hypotheses and suggested validation experiments.</p>
+        <p><strong>Central hypothesis:</strong> Standardized automated pipelines combined with traceable, literature-aware LLM reasoning
+          will reduce analysis turnaround time and increase interpretability, enabling faster, higher-quality study decisions
+          in immunology and infectious disease research.</p>
+      </div>
 
-  <h2>EXPECTED OUTCOMES &amp; DELIVERABLES</h2>
-  <ul>
-    <li>Validated prototype producing reproducible, versioned outputs across reruns</li>
-    <li>Reviewer-ready reports generated within &lt;24 hours from raw data inputs</li>
-    <li>Measured reductions in turnaround time and positive user feedback on AI-generated hypotheses</li>
-  </ul>
+      <h2>Specific aims</h2>
+      <ul>
+        <li><strong>Aim 1.</strong> Harden end-to-end automated RNA-Seq and flow cytometry pipelines using public datasets (GEO, SRA, FlowRepository).</li>
+        <li><strong>Aim 2.</strong> Implement a traceable Hypothesis Generator that ranks biological hypotheses and proposes validation experiments with PubMed-aware citations.</li>
+        <li><strong>Aim 3.</strong> Generate exportable HTML/PDF reports and evaluate usability through 2–3 pilot studies using public or de-identified datasets.</li>
+      </ul>
 
-  <h2>IMPACT</h2>
-  <p>
-    Successful completion of Phase I will establish PromptGenix as a scalable BioAI co-investigator platform
-    for immunology and infectious disease research. Phase I validation will rely exclusively on public
-    datasets to avoid IP or data-use conflicts and will position the platform for Phase II expansion into
-    multi-site studies and secure deployments.
-  </p>
+      <h2>Expected outcomes &amp; deliverables</h2>
+      <ul>
+        <li>Validated prototype producing reproducible outputs across reruns (versioned configs + reports).</li>
+        <li>Reviewer-ready reports generated within &lt;24 hours from raw data inputs (dataset-dependent).</li>
+        <li>Measured reductions in turnaround time and positive user feedback on AI-generated hypotheses.</li>
+      </ul>
 
-  <div class="footer-note">
-    Phase I SBIR – NIH/NIAID focus · Public-data validation · Women & Minority-Owned Small Business
-  </div>
+      <h2>Impact</h2>
+      <p>
+        Successful completion of Phase I will establish PromptGenix as a scalable BioAI co-investigator platform for
+        immunology studies. Phase I validation will rely exclusively on public datasets to avoid IP/data-use conflicts,
+        positioning the platform for Phase II expansion into multi-site studies and secure deployments.
+      </p>
 
+      <div class="fine">
+        Phase I SBIR – NIH/NIAID focus &middot; Public-data validation &middot; Women &amp; Minority-Owned Small Business
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    PromptGenix &middot; SBIR Portal &middot;
+    <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
+  </footer>
+</div>
 </body>
 </html>
