@@ -2,685 +2,290 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – SBIR BioAI Automation Platform</title>
+  <title>PromptGenix – SBIR Overview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PromptGenix SBIR Phase I overview: problem, innovation, aims, and feasibility."/>
   <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #020617;
-      color: #e5e7eb;
-      line-height: 1.5;
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#020617;
+      color:#e5e7eb;
+      line-height:1.5;
     }
+    a{ color:inherit; text-decoration:none; }
+    .page{ min-height:100vh; display:flex; flex-direction:column; }
 
-    a { color: inherit; text-decoration: none; }
-
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    /* ===== Shared Header / Nav ===== */
+    header{
+      position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
       background: rgba(15, 23, 42, 0.92);
       border-bottom: 1px solid rgba(148, 163, 184, 0.3);
     }
-
-    .nav {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
+    .nav{
+      max-width:1120px;
+      margin:0 auto;
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
     }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .nav-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
-
-    .logo-dot {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
+    .logo-dot{
+      width:28px;
+      height:28px;
+      border-radius:999px;
       background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
-      box-shadow: 0 0 18px rgba(56,189,248,.7);
+      box-shadow:0 0 18px rgba(56,189,248,.7);
+    }
+    .brand{
+      font-size:1.1rem;
+      font-weight:650;
+      letter-spacing:.04em;
+    }
+    .subbrand{
+      font-size:.72rem;
+      color:#9ca3af;
+      margin-top:2px;
     }
 
-    .brand {
-      font-size: 1.1rem;
-      font-weight: 650;
-      letter-spacing: 0.04em;
+    .nav-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav-links a{
+      font-size:.88rem;
+      color:#9ca3af;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.25);
+    }
+    .nav-links a:hover{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.35);
+    }
+    .nav-links a.active{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.55);
     }
 
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      font-size: .9rem;
-      color: #9ca3af;
+    /* ===== Layout ===== */
+    main{ flex:1; }
+    .section{
+      max-width:1120px;
+      margin:0 auto;
+      padding:28px 20px;
+    }
+    .topline{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:flex-end;
+      justify-content:space-between;
+      padding-top:16px;
+      margin-bottom:14px;
+    }
+    .doc-title{
+      font-size:1.45rem;
+      font-weight:820;
+      color:#f9fafb;
+      margin:0;
+    }
+    .meta{
+      font-size:.78rem;
+      color:#9ca3af;
     }
 
-    .nav-links a {
-      padding: 6px 10px;
-      border-radius: 999px;
+    .kicker{
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      color:#a5b4fc;
+      margin-bottom:6px;
+    }
+    h2{
+      font-size:1.15rem;
+      font-weight:760;
+      color:#f9fafb;
+      margin:14px 0 8px;
+    }
+    p{
+      margin:0 0 10px;
+      font-size:.93rem;
+      color:#d1d5db;
     }
 
-    .nav-links a.active,
-    .nav-links a:hover {
-      color: #e5e7eb;
-      background: rgba(148, 163, 184, 0.18);
+    .grid-2{
+      display:grid;
+      grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+      gap:18px;
+      align-items:start;
+      margin-top:10px;
+    }
+    .card{
+      border-radius:16px;
+      padding:14px 16px;
+      background: rgba(15,23,42,0.84);
+      border:1px solid rgba(148,163,184,0.28);
+      box-shadow:0 18px 45px rgba(15,23,42,0.55);
+    }
+    .card h3{
+      margin:0 0 8px;
+      font-size:.95rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#a5b4fc;
     }
 
-    .nav-cta {
-      display: flex;
-      gap: 10px;
-      align-items: center;
+    ul{
+      margin:6px 0 0;
+      padding-left:1.1rem;
+      color:#d1d5db;
+      font-size:.92rem;
+    }
+    li{ margin-bottom:6px; }
+    li strong{ color:#e5e7eb; }
+
+    .callout{
+      border-radius:14px;
+      padding:12px 14px;
+      border:1px dashed rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.75);
+      font-size:.88rem;
+      color:#e5e7eb;
+      margin-top:12px;
+    }
+    .callout strong{ color:#22c55e; }
+
+    footer{
+      border-top:1px solid rgba(31,41,55,0.9);
+      padding:16px;
+      font-size:.78rem;
+      color:#6b7280;
+      text-align:center;
     }
 
-    .btn {
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      padding: 8px 14px;
-      font-size: .85rem;
-      cursor: pointer;
-      background: transparent;
-      color: #e5e7eb;
+    @media (max-width:920px){
+      .grid-2{ grid-template-columns:minmax(0,1fr); }
     }
 
-    .btn-primary {
-      border: none;
-      background: linear-gradient(135deg,#22c55e,#22d3ee,#6366f1);
-      color: #020617;
-      font-weight: 600;
-      box-shadow: 0 0 22px rgba(59,130,246,0.55);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.05);
-    }
-
-    .btn-outline:hover {
-      background: rgba(148, 163, 184, 0.24);
-    }
-
-    main {
-      flex: 1;
-    }
-
-    .section {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 40px 20px 32px;
-    }
-
-    /* HERO */
-    .hero {
-      padding-top: 42px;
-      padding-bottom: 32px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.1fr);
-      gap: 42px;
-      align-items: center;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .badge {
-      font-size: .7rem;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      border-radius: 999px;
-      padding: 5px 11px;
-      border: 1px solid rgba(251,191,36,0.6);
-      color: #fed7aa;
-      background: rgba(120,53,15,0.4);
-    }
-
-    .hero-title {
-      font-size: clamp(2.2rem, 3vw + 1.5rem, 3rem);
-      font-weight: 750;
-      letter-spacing: 0.01em;
-      color: #f9fafb;
-      margin-bottom: 16px;
-    }
-
-    .hero-subtitle {
-      font-size: 1.02rem;
-      color: #e5e7eb;
-      max-width: 34rem;
-      margin-bottom: 22px;
-    }
-
-    .hero-subnote {
-      font-size: .8rem;
-      color: #9ca3af;
-      margin-top: 6px;
-      max-width: 32rem;
-    }
-
-    .hero-ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      margin-top: 14px;
-    }
-
-    .hero-right-card {
-      border-radius: 18px;
-      padding: 18px 18px 16px;
-      background: radial-gradient(circle at 0 0,#0f172a,#020617 50%,#020617 100%);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 20px 40px rgba(15,23,42,0.9);
-    }
-
-    .hero-right-title {
-      font-size: .86rem;
-      text-transform: uppercase;
-      letter-spacing: .16em;
-      color: #a5b4fc;
-      margin-bottom: 8px;
-    }
-
-    .hero-right-main {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .hero-right-body {
-      font-size: .88rem;
-      color: #cbd5f5;
-      margin-bottom: 12px;
-    }
-
-    .hero-right-pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-    }
-
-    .pill {
-      font-size: .7rem;
-      padding: 4px 7px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(129,140,248,0.5);
-      color: #c7d2fe;
-    }
-
-    /* Two-column descriptive section */
-    .two-col {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 32px;
-      align-items: flex-start;
-      margin-top: 8px;
-    }
-
-    .section-kicker {
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .18em;
-      color: #a5b4fc;
-      margin-bottom: 4px;
-    }
-
-    .section-title {
-      font-size: 1.45rem;
-      font-weight: 650;
-      margin-bottom: 8px;
-      color: #f9fafb;
-    }
-
-    .section-text {
-      font-size: .93rem;
-      color: #d1d5db;
-    }
-
-    ul {
-      padding-left: 1.1rem;
-      margin: .4rem 0 0;
-      font-size: .9rem;
-      color: #d1d5db;
-    }
-
-    li { margin-bottom: 4px; }
-
-    .callout {
-      border-radius: 14px;
-      padding: 12px 14px;
-      border: 1px dashed rgba(148, 163, 184, 0.5);
-      background: rgba(15,23,42,0.8);
-      font-size: .86rem;
-      color: #e5e7eb;
-      margin-top: 10px;
-    }
-
-    .callout strong { color: #22c55e; }
-
-    /* Use case image section */
-    .usecase-img {
-      width: 100%;
-      max-width: 980px;
-      border-radius: 16px;
-      display: block;
-      margin: 24px auto 0;
-      box-shadow: 0 18px 45px rgba(15,23,42,0.9);
-    }
-
-    .tag-row {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: .78rem;
-      color: #9ca3af;
-    }
-
-    .tag-row span {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(75,85,99,0.9);
-      background: rgba(15,23,42,0.9);
-    }
-    
-    /* Team + Pilot grid */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.05fr);
-      gap: 24px;
-      margin-top: 16px;
-    }
-
-    .card {
-      border-radius: 16px;
-      padding: 16px 18px;
-      background: rgba(15,23,42,0.96);
-      border: 1px solid rgba(55,65,81,0.9);
-    }
-
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 1.05rem;
-      color: #e5e7eb;
-    }
-
-    .card p {
-      font-size: .9rem;
-      color: #d1d5db;
-      margin: 4px 0 8px;
-    }
-
-    .small {
-      font-size: .8rem;
-      color: #9ca3af;
-    }
-
-    footer {
-      border-top: 1px solid rgba(31,41,55,0.9);
-      padding: 16px 20px 22px;
-      font-size: .78rem;
-      color: #6b7280;
-      text-align: center;
-      background: #020617;
-    }
-
-    @media (max-width: 880px) {
-      .hero {
-        grid-template-columns: minmax(0,1fr);
-      }
-      .two-col {
-        grid-template-columns: minmax(0,1fr);
-      }
-      .grid-2 {
-        grid-template-columns: minmax(0,1fr);
-      }
-      .nav {
-        flex-wrap: wrap;
-      }
-      .nav-links {
-        width: 100%;
-        justify-content: center;
-      }
+    @media print{
+      header, footer{ display:none !important; }
+      body{ background:#fff; color:#111; }
+      p, li{ color:#111; }
+      .kicker, .card h3{ color:#111; }
+      .card, .callout{ background:#fff; box-shadow:none; }
+      .section{ max-width:100%; padding:0; }
     }
   </style>
 </head>
+
 <body>
 <div class="page">
-
-  <!-- HEADER -->
   <header>
     <div class="nav">
       <div class="nav-left">
         <div class="logo-dot"></div>
         <div>
           <div class="brand">PromptGenix</div>
-          <div style="font-size:.72rem;color:#9ca3af;">BioAI Automation Platform</div>
+          <div class="subbrand">SBIR Portal</div>
         </div>
       </div>
 
       <nav class="nav-links">
-        <a href="index.html" class="active">SBIR Landing</a>
+        <a href="index.html">Portal</a>
+        <a href="sbir.html" class="active">SBIR</a>
+        <a href="aims.html">Aims</a>
+        <a href="approach.html">Approach</a>
+        <a href="commercialization.html">Commercialization</a>
+        <a href="facilities.html">Facilities</a>
+        <a href="team.html">Team</a>
         <a href="use-cases.html">Use Cases</a>
-        <a href="#team">Team</a>
-        <a href="#aims">Aims</a>
-        <a href="#commercialization">Commercialization</a>
-        <a href="#evidence">Evidence</a>
-        <a href="#pilot">Pilot Program</a>
       </nav>
-
-      <div class="nav-cta">
-        <a class="btn btn-outline" href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20SBIR%20Inquiry">
-          Email us
-        </a>
-      </div>
     </div>
   </header>
 
   <main>
-
-    <!-- HERO -->
-    <section class="section hero">
-      <div>
-        <div class="badge-row">
-          <span class="badge">Women & Minority-Owned BioAI</span>
-          <span class="badge" style="border-color:rgba(56,189,248,0.7);color:#bae6fd;background:rgba(15,23,42,0.9);">
-            NIH / NIAID SBIR-ready
-          </span>
-        </div>
-
-        <h1 class="hero-title">
-          Automated RNA-Seq & Flow Cytometry analysis, with an AI co-investigator.
-        </h1>
-
-        <p class="hero-subtitle">
-          PromptGenix turns FASTQ and FCS files into reproducible pipelines, 
-          human-readable scientific summaries, and even <strong>new hypotheses and follow-up experiments</strong>.
-        </p>
-
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="#pilot">Request a pilot</a>
-          <a class="btn btn-outline" href="use-cases.html">View analysis examples</a>
-        </div>
-
-        <p class="hero-subnote">
-          Built by an immunology & bioinformatics PI with 10+ years of HIV, vaccine, and flow cytometry experience.
-          Deployed securely on local Mac Studio or AWS.
-        </p>
-      </div>
-
-      <!-- Hypothesis Generator highlight -->
-      <div class="hero-right-card">
-        <div class="hero-right-title">AI HYPOTHESIS GENERATOR</div>
-        <div class="hero-right-main">
-          Literature-aware LLM that proposes testable hypotheses, not just summaries.
-        </div>
-        <div class="hero-right-body">
-          PromptGenix uses an internal LLM fine-tuned for immunology and omics to:
-        </div>
-        <ul>
-          <li>Scan PubMed and domain knowledge for mechanisms related to the uploaded dataset</li>
-          <li>Generate <strong>high-confidence biological hypotheses</strong></li>
-          <li>Recommend concrete follow-up experiments (flow panels, RNA-Seq contrasts, scRNA-Seq subsets)</li>
-        </ul>
-        <div class="hero-right-pill-row">
-          <span class="pill">PubMed-aware reasoning</span>
-          <span class="pill">Hypothesis ranking</span>
-          <span class="pill">Experiment suggestions</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROBLEM / SOLUTION / INNOVATION -->
     <section class="section">
-      <div class="two-col">
-        <div>
-          <div class="section-kicker">The problem</div>
-          <h2 class="section-title">Terabytes of omics data, but insights arrive too late.</h2>
-          <p class="section-text">
-            Modern immunology and genomics programs collect huge volumes of RNA-Seq, scRNA-Seq, and flow cytometry data,
-            but analysis often depends on fragmented tools, custom scripts, and a handful of over-extended experts.
-            Turnaround is measured in weeks, not hours, and every project feels like a one-off.
-          </p>
+      <div class="topline">
+        <h1 class="doc-title">SBIR Phase I Overview</h1>
+        <div class="meta">
+          PromptGenix LLC · Women & Minority-Owned · Contact: dohoon.kim1@icloud.com
+        </div>
+      </div>
+
+      <div class="kicker">The problem</div>
+      <h2>Biomedical data generation outpaces analysis and interpretation.</h2>
+      <p>
+        NIH-funded laboratories routinely generate RNA-Seq, scRNA-Seq, and high-dimensional flow cytometry data,
+        yet analysis remains fragmented across tools and scripts. Turnaround is slow, reproducibility is inconsistent,
+        and scientific interpretation depends on limited expert bandwidth.
+      </p>
+
+      <div class="kicker">The innovation</div>
+      <h2>PromptGenix: an automated BioAI co-investigator.</h2>
+      <p>
+        PromptGenix integrates reproducible analysis pipelines with a literature-aware AI layer that produces
+        human-readable summaries, ranked biological hypotheses, and concrete follow-up experiments.
+        The platform transforms raw FASTQ and FCS files into actionable, reviewer-ready outputs.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Technical innovation</h3>
           <ul>
-            <li>Multiple disconnected tools (STAR, RSEM, Seurat, FlowJo, COMPASS, GSEA)</li>
-            <li>Siloed code that is hard to reuse and harder to maintain</li>
-            <li>Limited access to biostatistics and bioinformatics expertise</li>
-            <li>Scientific interpretation left to whoever has time to read the literature</li>
+            <li><strong>End-to-end automation:</strong> RNA-Seq and flow cytometry pipelines with standardized outputs</li>
+            <li><strong>Reproducibility:</strong> deterministic configurations and versioned reports</li>
+            <li><strong>BioAI layer:</strong> hypothesis generation grounded in observed signals and PubMed evidence</li>
+            <li><strong>Deployment flexibility:</strong> local-first execution with optional secure cloud scaling</li>
           </ul>
         </div>
 
-        <div>
-          <div class="section-kicker">PromptGenix solution</div>
-          <h2 class="section-title">An end-to-end BioAI co-pilot for analysis, interpretation, and hypothesis.</h2>
-          <p class="section-text">
-            PromptGenix automates QC, alignment, DEG, GSEA/GSVA, and flow cytometry gating in reproducible pipelines.
-            On top of that, our internal LLM layer reads the results, cross-references the literature, and proposes
-            mechanistic hypotheses and validation experiments that can be dropped into a grant or lab meeting slide.
-          </p>
+        <div class="card">
+          <h3>SBIR Phase I focus</h3>
           <ul>
-            <li>One-click pipelines for RNA-Seq, scRNA-Seq, and flow cytometry</li>
-            <li>Exportable HTML/PDF reports with plain-language summaries</li>
-            <li>Configurable to run entirely on-prem (Mac Studio) or in a secure AWS VPC</li>
+            <li>Harden pipelines on multiple public datasets (GEO, SRA, FlowRepository)</li>
+            <li>Validate hypothesis generator traceability and usefulness</li>
+            <li>Measure reductions in turnaround time and improvements in reproducibility</li>
+            <li>Produce reviewer-ready HTML/PDF reports</li>
           </ul>
           <div class="callout">
-            <strong>SBIR focus:</strong> Phase I will harden the automated pipelines and hypothesis generator
-            on public datasets, then apply them to partner HIV/vaccine cohorts to demonstrate impact on study design.
+            <strong>Boundary:</strong> Phase I validation uses public data only to avoid IP and data-use constraints.
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- USE CASE VISUAL -->
-    <section class="section">
-      <div class="section-kicker">What it does today</div>
-      <h2 class="section-title">From dimensionality reduction to gene set enrichment.</h2>
-      <p class="section-text">
-        The current PromptGenix prototype already automates core workflows used in NIH-funded labs.
-        Below is an example of the types of analyses our pipelines and LLM layer can generate and explain.
+      <div class="kicker" style="margin-top:18px;">Why it matters</div>
+      <h2>Faster, more interpretable science with lower operational burden.</h2>
+      <p>
+        By automating analysis and embedding scientific reasoning directly into the workflow, PromptGenix enables
+        small and mid-sized labs to operate with PI-level analytical capacity. The result is faster insight generation,
+        improved rigor, and clearer decision-making for experimental design.
       </p>
 
-      <img
-        src="assets/img/usecases/usecases_main.png"
-        alt="PromptGenix dimensionality reduction, differential expression, immune signatures, cell subset gating, gene set enrichment and team comparison use cases"
-        class="usecase-img"
-      />
-
-      <div class="tag-row">
-        <span>UMAP / t-SNE</span>
-        <span>Differential expression</span>
-        <span>Immune signatures</span>
-        <span>Cell subset gating</span>
-        <span>Gene set enrichment</span>
-        <span>Team vs. team analysis</span>
+      <div class="callout">
+        <strong>Commercial relevance:</strong> the same capabilities validated in Phase I directly support a scalable
+        commercialization path to academic labs, CROs, and government research groups in Phase II.
       </div>
     </section>
-
-<!-- SPECIFIC AIMS -->
-<section class="section" id="aims">
-  <div class="two-col">
-    <div>
-      <div class="section-kicker">Specific Aims (Phase I)</div>
-      <h2 class="section-title">Build a robust BioAI pipeline + hypothesis engine for immunology studies.</h2>
-      <p class="section-text">
-        The Phase I objective is to deliver a validated, reproducible platform that automates RNA-Seq and flow cytometry analysis
-        and produces literature-grounded hypotheses and follow-up experiments for rapid study design decisions.
-      </p>
-
-      <div class="callout">
-        <strong>Overall hypothesis:</strong> Standardized automation + literature-aware LLM reasoning can reduce turnaround time and increase
-        interpretability of immune-omics analyses, enabling faster, higher-quality decisions in infectious disease and vaccine studies.
-      </div>
-    </div>
-
-    <div>
-      <div class="section-kicker">Aims & deliverables</div>
-      <ul>
-        <li><strong>Aim 1:</strong> Harden end-to-end automated pipelines for RNA-Seq and flow cytometry using public datasets (GEO/SRA/FlowRepository).</li>
-        <li><strong>Aim 2:</strong> Implement a traceable Hypothesis Generator that ranks hypotheses and proposes validation experiments with PubMed-aware citations.</li>
-        <li><strong>Aim 3:</strong> Produce reviewer-ready HTML/PDF reports and pilot-ready outputs, then evaluate usability with 2–3 partner labs.</li>
-      </ul>
-
-      <div class="callout">
-        <strong>End of Phase I outcome:</strong> A deployable prototype with measurable performance gains and a clear Phase II commercialization path
-        (pilot expansion, multi-site trials, secure deployments).
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMMERCIALIZATION & PHASE II -->
-<section class="section" id="commercialization">
-  <div class="two-col">
-    <div>
-      <div class="section-kicker">Commercialization</div>
-      <h2 class="section-title">Clear path from Phase I prototype to Phase II adoption.</h2>
-      <p class="section-text">
-        PromptGenix targets academic labs, government research groups, and CROs conducting RNA-Seq and
-        flow cytometry–based immunology studies. These users face recurring analysis bottlenecks and
-        limited access to expert bioinformatics support.
-      </p>
-
-      <ul>
-        <li>Initial customers: NIH-funded labs, vaccine and infectious disease programs, small CROs</li>
-        <li>Value proposition: faster turnaround, standardized analysis, and AI-assisted interpretation</li>
-        <li>Revenue model: subscription licensing with per-project or per-seat tiers</li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="section-kicker">Phase II vision</div>
-      <h2 class="section-title">Scale, validation, and secure deployment.</h2>
-      <ul>
-        <li>Expand pilots to multi-site cohorts and prospective studies</li>
-        <li>Add user management, audit trails, and role-based access controls</li>
-        <li>Deploy in secure cloud environments (AWS GovCloud/VPC) and on-prem systems</li>
-        <li>Integrate additional modalities (scRNA-Seq, proteomics, multi-omics)</li>
-      </ul>
-
-      <div class="callout">
-        <strong>Phase II objective:</strong> Establish PromptGenix as a validated BioAI analysis platform
-        adopted by multiple NIH-funded programs and commercial research partners.
-      </div>
-    </div>
-  </div>
-</section>
-    
-<!-- EVIDENCE / FEASIBILITY -->
-<section class="section" id="evidence">
-  <div class="two-col">
-    <div>
-      <div class="section-kicker">Evidence & Feasibility</div>
-      <h2 class="section-title">Technically feasible today, scalable in Phase I.</h2>
-      <p class="section-text">
-        PromptGenix builds on proven bioinformatics pipelines and a literature-aware LLM layer.
-        Phase I focuses on integration, robustness, and measurable performance gains using public datasets.
-      </p>
-
-      <ul>
-        <li><strong>Automated pipelines:</strong> RNA-Seq (QC → alignment → DEG → GSEA/GSVA) and flow cytometry preprocessing and analysis are already functional in prototype form.</li>
-        <li><strong>LLM-driven interpretation:</strong> Internal LLM produces structured summaries, ranked hypotheses, and concrete validation experiments.</li>
-        <li><strong>Reproducibility:</strong> Deterministic configs, versioned outputs, and exportable HTML/PDF reports.</li>
-      </ul>
-
-      <div class="callout">
-        <strong>Public-data validation:</strong> Phase I evaluation will use GEO, SRA, and FlowRepository datasets only,
-        ensuring no IP or data-use conflicts.
-      </div>
-    </div>
-
-    <div>
-      <div class="section-kicker">Phase I Deliverables</div>
-      <h2 class="section-title">Clear milestones with measurable KPIs.</h2>
-
-      <ul>
-        <li><strong>D1.</strong> End-to-end automated RNA-Seq and flow cytometry pipelines hardened on ≥3 public datasets.</li>
-        <li><strong>D2.</strong> Hypothesis Generator producing ranked hypotheses and experiment suggestions with traceable PubMed citations.</li>
-        <li><strong>D3.</strong> Reviewer-ready HTML/PDF reports generated in &lt;24 hours from raw data.</li>
-      </ul>
-
-      <div class="callout">
-        <strong>Success metrics (examples):</strong>
-        <ul>
-          <li>≥70% reduction in analysis turnaround time vs. manual workflows</li>
-          <li>≥90% pipeline reproducibility across reruns</li>
-          <li>≥80% user-rated usefulness of AI-generated hypotheses (pilot feedback)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-    
-    <!-- TEAM & PILOT -->
-    <section class="section" id="team">
-      <div class="grid-2">
-        <div class="card">
-          <div class="section-kicker">Team</div>
-          <h3>Women & minority-owned BioAI startup with deep immunology experience.</h3>
-          <p class="small">
-            PromptGenix is intentionally structured to qualify for women-owned and minority-owned small business
-            programs while bringing PI-level domain expertise to AI-driven analysis.
-          </p>
-          <p><strong>Yon Ji – CEO</strong><br/>
-            Leads operations, compliance, and business strategy. As a woman founder, she anchors PromptGenix
-            as a women-owned, minority-owned small business positioned for SBIR and related set-aside programs.
-          </p>
-          <p><strong>Dohoon Kim, MS – CTO & Founder</strong><br/>
-            Immunology and bioinformatics scientist with 10+ years at WRAIR/MHRP, specializing in HIV, vaccine trials,
-            RNA-Seq, scRNA-Seq, COMPASS, and high-dimensional flow cytometry. Architect of the PromptGenix pipelines
-            and LLM-driven interpretation engine.
-          </p>
-          <p class="small">
-            Phase I will also establish an advisory board of collaborating PIs to provide real-world datasets and
-            feedback on usability.
-          </p>
-        </div>
-
-        <div class="card" id="pilot">
-          <div class="section-kicker">Pilot program</div>
-          <h3>We are seeking 2–3 SBIR partner labs for structured pilots.</h3>
-          <p>
-            For Phase I, PromptGenix will onboard a small number of HIV, vaccine, or infectious disease labs as
-            pilot sites. We will run our pipelines and hypothesis generator on public or de-identified datasets and
-            measure impact on turnaround time, interpretability, and study design decisions.
-          </p>
-          <ul>
-            <li>Upload FASTQ / FCS files or point to public GEO / FlowRepository accessions</li>
-            <li>Receive a reproducible pipeline plus LLM-generated report and hypothesis list</li>
-            <li>Provide structured feedback to refine usability and scientific value</li>
-          </ul>
-          <p class="small">
-            Interested in being a pilot lab or letter-of-support partner? Contact us using the button below.
-          </p>
-          <a class="btn btn-primary"
-             href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20Pilot%20Program&body=I%27m%20interested%20in%20participating%20in%20the%20PromptGenix%20pilot.%20Please%20follow%20up%20with%20details.">
-            Contact PromptGenix about a pilot
-          </a>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer>
-    PromptGenix &middot; Women & Minority-Owned BioAI Automation Platform &middot;
-    Contact: <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
+    PromptGenix · SBIR Portal ·
+    <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
   </footer>
 </div>
 </body>
