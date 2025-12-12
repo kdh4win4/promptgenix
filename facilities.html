@@ -2,175 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – Facilities & Environment (Phase I)</title>
+  <title>PromptGenix – Facilities & Environment</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix SBIR Phase I Facilities & Environment: computational environment, software stack, reproducibility, and security posture for public-data validation." />
-
+  <meta name="description" content="PromptGenix facilities and environment supporting Phase I development and validation."/>
   <style>
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-
+    *{ box-sizing:border-box; }
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
       background:#020617;
       color:#e5e7eb;
-      line-height:1.55;
+      line-height:1.5;
     }
-
     a{ color:inherit; text-decoration:none; }
-
     .page{ min-height:100vh; display:flex; flex-direction:column; }
 
     header{
-      position:sticky; top:0; z-index:20;
+      position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
-      background: rgba(15,23,42,0.92);
-      border-bottom: 1px solid rgba(148,163,184,0.25);
+      background: rgba(15, 23, 42, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
     }
-
     .nav{
-      max-width:1120px;
-      margin:0 auto;
-      padding:14px 20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      flex-wrap:wrap;
+      max-width:1120px; margin:0 auto; padding:14px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
     }
-
     .nav-left{ display:flex; align-items:center; gap:12px; }
-
     .logo-dot{
       width:28px; height:28px; border-radius:999px;
       background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
       box-shadow:0 0 18px rgba(56,189,248,.7);
-      flex:0 0 auto;
     }
+    .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
+    .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
 
-    .brand{
-      font-size:1.05rem; font-weight:700;
-      letter-spacing:.04em; line-height:1.1;
-    }
-
-    .brand-sub{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
-
-    .nav-links{
-      display:flex; gap:10px;
-      font-size:.88rem; color:#9ca3af;
-      flex-wrap:wrap; justify-content:center;
-    }
-
+    .nav-links{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
     .nav-links a{
+      font-size:.88rem; color:#9ca3af;
       padding:6px 10px; border-radius:999px;
-      border:1px solid transparent;
+      border:1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.25);
     }
-
     .nav-links a:hover{
       color:#e5e7eb;
-      background: rgba(148,163,184,0.14);
-      border-color: rgba(148,163,184,0.18);
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.35);
     }
-
     .nav-links a.active{
       color:#e5e7eb;
       background: rgba(148,163,184,0.18);
-      border-color: rgba(148,163,184,0.22);
+      border-color: rgba(148,163,184,0.55);
     }
-
-    .nav-cta{
-      display:flex; gap:10px; align-items:center;
-      margin-left:auto;
-    }
-
-    .btn{
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.55);
-      padding:8px 14px;
-      font-size:.85rem;
-      background:transparent;
-      color:#e5e7eb;
-      display:inline-block;
-      white-space:nowrap;
-      cursor:pointer;
-    }
-
-    .btn-primary{
-      border:none;
-      background: linear-gradient(135deg,#22c55e,#22d3ee,#6366f1);
-      color:#020617;
-      font-weight:650;
-      box-shadow:0 0 22px rgba(59,130,246,0.45);
-    }
-
-    .btn-primary:hover{ filter:brightness(1.05); }
-    .btn-outline:hover{ background: rgba(148,163,184,0.18); }
 
     main{ flex:1; }
-
     .section{
       max-width:1120px;
       margin:0 auto;
-      padding:34px 20px;
+      padding:28px 20px;
     }
 
-    .hero{ padding-top:30px; padding-bottom:16px; }
-
-    .badge-row{
-      display:flex; flex-wrap:wrap;
-      gap:8px; margin-bottom:14px;
+    .topline{
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:flex-end; justify-content:space-between;
+      padding-top: 16px;
+      margin-bottom: 14px;
     }
-
-    .badge{
-      font-size:.7rem;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      border-radius:999px;
-      padding:5px 11px;
-      border:1px solid rgba(251,191,36,0.55);
-      color:#fed7aa;
-      background: rgba(120,53,15,0.35);
-    }
-
-    .badge.info{
-      border-color: rgba(56,189,248,0.55);
-      color:#bae6fd;
-      background: rgba(15,23,42,0.9);
-    }
-
-    .title{
-      font-size: clamp(1.9rem, 2.2vw + 1.2rem, 2.55rem);
-      font-weight:780;
-      letter-spacing:.01em;
+    .doc-title{
+      font-size: 1.35rem;
+      font-weight: 820;
       color:#f9fafb;
-      margin:10px 0 10px;
-      line-height:1.15;
+      margin: 0;
     }
-
-    .lede{
-      font-size:1.02rem;
-      color:#e5e7eb;
-      max-width:60rem;
-      margin:0 0 14px;
-    }
-
-    .meta{ font-size:.84rem; color:#9ca3af; margin-top:10px; }
-
-    .grid{
-      display:grid;
-      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-      gap:18px;
-      margin-top:18px;
-      align-items:start;
-    }
-
-    .card{
-      border-radius:16px;
-      padding:16px 18px;
-      background: rgba(15,23,42,0.92);
-      border: 1px solid rgba(55,65,81,0.85);
-      box-shadow: 0 18px 35px rgba(15,23,42,0.55);
+    .meta{
+      font-size:.78rem;
+      color:#9ca3af;
     }
 
     .kicker{
@@ -180,301 +85,273 @@
       color:#a5b4fc;
       margin-bottom:6px;
     }
-
     h2{
-      margin:0 0 10px;
-      font-size:1.18rem;
+      font-size:1.12rem;
+      font-weight:760;
       color:#f9fafb;
-      letter-spacing:.01em;
+      margin:14px 0 8px;
+    }
+    p{
+      margin:0 0 10px;
+      font-size:.93rem;
+      color:#d1d5db;
     }
 
-    p{ margin:0 0 10px; color:#d1d5db; font-size:.94rem; }
+    .grid-2{
+      display:grid;
+      grid-template-columns: minmax(0,1.05fr) minmax(0,1fr);
+      gap:18px;
+      align-items:start;
+      margin-top:10px;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:14px;
+      margin-top:10px;
+    }
+
+    .card{
+      border-radius:16px;
+      padding:14px 16px;
+      background: rgba(15,23,42,0.84);
+      border: 1px solid rgba(148,163,184,0.28);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.55);
+    }
+    .card h3{
+      margin:0 0 8px;
+      font-size:.95rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#a5b4fc;
+    }
 
     ul{
+      margin:6px 0 0;
       padding-left:1.1rem;
-      margin:8px 0 0;
       color:#d1d5db;
       font-size:.92rem;
     }
-
     li{ margin-bottom:6px; }
+    li strong{ color:#e5e7eb; }
+
+    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill{
+      font-size:.72rem;
+      padding:5px 9px;
+      border-radius:999px;
+      border:1px solid rgba(129,140,248,0.45);
+      background: rgba(2,6,23,0.25);
+      color:#c7d2fe;
+    }
 
     .callout{
       border-radius:14px;
       padding:12px 14px;
       border:1px dashed rgba(148,163,184,0.5);
-      background: rgba(2,6,23,0.35);
-      font-size:.9rem;
+      background: rgba(15,23,42,0.75);
+      font-size:.88rem;
       color:#e5e7eb;
-      margin-top:10px;
-    }
-
-    .callout strong{ color:#22c55e; }
-
-    .mini{ font-size:.82rem; color:#9ca3af; margin-top:8px; }
-
-    .pill{
-      display:inline-block;
-      font-size:.72rem;
-      padding:4px 8px;
-      border-radius:999px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(129,140,248,0.45);
-      color:#c7d2fe;
-      margin:2px 6px 2px 0;
-      white-space:nowrap;
-    }
-
-    .two-tone{
-      display:grid;
-      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-      gap:14px;
       margin-top:12px;
     }
+    .callout strong{ color:#22c55e; }
 
-    .panel{
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top:10px;
       border-radius:14px;
-      padding:12px 14px;
+      overflow:hidden;
+      border:1px solid rgba(148,163,184,0.28);
+      background: rgba(15,23,42,0.6);
+    }
+    .table th, .table td{
+      padding:10px 10px;
+      border-bottom:1px solid rgba(148,163,184,0.18);
+      vertical-align:top;
+      font-size:.88rem;
+      color:#d1d5db;
+    }
+    .table th{
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:#a5b4fc;
       background: rgba(2,6,23,0.35);
-      border:1px solid rgba(55,65,81,0.75);
     }
-
-    .panel h3{
-      margin:0 0 8px;
-      font-size:1rem;
-      color:#e5e7eb;
-    }
-
-    .panel p{ margin:0; font-size:.9rem; color:#d1d5db; }
 
     footer{
       border-top:1px solid rgba(31,41,55,0.9);
-      padding:16px 20px 22px;
+      padding:16px;
       font-size:.78rem;
       color:#6b7280;
       text-align:center;
-      background:#020617;
     }
 
     @media (max-width: 980px){
-      .grid, .two-tone{ grid-template-columns: minmax(0,1fr); }
-      .nav-cta{ margin-left:0; width:100%; justify-content:flex-start; }
-      .nav{ gap:12px; }
+      .grid-3{ grid-template-columns: minmax(0,1fr); }
+    }
+    @media (max-width: 920px){
+      .grid-2{ grid-template-columns: minmax(0,1fr); }
+    }
+
+    @media print{
+      header, footer { display:none !important; }
+      body{ background:#fff; color:#111; }
+      p, li, .table td{ color:#111; }
+      .kicker, .table th, .card h3{ color:#111; }
+      .card, .callout, .table{ background:#fff; box-shadow:none; }
+      .section{ max-width:100%; padding:0; }
     }
   </style>
 </head>
 
 <body>
 <div class="page">
-
-  <!-- HEADER -->
   <header>
     <div class="nav">
       <div class="nav-left">
         <div class="logo-dot"></div>
         <div>
           <div class="brand">PromptGenix</div>
-          <div class="brand-sub">Facilities & Environment (Phase I)</div>
+          <div class="subbrand">SBIR Portal</div>
         </div>
       </div>
 
       <nav class="nav-links">
-        <a href="sbir.html">SBIR Landing</a>
-        <a href="aims.html">Specific Aims</a>
+        <a href="index.html">Portal</a>
+        <a href="sbir.html">SBIR</a>
+        <a href="aims.html">Aims</a>
         <a href="approach.html">Approach</a>
         <a href="commercialization.html">Commercialization</a>
         <a href="facilities.html" class="active">Facilities</a>
+        <a href="team.html">Team</a>
+        <a href="use-cases.html">Use Cases</a>
       </nav>
-
-      <div class="nav-cta">
-        <a class="btn btn-outline" href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20Facilities%20%26%20Environment">Email</a>
-        <a class="btn btn-primary" href="#readiness">Phase I Readiness</a>
-      </div>
     </div>
   </header>
 
   <main>
-
-    <!-- HERO -->
-    <section class="section hero">
-      <div class="badge-row">
-        <span class="badge">Phase I</span>
-        <span class="badge info">Public-data only</span>
-        <span class="badge info">Local-first + Optional AWS</span>
+    <section class="section">
+      <div class="topline">
+        <h1 class="doc-title">Facilities & Environment</h1>
+        <div class="meta">
+          PromptGenix LLC &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
+        </div>
       </div>
 
-      <h1 class="title">Facilities & Environment</h1>
-
-      <p class="lede">
-        PromptGenix Phase I work will be executed using a <strong>local-first computational environment</strong>
-        (primary development and validation performed on dedicated local hardware), with an option to scale to
-        <strong>AWS</strong> when needed for throughput or parallel benchmarking. Phase I uses <strong>public datasets only</strong>,
-        enabling rapid iteration without IRB/PHI constraints and avoiding IP or data-use conflicts.
+      <div class="kicker">Overview</div>
+      <h2>Phase I execution is supported by a modern local compute environment and secure cloud-ready workflows.</h2>
+      <p>
+        PromptGenix Phase I focuses on automated analysis pipelines (RNA-Seq + flow cytometry) and a literature-aware
+        Hypothesis Generator. The work is designed to run reproducibly on a dedicated local workstation for rapid iteration,
+        with optional secure deployment in a cloud environment (e.g., AWS VPC) for scale testing.
       </p>
 
-      <div class="meta">
-        Contact: <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a> · Website: https://kdh4win4.github.io
-      </div>
-    </section>
-
-    <!-- COMPUTATIONAL ENVIRONMENT -->
-    <section class="section">
-      <div class="grid">
+      <div class="grid-2">
         <div class="card">
-          <div class="kicker">Computational environment</div>
-          <h2>Local-first execution with scalable cloud option.</h2>
-          <p>
-            The Phase I development environment is designed for rapid iteration, reproducibility, and secure operation.
-            Primary execution is on dedicated local compute, which supports on-prem workflows for partners who require
-            controlled execution and reduced cloud dependency.
-          </p>
+          <h3>Local development environment</h3>
           <ul>
-            <li><strong>Primary mode:</strong> local execution on dedicated workstation hardware (development + validation)</li>
-            <li><strong>Optional mode:</strong> AWS execution (batch processing, parallel benchmarking, reproducibility checks)</li>
-            <li><strong>Data scope (Phase I):</strong> public repositories only (GEO, SRA, FlowRepository)</li>
+            <li><strong>Dedicated workstation:</strong> high-memory Mac Studio-class system suitable for omics workflows</li>
+            <li><strong>Core toolchain:</strong> Python/R analysis stack; versioned environments; reproducible outputs</li>
+            <li><strong>Pipelines supported:</strong> RNA-Seq (QC → alignment → DEG → enrichment) and flow cytometry analysis</li>
+            <li><strong>Report generation:</strong> exportable HTML/PDF outputs for reviewers and collaborators</li>
+          </ul>
+          <div class="pill-row">
+            <span class="pill">Local-first</span>
+            <span class="pill">Reproducible runs</span>
+            <span class="pill">HTML/PDF reporting</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Secure & scalable deployment option</h3>
+          <ul>
+            <li><strong>AWS-ready:</strong> design supports deployment in a secure VPC for scale and collaboration</li>
+            <li><strong>Data separation:</strong> public-data validation in Phase I; sensitive datasets remain external</li>
+            <li><strong>Controlled access:</strong> role-based accounts; audit-friendly storage patterns (as applicable)</li>
+            <li><strong>Portability:</strong> pipelines and configs can move between local and cloud execution</li>
           </ul>
           <div class="callout">
-            <strong>Phase I advantage:</strong> No IRB / PHI dependency. Fast iteration using public datasets.
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="kicker">Software stack</div>
-          <h2>Modern, reproducible bioinformatics + reporting stack.</h2>
-          <p>
-            PromptGenix integrates established workflows with a standardized reporting layer and an internal
-            literature-aware LLM component for interpretation and hypothesis generation.
-          </p>
-          <div style="margin-top:10px;">
-            <span class="pill">Python</span>
-            <span class="pill">R</span>
-            <span class="pill">HTML/PDF reports</span>
-            <span class="pill">Versioned configs</span>
-            <span class="pill">UMAP / t-SNE</span>
-            <span class="pill">DEG</span>
-            <span class="pill">GSEA/GSVA</span>
-            <span class="pill">Flow preprocessing</span>
-          </div>
-          <div class="mini">
-            The Phase I deliverable is a reviewer-ready report pipeline that is auditable, repeatable, and exportable.
+            <strong>Phase I policy alignment:</strong> validation will use GEO/SRA/FlowRepository public datasets to avoid IP
+            and data-use constraints while demonstrating feasibility and performance.
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- REPRODUCIBILITY + QA -->
-    <section class="section">
-      <div class="card">
-        <div class="kicker">Reproducibility & quality assurance</div>
-        <h2>Deterministic runs, version stamping, and fail-fast validation.</h2>
-        <p>
-          Phase I emphasizes reproducibility as a first-class requirement. Each run produces a standardized report,
-          configuration manifest, and version stamps to support independent verification and reviewer confidence.
-        </p>
+      <div class="kicker" style="margin-top:18px;">Resources supporting Phase I</div>
+      <h2>Software, datasets, and operational supports aligned to SBIR deliverables.</h2>
 
-        <div class="two-tone">
-          <div class="panel">
-            <h3>Reproducibility controls</h3>
-            <ul>
-              <li>Versioned configuration files and run manifests</li>
-              <li>Environment stamping (software versions + parameters)</li>
-              <li>Deterministic pipelines where applicable; controlled randomness for ML components</li>
-              <li>Standardized output structure for audits and reruns</li>
-            </ul>
-          </div>
-          <div class="panel">
-            <h3>QA / robustness</h3>
-            <ul>
-              <li>Input validation checks (schema + metadata completeness)</li>
-              <li>Fail-fast errors with actionable messaging</li>
-              <li>Sanity checks (QC thresholds, sample consistency, expected output artifacts)</li>
-              <li>Benchmark reruns for reproducibility and timing KPIs</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="callout">
-          <strong>Phase I KPI alignment:</strong> ≥90% reproducibility across reruns and reviewer-ready reports within &lt;24 hours.
-        </div>
-      </div>
-    </section>
-
-    <!-- SECURITY POSTURE -->
-    <section class="section">
-      <div class="grid">
+      <div class="grid-3">
         <div class="card">
-          <div class="kicker">Data security posture</div>
-          <h2>Phase I: public data only (no IP/PHI exposure).</h2>
-          <p>
-            To minimize risk and accelerate progress, Phase I uses public datasets exclusively. This ensures there is
-            no protected health information, no proprietary partner data, and no ambiguity regarding data-use rights.
-          </p>
+          <h3>Software stack</h3>
           <ul>
-            <li><strong>Public-only:</strong> GEO, SRA, FlowRepository (or equivalent open repositories)</li>
-            <li><strong>No PHI:</strong> avoids IRB delays and privacy constraints in Phase I</li>
-            <li><strong>No partner IP:</strong> prevents IP encumbrances and data-use conflicts</li>
+            <li><strong>Analysis:</strong> Python + R pipelines for omics and immunology workflows</li>
+            <li><strong>Automation:</strong> deterministic configs, versioned outputs, repeatable reruns</li>
+            <li><strong>LLM layer:</strong> literature-aware reasoning and traceable hypothesis generation</li>
           </ul>
-          <div class="mini">
-            Phase II may incorporate de-identified partner datasets under appropriate agreements, if applicable.
-          </div>
         </div>
 
         <div class="card">
-          <div class="kicker">Deployment options</div>
-          <h2>Local execution and optional AWS VPC path.</h2>
-          <p>
-            PromptGenix is designed to run in controlled environments. For partners requiring strict data governance,
-            the platform can execute locally. When needed for throughput or scale, Phase I benchmarking can be run in
-            AWS with secure network boundaries.
-          </p>
+          <h3>Validation datasets</h3>
           <ul>
-            <li><strong>Local:</strong> on-prem execution for controlled workflows</li>
-            <li><strong>AWS option:</strong> parallel runs, reproducibility checks, performance benchmarking</li>
-            <li><strong>Architecture readiness:</strong> designed to support secure VPC deployment patterns</li>
+            <li><strong>RNA-Seq/scRNA-Seq:</strong> GEO and SRA accessions</li>
+            <li><strong>Flow cytometry:</strong> FlowRepository datasets</li>
+            <li><strong>Evaluation:</strong> runtime, reproducibility, and usefulness of AI hypotheses</li>
           </ul>
-          <div class="callout">
-            <strong>Reviewer clarity:</strong> Phase I does not depend on cloud access; cloud is optional for speed/scale.
-          </div>
+        </div>
+
+        <div class="card">
+          <h3>Operational supports</h3>
+          <ul>
+            <li><strong>Documentation:</strong> SBIR portal pages + reviewer-ready outputs</li>
+            <li><strong>Pilot readiness:</strong> structured onboarding and feedback templates</li>
+            <li><strong>Collaboration:</strong> channels for partner labs (letters of support in Phase II)</li>
+          </ul>
         </div>
       </div>
-    </section>
 
-    <!-- PHASE I READINESS -->
-    <section class="section" id="readiness">
-      <div class="card">
-        <div class="kicker">Phase I readiness</div>
-        <h2>Ready to execute on Day 1 with public datasets.</h2>
-        <p>
-          PromptGenix Phase I work is structured to begin immediately: public datasets are available without delay,
-          pipeline components exist in prototype form, and the work plan is centered on integration, robustness, and
-          measurable validation metrics.
-        </p>
-        <ul>
-          <li><strong>Inputs:</strong> public accession IDs or downloaded FASTQ/FCS files</li>
-          <li><strong>Outputs:</strong> standardized HTML/PDF reports, figures, methods, and hypothesis tables with citations</li>
-          <li><strong>Validation:</strong> ≥3 public datasets, rerun reproducibility benchmarks, timing KPIs</li>
-          <li><strong>Scale:</strong> local-first execution with optional AWS for benchmarking</li>
-        </ul>
+      <div class="kicker" style="margin-top:18px;">Facilities fit to the work</div>
+      <h2>Environment supports rapid prototyping, reproducible validation, and SBIR-compliant evaluation.</h2>
 
-        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-          <a class="btn btn-outline" href="approach.html">Back to Approach</a>
-          <a class="btn btn-primary"
-             href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20SBIR%20Pilot%20Program&body=I%27m%20interested%20in%20a%20PromptGenix%20pilot%20or%20reviewing%20Phase%20I%20results.%20Please%20follow%20up%20with%20details.">
-            Pilot / feedback inquiry
-          </a>
-        </div>
+      <table class="table" aria-label="Facilities fit table">
+        <thead>
+          <tr>
+            <th style="width:34%;">Need</th>
+            <th style="width:33%;">Environment support</th>
+            <th style="width:33%;">Phase I output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Fast iteration</strong></td>
+            <td>Local compute enables rapid pipeline debugging and report template refinement</td>
+            <td>Stable end-to-end workflows on multiple public datasets</td>
+          </tr>
+          <tr>
+            <td><strong>Reproducibility</strong></td>
+            <td>Versioned configs and deterministic runs; exportable artifacts</td>
+            <td>Rerun-consistent outputs; reviewer-ready HTML/PDF reports</td>
+          </tr>
+          <tr>
+            <td><strong>Scalability testing</strong></td>
+            <td>Cloud-ready architecture (optional) to evaluate heavier workloads and multi-user patterns</td>
+            <td>Evidence of feasibility to scale in Phase II deployments</td>
+          </tr>
+        </tbody>
+      </table>
 
-        <div class="mini">
-          Next recommended artifact: a one-page “Company / Team” SBIR page (roles + credibility + execution capacity).
-        </div>
+      <div class="callout">
+        <strong>Bottom line:</strong> the current facilities and environment are sufficient to deliver Phase I milestones
+        (pipeline hardening, hypothesis generator traceability, and measurable validation on public datasets), while
+        supporting a clean path to secure scale-out in Phase II.
       </div>
     </section>
-
   </main>
 
   <footer>
-    PromptGenix &middot; Facilities & Environment (Phase I) &middot;
-    Contact: <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
+    PromptGenix &middot; SBIR Portal &middot;
+    <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
   </footer>
 </div>
 </body>
