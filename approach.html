@@ -2,211 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – Research Strategy (Approach)</title>
+  <title>PromptGenix – Research Strategy (Approach, Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Phase I research strategy and approach: automated RNA-Seq and flow cytometry pipelines + PubMed-aware hypothesis generator, validated on public datasets." />
-
+  <meta name="description" content="PromptGenix SBIR Phase I Approach: workflow, validation plan, milestones, KPIs, and risks & mitigation."/>
   <style>
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #020617;
-      color: #e5e7eb;
-      line-height: 1.55;
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#020617;
+      color:#e5e7eb;
+      line-height:1.5;
     }
+    a{ color:inherit; text-decoration:none; }
+    .page{ min-height:100vh; display:flex; flex-direction:column; }
 
-    a { color: inherit; text-decoration: none; }
-
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    /* Shared header/nav (matches index.html) */
+    header{
+      position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
       background: rgba(15, 23, 42, 0.92);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
     }
-
-    .nav {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
+    .nav{
+      max-width:1120px; margin:0 auto; padding:14px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
     }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-dot {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
+    .nav-left{ display:flex; align-items:center; gap:12px; }
+    .logo-dot{
+      width:28px; height:28px; border-radius:999px;
       background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
-      box-shadow: 0 0 18px rgba(56,189,248,.7);
-      flex: 0 0 auto;
+      box-shadow:0 0 18px rgba(56,189,248,.7);
+    }
+    .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
+    .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
+
+    .nav-links{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .nav-links a{
+      font-size:.88rem; color:#9ca3af;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.25);
+    }
+    .nav-links a:hover{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.35);
+    }
+    .nav-links a.active{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.55);
     }
 
-    .brand {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      line-height: 1.1;
-    }
+    main{ flex:1; }
 
-    .brand-sub {
-      font-size: .72rem;
-      color: #9ca3af;
-      margin-top: 2px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 10px;
-      font-size: .88rem;
-      color: #9ca3af;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .nav-links a {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-
-    .nav-links a:hover {
-      color: #e5e7eb;
-      background: rgba(148, 163, 184, 0.14);
-      border-color: rgba(148, 163, 184, 0.18);
-    }
-
-    .nav-links a.active {
-      color: #e5e7eb;
-      background: rgba(148, 163, 184, 0.18);
-      border-color: rgba(148, 163, 184, 0.22);
-    }
-
-    .nav-cta {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-left: auto;
-    }
-
-    .btn {
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      padding: 8px 14px;
-      font-size: .85rem;
-      cursor: pointer;
-      background: transparent;
-      color: #e5e7eb;
-      display: inline-block;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      border: none;
-      background: linear-gradient(135deg,#22c55e,#22d3ee,#6366f1);
-      color: #020617;
-      font-weight: 650;
-      box-shadow: 0 0 22px rgba(59,130,246,0.45);
-    }
-
-    .btn-primary:hover { filter: brightness(1.05); }
-    .btn-outline:hover { background: rgba(148, 163, 184, 0.18); }
-
-    main { flex: 1; }
-
-    .section {
+    .section{
       max-width: 1120px;
       margin: 0 auto;
-      padding: 34px 20px;
+      padding: 28px 20px;
     }
 
-    .hero {
-      padding-top: 30px;
-      padding-bottom: 16px;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+    .topline{
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:flex-end; justify-content:space-between;
+      padding-top: 16px;
       margin-bottom: 14px;
     }
-
-    .badge {
-      font-size: .7rem;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      border-radius: 999px;
-      padding: 5px 11px;
-      border: 1px solid rgba(251,191,36,0.55);
-      color: #fed7aa;
-      background: rgba(120,53,15,0.35);
+    .doc-title{
+      font-size: 1.35rem;
+      font-weight: 820;
+      color:#f9fafb;
+      margin: 0;
+    }
+    .meta{
+      font-size:.78rem;
+      color:#9ca3af;
     }
 
-    .badge.info {
-      border-color: rgba(56,189,248,0.55);
-      color: #bae6fd;
-      background: rgba(15,23,42,0.9);
-    }
-
-    .title {
-      font-size: clamp(1.9rem, 2.2vw + 1.2rem, 2.55rem);
-      font-weight: 780;
-      letter-spacing: 0.01em;
-      color: #f9fafb;
-      margin: 10px 0 10px;
-      line-height: 1.15;
-    }
-
-    .lede {
-      font-size: 1.02rem;
-      color: #e5e7eb;
-      max-width: 58rem;
-      margin: 0 0 14px;
-    }
-
-    .meta {
-      font-size: .84rem;
-      color: #9ca3af;
-      margin-top: 10px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-      gap: 18px;
-      margin-top: 18px;
-      align-items: start;
-    }
-
-    .card {
-      border-radius: 16px;
-      padding: 16px 18px;
-      background: rgba(15,23,42,0.92);
-      border: 1px solid rgba(55,65,81,0.85);
-      box-shadow: 0 18px 35px rgba(15,23,42,0.55);
-    }
-
-    .kicker {
+    .kicker{
       font-size: .78rem;
       text-transform: uppercase;
       letter-spacing: .18em;
@@ -214,496 +88,284 @@
       margin-bottom: 6px;
     }
 
-    h2 {
-      margin: 0 0 10px;
-      font-size: 1.22rem;
-      color: #f9fafb;
-      letter-spacing: 0.01em;
+    h2{
+      font-size: 1.15rem;
+      font-weight: 760;
+      color:#f9fafb;
+      margin: 14px 0 8px;
     }
 
-    p { margin: 0 0 10px; color: #d1d5db; font-size: .94rem; }
+    p{
+      margin: 0 0 10px;
+      font-size: .93rem;
+      color:#d1d5db;
+    }
 
-    ul {
+    .grid-2{
+      display:grid;
+      grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+      gap:18px;
+      margin-top: 10px;
+      align-items:start;
+    }
+
+    .card{
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(15,23,42,0.84);
+      border: 1px solid rgba(148,163,184,0.28);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.55);
+    }
+
+    .card h3{
+      margin: 0 0 8px;
+      font-size: .95rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color:#a5b4fc;
+    }
+
+    ul{
+      margin: 6px 0 0;
       padding-left: 1.1rem;
-      margin: 8px 0 0;
-      color: #d1d5db;
+      color:#d1d5db;
       font-size: .92rem;
     }
+    li{ margin-bottom: 6px; }
+    li strong{ color:#e5e7eb; }
 
-    li { margin-bottom: 6px; }
+    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill{
+      font-size:.72rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(129,140,248,0.45);
+      background: rgba(2,6,23,0.25);
+      color:#c7d2fe;
+    }
 
-    .callout {
+    .callout{
       border-radius: 14px;
       padding: 12px 14px;
-      border: 1px dashed rgba(148, 163, 184, 0.5);
-      background: rgba(2,6,23,0.35);
-      font-size: .9rem;
-      color: #e5e7eb;
-      margin-top: 10px;
+      border: 1px dashed rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.75);
+      font-size: .88rem;
+      color:#e5e7eb;
+      margin-top: 12px;
     }
-    .callout strong { color: #22c55e; }
+    .callout strong{ color:#22c55e; }
 
-    .mini {
-      font-size: .82rem;
-      color: #9ca3af;
-      margin-top: 8px;
-    }
-
-    /* Table */
-    .table-wrap {
-      overflow: auto;
-      border-radius: 14px;
-      border: 1px solid rgba(55,65,81,0.85);
-      background: rgba(2,6,23,0.25);
-    }
-
-    table {
-      width: 100%;
+    .table{
+      width:100%;
       border-collapse: collapse;
-      min-width: 760px;
+      margin-top: 10px;
+      overflow:hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: rgba(15,23,42,0.6);
     }
-
-    th, td {
-      padding: 12px 12px;
-      border-bottom: 1px solid rgba(55,65,81,0.7);
+    .table th, .table td{
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(148,163,184,0.18);
       vertical-align: top;
-      font-size: .9rem;
-      color: #d1d5db;
+      font-size: .88rem;
+      color:#d1d5db;
     }
-
-    th {
-      text-align: left;
+    .table th{
       font-size: .78rem;
       text-transform: uppercase;
-      letter-spacing: .12em;
-      color: #c7d2fe;
-      background: rgba(15,23,42,0.78);
-      position: sticky;
-      top: 0;
-      z-index: 1;
+      letter-spacing: .14em;
+      color:#a5b4fc;
+      background: rgba(2,6,23,0.35);
     }
 
-    tr:last-child td { border-bottom: none; }
-
-    .pill {
-      display: inline-block;
-      font-size: .72rem;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(129,140,248,0.45);
-      color: #c7d2fe;
-      margin: 2px 6px 2px 0;
-      white-space: nowrap;
+    footer{
+      border-top:1px solid rgba(31,41,55,0.9);
+      padding:16px;
+      font-size:.78rem;
+      color:#6b7280;
+      text-align:center;
     }
 
-    footer {
-      border-top: 1px solid rgba(31,41,55,0.9);
-      padding: 16px 20px 22px;
-      font-size: .78rem;
-      color: #6b7280;
-      text-align: center;
-      background: #020617;
+    @media (max-width: 920px){
+      .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
-    @media (max-width: 880px) {
-      .grid { grid-template-columns: minmax(0,1fr); }
-      .nav-cta { margin-left: 0; width: 100%; justify-content: flex-start; }
-      .nav { gap: 12px; }
-      table { min-width: 680px; }
+    /* Print friendliness */
+    @media print{
+      header, footer { display:none !important; }
+      body{ background:#fff; color:#111; }
+      p, li, .table td{ color:#111; }
+      .kicker, .table th, .card h3{ color:#111; }
+      .card, .callout, .table{ background:#fff; box-shadow:none; }
+      .section{ max-width: 100%; padding: 0; }
     }
   </style>
 </head>
 
 <body>
 <div class="page">
-
-  <!-- HEADER -->
   <header>
     <div class="nav">
       <div class="nav-left">
         <div class="logo-dot"></div>
         <div>
           <div class="brand">PromptGenix</div>
-          <div class="brand-sub">Research Strategy – Approach (Phase I)</div>
+          <div class="subbrand">SBIR Portal</div>
         </div>
       </div>
-
       <nav class="nav-links">
-        <a href="sbir.html">SBIR Landing</a>
-        <a href="aims.html">Specific Aims</a>
+        <a href="index.html">Portal</a>
+        <a href="sbir.html">SBIR</a>
+        <a href="aims.html">Aims</a>
         <a href="approach.html" class="active">Approach</a>
+        <a href="commercialization.html">Commercialization</a>
+        <a href="facilities.html">Facilities</a>
+        <a href="team.html">Team</a>
+        <a href="use-cases.html">Use Cases</a>
       </nav>
-
-      <div class="nav-cta">
-        <a class="btn btn-outline" href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20SBIR%20Approach%20Question">Email</a>
-        <a class="btn btn-primary" href="#validation">Jump to Validation Plan</a>
-      </div>
     </div>
   </header>
 
   <main>
-
-    <!-- HERO -->
-    <section class="section hero">
-      <div class="badge-row">
-        <span class="badge">Phase I</span>
-        <span class="badge info">Public-data validation</span>
-        <span class="badge info">PubMed-aware hypothesis generator</span>
+    <section class="section">
+      <div class="topline">
+        <h1 class="doc-title">Research Strategy – Approach (Phase I Workflow & Validation)</h1>
+        <div class="meta">
+          PromptGenix LLC &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
+        </div>
       </div>
 
-      <h1 class="title">Research Strategy – Approach</h1>
-
-      <p class="lede">
-        Phase I integrates hardened automated pipelines for <strong>RNA-Seq</strong> and <strong>flow cytometry</strong>
-        with a literature-aware LLM layer that produces <strong>traceable interpretations</strong> and a
-        <strong>Hypothesis Generator</strong> (ranked hypotheses + concrete validation experiments).
-        Validation uses <strong>public datasets only</strong> to avoid IP/data-use conflicts and to ensure reproducibility.
+      <div class="kicker">Phase I goal</div>
+      <h2>Build a validated, reproducible prototype that produces pipeline results and ranked hypotheses from public datasets.</h2>
+      <p>
+        Phase I focuses on engineering robustness, reproducibility, and measurable performance gains.
+        Validation will rely exclusively on public datasets (e.g., GEO/SRA for RNA-Seq and FlowRepository for flow cytometry),
+        minimizing IP or data-use conflicts while enabling transparent evaluation.
       </p>
 
-      <div class="meta">
-        Outputs: Versioned configs · Reproducible reports (HTML/PDF) · Figures · Methods · PubMed-linked evidence.
-      </div>
-    </section>
-
-    <!-- WORKFLOW FIGURE -->
-    <section class="section">
-      <div class="card">
-        <div class="kicker">Phase I Workflow Figure</div>
-
-        <svg viewBox="0 0 1120 340" width="100%" height="auto" role="img" aria-label="PromptGenix Phase I workflow from inputs to pipelines, LLM interpretation, hypothesis generator, and reports"
-             style="display:block;border-radius:14px;background:rgba(2,6,23,0.35);border:1px solid rgba(55,65,81,0.75);">
-          <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.9"/>
-              <stop offset="55%" stop-color="#6366f1" stop-opacity="0.9"/>
-              <stop offset="100%" stop-color="#22c55e" stop-opacity="0.9"/>
-            </linearGradient>
-
-            <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="8" result="blur"/>
-              <feColorMatrix in="blur" type="matrix"
-                values="1 0 0 0 0
-                        0 1 0 0 0
-                        0 0 1 0 0
-                        0 0 0 0.55 0" result="glow"/>
-              <feMerge>
-                <feMergeNode in="glow"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-
-            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-              <path d="M0,0 L10,3 L0,6 Z" fill="#94a3b8" />
-            </marker>
-
-            <style>
-              .bx { fill: rgba(15,23,42,0.92); stroke: rgba(148,163,184,0.55); stroke-width: 1.2; rx: 18; ry: 18; }
-              .ttl { font: 700 16px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif; fill: #f9fafb; }
-              .sub { font: 500 12.5px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif; fill: #d1d5db; }
-              .tag { font: 600 11px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif; fill: #c7d2fe; }
-              .line { stroke: rgba(148,163,184,0.75); stroke-width: 2; fill: none; marker-end: url(#arrow); }
-              .badge { fill: rgba(15,23,42,0.9); stroke: rgba(129,140,248,0.55); stroke-width: 1; rx: 999; ry: 999; }
-            </style>
-          </defs>
-
-          <rect x="22" y="18" width="1076" height="8" rx="8" fill="url(#g1)" filter="url(#softGlow)"/>
-
-          <rect class="bx" x="40" y="60" width="240" height="210"/>
-          <text class="ttl" x="64" y="92">Inputs</text>
-          <text class="sub" x="64" y="118">• FASTQ / FCS</text>
-          <text class="sub" x="64" y="140">• Public accession IDs</text>
-          <text class="sub" x="64" y="162">• Minimal metadata</text>
-          <rect class="badge" x="64" y="190" width="192" height="26"/>
-          <text class="tag" x="80" y="208">Public-data Phase I</text>
-
-          <rect class="bx" x="320" y="60" width="300" height="210"/>
-          <text class="ttl" x="344" y="92">Automated Pipelines</text>
-          <text class="sub" x="344" y="118">RNA-Seq: QC → align/quant → DEG → GSEA/GSVA</text>
-          <text class="sub" x="344" y="142">Flow: QC → transforms → batch norm → summaries</text>
-          <text class="sub" x="344" y="166">Versioned configs + reproducible outputs</text>
-
-          <rect class="bx" x="660" y="60" width="260" height="210"/>
-          <text class="ttl" x="684" y="92">Evidence-aware LLM</text>
-          <text class="sub" x="684" y="118">• Interprets results</text>
-          <text class="sub" x="684" y="140">• PubMed-linked evidence</text>
-          <text class="sub" x="684" y="162">• Structured summaries</text>
-
-          <rect x="684" y="182" width="212" height="64" rx="14" ry="14"
-                fill="rgba(15,23,42,0.9)" stroke="rgba(34,197,94,0.55)" stroke-width="1.2"/>
-          <text class="ttl" x="700" y="210" style="font-size:14px;">Hypothesis Generator</text>
-          <text class="sub" x="700" y="232">Ranked hypotheses + experiments</text>
-
-          <rect class="bx" x="960" y="60" width="120" height="210"/>
-          <text class="ttl" x="976" y="92">Outputs</text>
-          <text class="sub" x="976" y="118">HTML/PDF</text>
-          <text class="sub" x="976" y="140">Figures</text>
-          <text class="sub" x="976" y="162">Methods</text>
-          <text class="sub" x="976" y="184">Citations</text>
-
-          <path class="line" d="M280 165 C300 165, 300 165, 320 165"/>
-          <path class="line" d="M620 165 C640 165, 640 165, 660 165"/>
-          <path class="line" d="M920 165 C940 165, 940 165, 960 165"/>
-
-          <rect x="40" y="288" width="1040" height="36" rx="14" fill="rgba(15,23,42,0.78)" stroke="rgba(55,65,81,0.85)"/>
-          <text class="sub" x="64" y="311">
-            Phase I KPIs: ≥70% faster turnaround · ≥90% reproducibility · ≥80% hypothesis usefulness (pilot rubric)
-          </text>
-        </svg>
-
-        <div class="mini">Vector SVG: prints cleanly to PDF and scales well on mobile (no asset upload needed).</div>
-      </div>
-    </section>
-
-    <!-- APPROACH DETAILS -->
-    <section class="section">
-      <div class="grid">
+      <div class="grid-2">
         <div class="card">
-          <div class="kicker">A. Pipeline hardening</div>
-          <h2>Make RNA-Seq and flow cytometry workflows robust, repeatable, and reviewer-traceable.</h2>
+          <h3>Workflow overview</h3>
           <ul>
-            <li><strong>RNA-Seq:</strong> QC → alignment/quantification → differential expression → GSEA/GSVA, with versioned configs and deterministic outputs.</li>
-            <li><strong>Flow cytometry:</strong> preprocessing/QC, transforms, batch normalization, and summary exports (for downstream statistics + reporting).</li>
-            <li><strong>Reproducibility:</strong> run manifests, environment/version stamping, and standardized report structure for easy audit.</li>
+            <li><strong>Inputs:</strong> FASTQ (bulk or single-cell), FCS files, or public accession IDs.</li>
+            <li><strong>Automated pipelines:</strong> QC → preprocessing → analysis (DEG, signatures, enrichment / gating / subsets).</li>
+            <li><strong>Outputs:</strong> versioned results + reviewer-ready HTML/PDF report + structured artifacts for reuse.</li>
+            <li><strong>LLM layer:</strong> converts results into mechanistic narratives and produces a ranked hypothesis list with suggested validation experiments.</li>
           </ul>
-          <div class="callout">
-            <strong>Phase I constraint:</strong> public datasets only (GEO/SRA/FlowRepository), enabling conflict-free validation.
+          <div class="pill-row">
+            <span class="pill">Reproducible configs</span>
+            <span class="pill">Versioned outputs</span>
+            <span class="pill">HTML/PDF reports</span>
+            <span class="pill">Traceable citations</span>
           </div>
         </div>
 
         <div class="card">
-          <div class="kicker">B. Literature-aware hypothesis generator</div>
-          <h2>Generate ranked hypotheses and concrete follow-up experiments with PubMed traceability.</h2>
+          <h3>Hypothesis Generator (traceable)</h3>
+          <p>
+            The Hypothesis Generator is designed to produce <strong>testable</strong> and <strong>ranked</strong> hypotheses
+            grounded in literature-aware reasoning.
+          </p>
           <ul>
-            <li><strong>Evidence linkage:</strong> connect literature mechanisms to observed signals (DEG, pathways, immune subsets).</li>
-            <li><strong>Hypothesis ranking:</strong> score by strength/consistency of evidence + coherence with the dataset.</li>
-            <li><strong>Experiment suggestions:</strong> propose actionable validation steps (panel refinements, contrasts, perturbations) with citations.</li>
+            <li><strong>Evidence stitching:</strong> connect observed signals (DE genes, pathways, immune subsets) to plausible mechanisms.</li>
+            <li><strong>Ranking:</strong> prioritize by consistency with dataset signals, coherence with known biology, and actionability.</li>
+            <li><strong>Experiments:</strong> recommend concrete next steps (flow panels, contrasts, subset analyses, validation assays).</li>
+            <li><strong>Traceability:</strong> include PubMed-style citations and “why this hypothesis” rationale for reviewer transparency.</li>
           </ul>
           <div class="callout">
-            <strong>Deliverable:</strong> a structured “Hypothesis Table” in the report with citations and proposed tests.
+            <strong>Phase I emphasis:</strong> traceable reasoning over “black-box” generation.
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- VALIDATION PLAN TABLE -->
-    <section class="section" id="validation">
-      <div class="card">
-        <div class="kicker">C. Phase I Validation Plan</div>
-        <h2>Public-data validation with measurable KPIs and reviewer-ready outputs.</h2>
-        <p>
-          Phase I evaluation focuses on pipeline stability, reproducibility, speed, and user-rated usefulness of
-          AI-generated hypotheses. Datasets are selected to represent typical NIH lab workflows and common failure modes
-          (batch effects, heterogeneous cohorts, noisy markers).
-        </p>
+      <div class="kicker" style="margin-top:18px;">Phase I validation plan</div>
+      <h2>Public-data evaluation with measurable KPIs.</h2>
 
-        <div class="table-wrap" style="margin-top:12px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Module</th>
-                <th>Public dataset type (examples)</th>
-                <th>Validation outputs</th>
-                <th>Success metrics (examples)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="pill">RNA-Seq</div>
-                  <div class="pill">DEG</div>
-                  <div class="pill">GSEA/GSVA</div>
-                </td>
-                <td>
-                  GEO/SRA bulk RNA-Seq study with case/control contrasts and batch variation.
-                  <div class="mini">Goal: stable alignment/quant + consistent DEG + pathway results.</div>
-                </td>
-                <td>
-                  HTML/PDF report, QC figures, DEG tables, pathway enrichment, methods.
-                </td>
-                <td>
-                  ≥90% reproducibility across reruns; ≥70% reduction in turnaround time vs manual baseline.
-                </td>
-              </tr>
+      <table class="table" aria-label="Phase I validation plan table">
+        <thead>
+          <tr>
+            <th style="width:18%;">Work package</th>
+            <th style="width:52%;">What we will do</th>
+            <th style="width:30%;">Success metrics (examples)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>WP1</strong><br/>Pipelines</td>
+            <td>
+              Harden automated RNA-Seq and flow cytometry pipelines across multiple public datasets.
+              Standardize configuration, logging, and export formats to enable deterministic reruns.
+            </td>
+            <td>
+              ≥90% reproducibility across reruns (same inputs/configs).<br/>
+              ≥70% reduction in turnaround time vs. manual workflow baseline.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>WP2</strong><br/>Hypotheses</td>
+            <td>
+              Implement Hypothesis Generator producing ranked hypotheses with supporting evidence from pipeline outputs
+              and traceable literature-aware citations.
+            </td>
+            <td>
+              ≥80% “useful” rating by pilot users on hypothesis lists (structured feedback).<br/>
+              Clear traceability: each hypothesis includes evidence + citations.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>WP3</strong><br/>Reports</td>
+            <td>
+              Generate reviewer-ready HTML/PDF outputs (figures, tables, narrative, hypotheses, experiment plan).
+              Improve readability and reduce manual post-processing.
+            </td>
+            <td>
+              Report generated within &lt;24 hours from raw inputs (dataset-dependent).<br/>
+              Reduced manual editing time (tracked in pilot feedback).
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-              <tr>
-                <td>
-                  <div class="pill">Flow cytometry</div>
-                  <div class="pill">Batch norm</div>
-                  <div class="pill">Summaries</div>
-                </td>
-                <td>
-                  FlowRepository dataset with multi-batch samples and common immunophenotyping panels.
-                  <div class="mini">Goal: robust preprocessing + consistent summary outputs.</div>
-                </td>
-                <td>
-                  Standardized preprocessing outputs, summary tables/figures, exportable report sections.
-                </td>
-                <td>
-                  Reduced batch-driven variance (pre/post metrics); stable outputs across reruns.
-                </td>
-              </tr>
+      <div class="callout">
+        <strong>Data-use boundary:</strong> Phase I evaluation uses public datasets only (GEO/SRA/FlowRepository),
+        enabling clean SBIR review and minimizing IP concerns.
+      </div>
 
-              <tr>
-                <td>
-                  <div class="pill">LLM layer</div>
-                  <div class="pill">Interpretation</div>
-                </td>
-                <td>
-                  Any of the above (paired with results artifacts).
-                  <div class="mini">Goal: clear narrative + traceable claims to evidence.</div>
-                </td>
-                <td>
-                  Structured summary, evidence-linked narrative, citations, limitations.
-                </td>
-                <td>
-                  Pilot rubric: ≥80% “useful/very useful” ratings on interpretability.
-                </td>
-              </tr>
+      <div class="kicker" style="margin-top:18px;">Risks &amp; Mitigation</div>
+      <h2>Practical risks addressed with explicit fallback strategies.</h2>
 
-              <tr>
-                <td>
-                  <div class="pill">Hypothesis Generator</div>
-                  <div class="pill">PubMed-aware</div>
-                </td>
-                <td>
-                  Public datasets with known mechanisms or established literature context.
-                  <div class="mini">Goal: hypotheses that are plausible, testable, and cited.</div>
-                </td>
-                <td>
-                  Ranked hypothesis list + proposed validation experiments + citations.
-                </td>
-                <td>
-                  Pilot rubric: ≥80% hypotheses rated “plausible & actionable”; citation traceability maintained.
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Technical risks</h3>
+          <ul>
+            <li><strong>Dataset heterogeneity:</strong> inconsistent metadata / formats across repositories.</li>
+            <li><strong>Compute variability:</strong> differences between local Mac Studio and cloud environments.</li>
+            <li><strong>Model drift / hallucinations:</strong> LLM may overstate evidence without guardrails.</li>
+          </ul>
         </div>
 
-        <div class="callout" style="margin-top:12px;">
-          <strong>Phase I deliverables alignment:</strong> D1 (harden pipelines) · D2 (hypothesis generator with citations) ·
-          D3 (reviewer-ready reports within &lt;24 hours).
+        <div class="card">
+          <h3>Mitigation strategies</h3>
+          <ul>
+            <li><strong>Robust ingest layer:</strong> schema detection + validation + standardized output templates.</li>
+            <li><strong>Deterministic runs:</strong> pinned versions, config snapshots, and re-run checksums.</li>
+            <li><strong>Traceability guardrails:</strong> require citations/evidence per hypothesis; label uncertainty explicitly.</li>
+            <li><strong>Fallback mode:</strong> if citations are weak, generate “candidate hypotheses” with a clear confidence flag and recommended data needs.</li>
+          </ul>
         </div>
       </div>
-    </section>
 
-    <!-- RISKS & MITIGATIONS -->
-    <section class="section" id="risks">
-      <div class="card">
-        <div class="kicker">Risks & Mitigations</div>
-        <h2>Phase I technical risks are known and manageable with clear mitigations.</h2>
-        <p>
-          Phase I focuses on hardening, traceability, and public-data validation. The table below summarizes
-          anticipated risks and concrete mitigations that keep deliverables on schedule.
-        </p>
-
-        <div class="table-wrap" style="margin-top:12px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Risk</th>
-                <th>Why it matters</th>
-                <th>Mitigation (Phase I)</th>
-                <th>Go / No-Go criteria</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Public dataset heterogeneity</strong><br/><span class="mini">formats, metadata gaps</span></td>
-                <td>Inconsistent inputs can break automation and reduce reproducibility.</td>
-                <td>
-                  Standard ingestion templates; robust parsers; minimum metadata requirements;
-                  fail-fast checks with actionable error messages.
-                </td>
-                <td>
-                  ≥3 datasets processed end-to-end without manual code edits; documented input schema.
-                </td>
-              </tr>
-
-              <tr>
-                <td><strong>Batch effects confound signals</strong><br/><span class="mini">flow and RNA-Seq</span></td>
-                <td>False positives/negatives degrade trust and usability.</td>
-                <td>
-                  Batch-aware normalization options; pre/post batch diagnostics in the report;
-                  transparent methods and limitations.
-                </td>
-                <td>
-                  Demonstrable reduction in batch-driven variance; stable results across reruns.
-                </td>
-              </tr>
-
-              <tr>
-                <td><strong>LLM hallucination / unverifiable claims</strong><br/><span class="mini">scientific narrative risk</span></td>
-                <td>Untraceable statements are unacceptable for reviewers and PIs.</td>
-                <td>
-                  Structured templates; citations required for mechanistic claims; “evidence level” labels;
-                  uncertainty + “what would falsify this” prompts.
-                </td>
-                <td>
-                  All hypotheses include citations or are explicitly marked speculative with rationale.
-                </td>
-              </tr>
-
-              <tr>
-                <td><strong>Hypotheses not actionable</strong><br/><span class="mini">too generic / not testable</span></td>
-                <td>Value depends on producing experiments a lab can realistically run.</td>
-                <td>
-                  Enforce testability fields (assay/panel/contrast); rank by actionability;
-                  complexity tags; pilot feedback loop.
-                </td>
-                <td>
-                  ≥80% pilot-rated “plausible & actionable” on a structured rubric.
-                </td>
-              </tr>
-
-              <tr>
-                <td><strong>Compute/time constraints</strong><br/><span class="mini">local vs cloud</span></td>
-                <td>Long runtimes reduce adoption and Phase I throughput.</td>
-                <td>
-                  Modular execution; caching intermediates; local or AWS VPC execution;
-                  prioritize “good defaults” over exhaustive search in Phase I.
-                </td>
-                <td>
-                  Reviewer-ready report produced in &lt;24 hours from raw inputs on target hardware profile.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="callout" style="margin-top:12px;">
-          <strong>Phase I readiness:</strong> Mitigations are implemented as product features (templates, constraints,
-          traceability, reporting), not manual reviewer-dependent steps.
-        </div>
+      <div class="callout">
+        <strong>Reviewer-friendly principle:</strong> Every claim must be traceable to (1) observed data outputs or (2) cited literature,
+        with uncertainty explicitly stated.
       </div>
     </section>
-
-    <!-- CLOSE -->
-    <section class="section">
-      <div class="card">
-        <div class="kicker">Next</div>
-        <h2>Use this page as your Phase I “Approach” narrative.</h2>
-        <ul>
-          <li>Replace dataset “examples” later with specific GEO/SRA/FlowRepository accession IDs.</li>
-          <li>Export this page to PDF for reviewer-friendly appendices or Program Officer discussions.</li>
-          <li>Next step: create a one-page “Commercialization” summary and a Letter-of-Support outreach email template.</li>
-        </ul>
-
-        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-          <a class="btn btn-outline" href="aims.html">Back to Specific Aims</a>
-          <a class="btn btn-primary" href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20SBIR%20Pilot%20/LOS">
-            Request pilot / Letter of Support
-          </a>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer>
-    PromptGenix &middot; Research Strategy – Approach (Phase I) &middot;
-    Contact: <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
+    PromptGenix &middot; SBIR Portal &middot;
+    <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
   </footer>
 </div>
 </body>
