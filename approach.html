@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PromptGenix – Research Strategy (Approach)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020617;
+      color: #e5e7eb;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(15, 23, 42, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 12px; }
+    .logo-dot {
+      width: 28px; height: 28px; border-radius: 999px;
+      background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
+      box-shadow: 0 0 18px rgba(56,189,248,.7);
+    }
+    .brand { font-size: 1.05rem; font-weight: 650; letter-spacing: 0.04em; }
+    .subbrand { font-size:.72rem;color:#9ca3af; margin-top:2px; }
+
+    .nav-links { display:flex; gap: 12px; flex-wrap: wrap; font-size:.9rem; color:#9ca3af; }
+    .nav-links a { padding: 6px 10px; border-radius: 999px; }
+    .nav-links a.active, .nav-links a:hover {
+      color:#e5e7eb; background: rgba(148,163,184,0.18);
+    }
+
+    main { max-width: 1120px; margin: 0 auto; padding: 34px 20px 50px; }
+
+    .kicker {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: #a5b4fc;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.9rem, 2.4vw + 1.2rem, 2.6rem);
+      font-weight: 760;
+      color: #f9fafb;
+      letter-spacing: 0.01em;
+    }
+
+    .lede {
+      max-width: 70ch;
+      color: #d1d5db;
+      font-size: .98rem;
+      margin-bottom: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .card {
+      border-radius: 16px;
+      padding: 16px 18px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(55,65,81,0.9);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.65);
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+      color: #e5e7eb;
+    }
+
+    .card p, .card li {
+      font-size: .9rem;
+      color: #d1d5db;
+    }
+
+    ul { padding-left: 1.1rem; margin: .35rem 0 0; }
+    li { margin-bottom: 6px; }
+
+    .callout {
+      margin-top: 10px;
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+      background: rgba(15,23,42,0.82);
+      font-size: .86rem;
+      color: #e5e7eb;
+    }
+    .callout strong { color: #22c55e; }
+
+    .mini {
+      font-size: .82rem;
+      color: #9ca3af;
+      margin-top: 8px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .pill-row { display:flex; flex-wrap:wrap; gap:8px; margin-top: 8px; }
+    .pill {
+      font-size: .72rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(129,140,248,0.45);
+      color: #c7d2fe;
+    }
+
+    footer {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px 22px;
+      border-top: 1px solid rgba(31,41,55,0.85);
+      color: #6b7280;
+      font-size: .78rem;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: minmax(0, 1fr); }
+      .nav { flex-wrap: wrap; }
+      .nav-links { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-dot"></div>
+      <div>
+        <div class="brand">PromptGenix</div>
+        <div class="subbrand">Phase I Research Strategy (Approach)</div>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="sbir.html">SBIR Landing</a>
+      <a href="aims.html">Specific Aims</a>
+      <a href="approach.html" class="active">Approach</a>
+      <a href="use-cases.html">Use Cases</a>
+    </nav>
+
+    <div class="nav-links">
+      <a href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20SBIR%20Approach%20Inquiry">Email</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="kicker">Research Strategy</div>
+  <h1>Approach (Phase I): Workflow, validation plan, and measurable KPIs</h1>
+  <p class="lede">
+    Phase I hardens PromptGenix into a reviewer-ready, reproducible BioAI automation platform using <strong>public datasets only</strong>.
+    The goal is to demonstrate: (i) reliable end-to-end pipelines for RNA-Seq and flow cytometry, and (ii) a traceable
+    <strong>Hypothesis Generator</strong> that produces ranked, testable hypotheses with PubMed-linked evidence.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>1) Phase I system workflow (end-to-end)</h2>
+      <ul>
+        <li><strong>Input:</strong> FASTQ / FCS (or public accession IDs) + minimal metadata template.</li>
+        <li><strong>Automated pipelines:</strong> RNA-Seq (QC → alignment/quant → DEG → GSEA/GSVA) and flow cytometry preprocessing (QC → transforms → batch normalization → automated gating/summary).</li>
+        <li><strong>Evidence-aware LLM layer:</strong> reads results, pulls supporting biology from PubMed + curated knowledge, then generates structured interpretation.</li>
+        <li><strong>Hypothesis Generator:</strong> outputs ranked hypotheses + concrete follow-up experiments; each item includes traceable citations and “why this hypothesis” rationale.</li>
+        <li><strong>Output:</strong> exportable HTML/PDF report (methods + figures + key findings + hypotheses + recommended experiments).</li>
+      </ul>
+
+      <div class="pill-row">
+        <span class="pill">Reproducible configs</span>
+        <span class="pill">Versioned outputs</span>
+        <span class="pill">Audit trail</span>
+        <span class="pill">HTML/PDF export</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2) Validation datasets & study design</h2>
+      <ul>
+        <li><strong>Public-only evaluation:</strong> GEO/SRA for RNA-Seq, FlowRepository for flow cytometry (no restricted cohort data in Phase I).</li>
+        <li><strong>Replicates & reruns:</strong> each dataset processed across multiple reruns to quantify reproducibility and stability.</li>
+        <li><strong>Ground-truth anchors:</strong> compare recovered signals to known published contrasts (DE genes, pathways, canonical immune signatures).</li>
+        <li><strong>Usability pilot:</strong> 2–3 partner reviewers (PI/analyst) score report clarity and hypothesis usefulness using a short rubric.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Selection rule:</strong> choose ≥3 datasets spanning disease area and assay variability (different platforms / panels) to stress-test robustness.
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <h2>3) Phase I success metrics (KPIs) & deliverables</h2>
+      <ul>
+        <li><strong>KPI-1: Turnaround time</strong> — target ≥70% reduction vs. manual analysis baselines (time-to-report).</li>
+        <li><strong>KPI-2: Reproducibility</strong> — target ≥90% reproducibility across reruns (config-locked outputs, stable summary statistics).</li>
+        <li><strong>KPI-3: Hypothesis usefulness</strong> — target ≥80% “useful/actionable” ratings from pilot rubric.</li>
+        <li><strong>D1:</strong> hardened end-to-end pipelines on ≥3 public datasets (RNA-Seq + flow).</li>
+        <li><strong>D2:</strong> traceable Hypothesis Generator with ranked hypotheses + experiment suggestions + PubMed citations.</li>
+        <li><strong>D3:</strong> reviewer-ready HTML/PDF reports generated in &lt;24 hours from raw inputs.</li>
+      </ul>
+
+      <div class="mini">
+        Note: KPI thresholds are adjustable to solicitation guidance; all Phase I validation uses public datasets to avoid IP/data-use conflicts.
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  PromptGenix &middot; Phase I Approach &middot; Contact: <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
+</footer>
+
+</body>
+</html>
