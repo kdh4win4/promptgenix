@@ -475,9 +475,9 @@
           <div class="kicker">B. Literature-aware hypothesis generator</div>
           <h2>Generate ranked hypotheses and concrete follow-up experiments with PubMed traceability.</h2>
           <ul>
-            <li><strong>Evidence linkage:</strong> extract mechanistic claims and connect them to observed signals (DEG, pathways, subsets).</li>
-            <li><strong>Hypothesis ranking:</strong> score hypotheses based on strength/consistency of evidence + coherence with data.</li>
-            <li><strong>Experiment suggestions:</strong> propose validation steps (panel refinements, contrasts, perturbations), grounded in citations.</li>
+            <li><strong>Evidence linkage:</strong> connect literature mechanisms to observed signals (DEG, pathways, immune subsets).</li>
+            <li><strong>Hypothesis ranking:</strong> score by strength/consistency of evidence + coherence with the dataset.</li>
+            <li><strong>Experiment suggestions:</strong> propose actionable validation steps (panel refinements, contrasts, perturbations) with citations.</li>
           </ul>
           <div class="callout">
             <strong>Deliverable:</strong> a structured “Hypothesis Table” in the report with citations and proposed tests.
@@ -554,7 +554,7 @@
                   <div class="mini">Goal: clear narrative + traceable claims to evidence.</div>
                 </td>
                 <td>
-                  Structured summary, “evidence map” sections, citations, limitations.
+                  Structured summary, evidence-linked narrative, citations, limitations.
                 </td>
                 <td>
                   Pilot rubric: ≥80% “useful/very useful” ratings on interpretability.
@@ -577,7 +577,6 @@
                   Pilot rubric: ≥80% hypotheses rated “plausible & actionable”; citation traceability maintained.
                 </td>
               </tr>
-
             </tbody>
           </table>
         </div>
@@ -589,20 +588,111 @@
       </div>
     </section>
 
+    <!-- RISKS & MITIGATIONS -->
+    <section class="section" id="risks">
+      <div class="card">
+        <div class="kicker">Risks & Mitigations</div>
+        <h2>Phase I technical risks are known and manageable with clear mitigations.</h2>
+        <p>
+          Phase I focuses on hardening, traceability, and public-data validation. The table below summarizes
+          anticipated risks and concrete mitigations that keep deliverables on schedule.
+        </p>
+
+        <div class="table-wrap" style="margin-top:12px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Risk</th>
+                <th>Why it matters</th>
+                <th>Mitigation (Phase I)</th>
+                <th>Go / No-Go criteria</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Public dataset heterogeneity</strong><br/><span class="mini">formats, metadata gaps</span></td>
+                <td>Inconsistent inputs can break automation and reduce reproducibility.</td>
+                <td>
+                  Standard ingestion templates; robust parsers; minimum metadata requirements;
+                  fail-fast checks with actionable error messages.
+                </td>
+                <td>
+                  ≥3 datasets processed end-to-end without manual code edits; documented input schema.
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Batch effects confound signals</strong><br/><span class="mini">flow and RNA-Seq</span></td>
+                <td>False positives/negatives degrade trust and usability.</td>
+                <td>
+                  Batch-aware normalization options; pre/post batch diagnostics in the report;
+                  transparent methods and limitations.
+                </td>
+                <td>
+                  Demonstrable reduction in batch-driven variance; stable results across reruns.
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>LLM hallucination / unverifiable claims</strong><br/><span class="mini">scientific narrative risk</span></td>
+                <td>Untraceable statements are unacceptable for reviewers and PIs.</td>
+                <td>
+                  Structured templates; citations required for mechanistic claims; “evidence level” labels;
+                  uncertainty + “what would falsify this” prompts.
+                </td>
+                <td>
+                  All hypotheses include citations or are explicitly marked speculative with rationale.
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Hypotheses not actionable</strong><br/><span class="mini">too generic / not testable</span></td>
+                <td>Value depends on producing experiments a lab can realistically run.</td>
+                <td>
+                  Enforce testability fields (assay/panel/contrast); rank by actionability;
+                  complexity tags; pilot feedback loop.
+                </td>
+                <td>
+                  ≥80% pilot-rated “plausible & actionable” on a structured rubric.
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Compute/time constraints</strong><br/><span class="mini">local vs cloud</span></td>
+                <td>Long runtimes reduce adoption and Phase I throughput.</td>
+                <td>
+                  Modular execution; caching intermediates; local or AWS VPC execution;
+                  prioritize “good defaults” over exhaustive search in Phase I.
+                </td>
+                <td>
+                  Reviewer-ready report produced in &lt;24 hours from raw inputs on target hardware profile.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout" style="margin-top:12px;">
+          <strong>Phase I readiness:</strong> Mitigations are implemented as product features (templates, constraints,
+          traceability, reporting), not manual reviewer-dependent steps.
+        </div>
+      </div>
+    </section>
+
     <!-- CLOSE -->
     <section class="section">
       <div class="card">
-        <div class="kicker">How to use this page</div>
-        <h2>Reviewer-friendly framing</h2>
+        <div class="kicker">Next</div>
+        <h2>Use this page as your Phase I “Approach” narrative.</h2>
         <ul>
-          <li>Use this page as the “Approach” narrative for Phase I (workflow → hardening → validation → metrics).</li>
-          <li>Keep dataset names flexible; you can later replace “examples” with specific accession IDs.</li>
-          <li>If needed, we can add a 1-paragraph “Risks & Mitigations” block next (still Phase I style).</li>
+          <li>Replace dataset “examples” later with specific GEO/SRA/FlowRepository accession IDs.</li>
+          <li>Export this page to PDF for reviewer-friendly appendices or Program Officer discussions.</li>
+          <li>Next step: create a one-page “Commercialization” summary and a Letter-of-Support outreach email template.</li>
         </ul>
 
         <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
           <a class="btn btn-outline" href="aims.html">Back to Specific Aims</a>
-          <a class="btn btn-primary" href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20SBIR%20Phase%20I%20Validation%20Pilot">
+          <a class="btn btn-primary" href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20SBIR%20Pilot%20/LOS">
             Request pilot / Letter of Support
           </a>
         </div>
