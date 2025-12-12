@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PromptGenix – Company & Team (Phase I)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PromptGenix SBIR Phase I Company & Team: women- and minority-owned small business positioning, roles, capabilities, and execution plan." />
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#020617;
+      color:#e5e7eb;
+      line-height:1.55;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+
+    .page{ min-height:100vh; display:flex; flex-direction:column; }
+
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(14px);
+      background: rgba(15,23,42,0.92);
+      border-bottom: 1px solid rgba(148,163,184,0.25);
+    }
+
+    .nav{
+      max-width:1120px;
+      margin:0 auto;
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .nav-left{ display:flex; align-items:center; gap:12px; }
+
+    .logo-dot{
+      width:28px; height:28px; border-radius:999px;
+      background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
+      box-shadow:0 0 18px rgba(56,189,248,.7);
+      flex:0 0 auto;
+    }
+
+    .brand{
+      font-size:1.05rem; font-weight:700;
+      letter-spacing:.04em; line-height:1.1;
+    }
+
+    .brand-sub{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
+
+    .nav-links{
+      display:flex; gap:10px;
+      font-size:.88rem; color:#9ca3af;
+      flex-wrap:wrap; justify-content:center;
+    }
+
+    .nav-links a{
+      padding:6px 10px; border-radius:999px;
+      border:1px solid transparent;
+    }
+
+    .nav-links a:hover{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.14);
+      border-color: rgba(148,163,184,0.18);
+    }
+
+    .nav-links a.active{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.22);
+    }
+
+    .nav-cta{
+      display:flex; gap:10px; align-items:center;
+      margin-left:auto;
+    }
+
+    .btn{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:8px 14px;
+      font-size:.85rem;
+      background:transparent;
+      color:#e5e7eb;
+      display:inline-block;
+      white-space:nowrap;
+      cursor:pointer;
+    }
+
+    .btn-primary{
+      border:none;
+      background: linear-gradient(135deg,#22c55e,#22d3ee,#6366f1);
+      color:#020617;
+      font-weight:650;
+      box-shadow:0 0 22px rgba(59,130,246,0.45);
+    }
+
+    .btn-primary:hover{ filter:brightness(1.05); }
+    .btn-outline:hover{ background: rgba(148,163,184,0.18); }
+
+    main{ flex:1; }
+
+    .section{
+      max-width:1120px;
+      margin:0 auto;
+      padding:34px 20px;
+    }
+
+    .hero{ padding-top:30px; padding-bottom:16px; }
+
+    .badge-row{
+      display:flex; flex-wrap:wrap;
+      gap:8px; margin-bottom:14px;
+    }
+
+    .badge{
+      font-size:.7rem;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      border-radius:999px;
+      padding:5px 11px;
+      border:1px solid rgba(251,191,36,0.55);
+      color:#fed7aa;
+      background: rgba(120,53,15,0.35);
+    }
+
+    .badge.info{
+      border-color: rgba(56,189,248,0.55);
+      color:#bae6fd;
+      background: rgba(15,23,42,0.9);
+    }
+
+    .title{
+      font-size: clamp(1.9rem, 2.2vw + 1.2rem, 2.55rem);
+      font-weight:780;
+      letter-spacing:.01em;
+      color:#f9fafb;
+      margin:10px 0 10px;
+      line-height:1.15;
+    }
+
+    .lede{
+      font-size:1.02rem;
+      color:#e5e7eb;
+      max-width:60rem;
+      margin:0 0 14px;
+    }
+
+    .meta{ font-size:.84rem; color:#9ca3af; margin-top:10px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap:18px;
+      margin-top:18px;
+      align-items:start;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);
+      gap:18px;
+      margin-top:18px;
+      align-items:start;
+    }
+
+    .card{
+      border-radius:16px;
+      padding:16px 18px;
+      background: rgba(15,23,42,0.92);
+      border: 1px solid rgba(55,65,81,0.85);
+      box-shadow: 0 18px 35px rgba(15,23,42,0.55);
+    }
+
+    .kicker{
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      color:#a5b4fc;
+      margin-bottom:6px;
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size:1.18rem;
+      color:#f9fafb;
+      letter-spacing:.01em;
+    }
+
+    h3{
+      margin:0 0 8px;
+      font-size:1rem;
+      color:#e5e7eb;
+    }
+
+    p{ margin:0 0 10px; color:#d1d5db; font-size:.94rem; }
+
+    ul{
+      padding-left:1.1rem;
+      margin:8px 0 0;
+      color:#d1d5db;
+      font-size:.92rem;
+    }
+
+    li{ margin-bottom:6px; }
+
+    .callout{
+      border-radius:14px;
+      padding:12px 14px;
+      border:1px dashed rgba(148,163,184,0.5);
+      background: rgba(2,6,23,0.35);
+      font-size:.9rem;
+      color:#e5e7eb;
+      margin-top:10px;
+    }
+
+    .callout strong{ color:#22c55e; }
+
+    .mini{ font-size:.82rem; color:#9ca3af; margin-top:8px; }
+
+    .pill{
+      display:inline-block;
+      font-size:.72rem;
+      padding:4px 8px;
+      border-radius:999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(129,140,248,0.45);
+      color:#c7d2fe;
+      margin:2px 6px 2px 0;
+      white-space:nowrap;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns: minmax(0,1.05fr) minmax(0,0.95fr);
+      gap:18px;
+      margin-top:18px;
+      align-items:start;
+    }
+
+    .profile{
+      border-radius:14px;
+      padding:12px 14px;
+      background: rgba(2,6,23,0.35);
+      border:1px solid rgba(55,65,81,0.75);
+    }
+
+    .name{
+      display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+      margin-bottom:6px;
+    }
+
+    .name strong{ font-size:1.02rem; color:#f9fafb; }
+    .role{ font-size:.85rem; color:#c7d2fe; }
+
+    .list-tight li{ margin-bottom:5px; }
+
+    footer{
+      border-top:1px solid rgba(31,41,55,0.9);
+      padding:16px 20px 22px;
+      font-size:.78rem;
+      color:#6b7280;
+      text-align:center;
+      background:#020617;
+    }
+
+    @media (max-width: 980px){
+      .grid, .grid-3, .split{ grid-template-columns: minmax(0,1fr); }
+      .nav-cta{ margin-left:0; width:100%; justify-content:flex-start; }
+      .nav{ gap:12px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav">
+      <div class="nav-left">
+        <div class="logo-dot"></div>
+        <div>
+          <div class="brand">PromptGenix</div>
+          <div class="brand-sub">Company & Team (Phase I)</div>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="sbir.html">SBIR Landing</a>
+        <a href="aims.html">Specific Aims</a>
+        <a href="approach.html">Approach</a>
+        <a href="commercialization.html">Commercialization</a>
+        <a href="facilities.html">Facilities</a>
+        <a href="team.html" class="active">Company & Team</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn btn-outline" href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20Company%20%26%20Team">Email</a>
+        <a class="btn btn-primary" href="#execution">Execution Plan</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="section hero">
+      <div class="badge-row">
+        <span class="badge">Women & Minority-Owned</span>
+        <span class="badge info">SBIR-ready</span>
+        <span class="badge info">Local-first + Optional AWS</span>
+      </div>
+
+      <h1 class="title">Company & Team</h1>
+
+      <p class="lede">
+        PromptGenix is a women- and minority-owned BioAI startup building an automation platform for RNA-Seq and flow cytometry
+        analysis, interpretation, and hypothesis generation. The team combines PI-level immunology/bioinformatics expertise with
+        practical engineering for reproducible pipelines and reviewer-ready reporting.
+      </p>
+
+      <div class="meta">
+        Contact: <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a> · Website: https://kdh4win4.github.io
+      </div>
+    </section>
+
+    <!-- STRUCTURE + DIFFERENTIATION -->
+    <section class="section">
+      <div class="grid">
+        <div class="card">
+          <div class="kicker">Company structure</div>
+          <h2>Women-owned leadership with founder-led technical execution.</h2>
+          <p>
+            PromptGenix is structured to qualify for women-owned and minority-owned small business programs.
+            The CEO oversees operations, compliance, and commercialization readiness, while the founder CTO leads
+            product architecture and technical delivery for Phase I.
+          </p>
+          <div class="callout">
+            <strong>Phase I posture:</strong> deliver measurable technical validation using public datasets only (no IP/PHI dependency).
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="kicker">Why we can execute</div>
+          <h2>Deep domain + proven pipelines + practical deployment.</h2>
+          <ul class="list-tight">
+            <li><strong>Domain depth:</strong> immunology, infectious disease, vaccine studies, high-dimensional flow</li>
+            <li><strong>Technical depth:</strong> RNA-Seq pipelines, statistics, reporting, automation, AI integration</li>
+            <li><strong>Deployment realism:</strong> local-first execution with optional AWS VPC path</li>
+            <li><strong>Reviewer trust:</strong> traceable interpretation and PubMed-linked hypothesis generation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM PROFILES -->
+    <section class="section" id="team">
+      <div class="card">
+        <div class="kicker">Key personnel</div>
+        <h2>Lean team, clearly defined roles, and Phase I-ready responsibilities.</h2>
+
+        <div class="split">
+          <div class="profile">
+            <div class="name">
+              <strong>Yon Ji</strong>
+              <span class="role">CEO</span>
+            </div>
+            <ul class="list-tight">
+              <li>Operations, compliance, and business administration for SBIR readiness</li>
+              <li>Customer discovery coordination and pilot logistics</li>
+              <li>Commercialization planning, documentation, and stakeholder communication</li>
+              <li>Program alignment with women-owned/minority-owned small business pathways</li>
+            </ul>
+            <div class="mini">Phase I focus: customer discovery + pilot process + documentation quality.</div>
+          </div>
+
+          <div class="profile">
+            <div class="name">
+              <strong>Dohoon Kim, MS</strong>
+              <span class="role">CTO & Founder</span>
+            </div>
+            <ul class="list-tight">
+              <li>Architect and implement Phase I pipeline hardening (RNA-Seq + flow cytometry)</li>
+              <li>Build reviewer-ready reporting (HTML/PDF) with traceability and version stamping</li>
+              <li>Develop “Hypothesis Generator” (PubMed-aware, ranked hypotheses + experiments)</li>
+              <li>Define validation metrics and execute public-data benchmarking</li>
+            </ul>
+            <div class="mini">Phase I focus: integration + robustness + measurable KPIs on public datasets.</div>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top:14px;">
+          <strong>Advisory plan (Phase I):</strong> establish 2–3 external scientific advisors/pilot partners to provide
+          usability feedback and domain realism. No partner data is required in Phase I.
+        </div>
+      </div>
+    </section>
+
+    <!-- CAPABILITIES -->
+    <section class="section">
+      <div class="grid-3">
+        <div class="card">
+          <div class="kicker">Core capabilities</div>
+          <h3>Bioinformatics automation</h3>
+          <ul class="list-tight">
+            <li>RNA-Seq: QC → align/quant → DEG</li>
+            <li>Pathway: GSEA/GSVA outputs</li>
+            <li>Reproducible run manifests</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="kicker">Core capabilities</div>
+          <h3>Flow cytometry workflows</h3>
+          <ul class="list-tight">
+            <li>Preprocessing/QC and transforms</li>
+            <li>Batch-aware normalization options</li>
+            <li>Exportable summaries for stats</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="kicker">Core capabilities</div>
+          <h3>Interpretation & hypotheses</h3>
+          <ul class="list-tight">
+            <li>Structured AI summaries</li>
+            <li>PubMed-linked evidence</li>
+            <li>Ranked hypotheses + experiments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini">
+        Platform outputs are designed to be “reviewer-friendly”: clear methods, figures, citations, and limitations.
+      </div>
+    </section>
+
+    <!-- EXECUTION PLAN -->
+    <section class="section" id="execution">
+      <div class="card">
+        <div class="kicker">Execution plan</div>
+        <h2>Phase I responsibilities mapped to deliverables.</h2>
+        <ul class="list-tight">
+          <li><strong>D1 (Pipelines hardened):</strong> CTO leads integration/testing; CEO coordinates documentation and process readiness.</li>
+          <li><strong>D2 (Hypothesis Generator):</strong> CTO implements structured outputs + citation constraints; CEO supports pilot rubric design.</li>
+          <li><strong>D3 (Reviewer-ready reports):</strong> CTO builds standardized HTML/PDF export; CEO ensures clarity and consistency for reviewers.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Phase I KPIs:</strong> ≥70% faster turnaround vs manual workflows · ≥90% reproducibility across reruns ·
+          ≥80% “useful/very useful” hypothesis ratings (pilot rubric).
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a class="btn btn-outline" href="facilities.html">Back to Facilities</a>
+          <a class="btn btn-outline" href="commercialization.html">Back to Commercialization</a>
+          <a class="btn btn-primary"
+             href="mailto:dohoon.kim1@icloud.com?subject=PromptGenix%20SBIR%20Pilot%20Interest&body=I%27m%20interested%20in%20learning%20more%20about%20PromptGenix%20and%20the%20Phase%20I%20pilot%20process.%20Please%20send%20details.">
+            Pilot / feedback inquiry
+          </a>
+        </div>
+
+        <div class="mini">
+          Next recommended artifact: a one-page “Human Subjects / Data Plan” note (Phase I public-data-only posture).
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    PromptGenix &middot; Company & Team (Phase I) &middot;
+    Contact: <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
+  </footer>
+</div>
+</body>
+</html>
