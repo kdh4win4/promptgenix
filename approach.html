@@ -273,7 +273,7 @@
             <li><strong>Inputs:</strong> FASTQ (bulk or single-cell), FCS files, or public accession IDs.</li>
             <li><strong>Automated pipelines:</strong> QC → preprocessing → analysis (DEG, signatures, enrichment / gating / subsets).</li>
             <li><strong>Outputs:</strong> versioned results + reviewer-ready HTML/PDF report + structured artifacts for reuse.</li>
-            <li><strong>LLM layer:</strong> converts results into mechanistic narratives and produces a ranked hypothesis list with suggested validation experiments.</li>
+            <li><strong>LLM layer:</strong> converts results into mechanistic narratives under strict traceability constraints, requiring explicit linkage to observed pipeline outputs and cited literature.</li>
           </ul>
           <div class="pill-row">
             <span class="pill">Reproducible configs</span>
@@ -331,7 +331,7 @@
               and traceable literature-aware citations.
             </td>
             <td>
-              ≥80% “useful” rating by pilot users on hypothesis lists (structured feedback).<br/>
+              ≥80% “useful” rating by pilot users, defined as hypotheses that directly inform at least one concrete follow-up analysis or experimental decision.<br/>
               Clear traceability: each hypothesis includes evidence + citations.
             </td>
           </tr>
