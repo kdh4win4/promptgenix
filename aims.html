@@ -124,41 +124,54 @@
       text-align:center;
     }
 
- /* =========================
-   PRINT CONFIG (SBIR PDF)
-   - Website view: unchanged
-   - PDF output: stable + compact
+/* =========================
+   PRINT CONFIG (SBIR – FINAL)
    ========================= */
 @media print {
-  @page { size: Letter; margin: 0.5in; }
 
-  header, footer { display: none !important; }
+  @page {
+    size: Letter;
+    margin: 0.5in;
+  }
+
+  header, footer {
+    display: none !important;
+  }
 
   body {
-    background: #fff !important;
-    color: #111 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    line-height: 1.35;            /* <-- Aims 1-page helper */
+    background: #fff;
+    color: #111;
+    font-size: 11.2pt;      /* 🔑 핵심 1 */
+    line-height: 1.28;      /* 🔑 핵심 2 */
   }
 
-  p, li, h1, h2, h3 { color: #111 !important; }
+  h1 { font-size: 16pt; }
+  h2 { font-size: 12.5pt; margin-top: 10px; }
+  h3 { font-size: 11.5pt; }
 
-  .section { max-width: 100% !important; padding: 0 !important; }
+  p, li {
+    color: #111;
+    margin-bottom: 4px;
+  }
 
-  /* If you use .box cards */
-  .box { border: 1px solid #999 !important; background: #fff !important; }
+  ul {
+    margin-top: 4px;
+    margin-bottom: 6px;
+  }
 
-  /* Tighten lists slightly (helps 1-page without deleting text) */
-  ul { margin-top: 4px !important; margin-bottom: 4px !important; }
-  li { margin-bottom: 3px !important; }
+  .section {
+    max-width: 100%;
+    padding: 0;
+    margin-bottom: 10px;
+  }
 
-  /* Avoid awkward splits */
-  h1, h2, h3, p, ul, li, .box, .callout, .card {
-    break-inside: avoid;
-    page-break-inside: avoid;
+  .box {
+    border: 1px solid #999;
+    background: #fff;
+    padding: 8px;
   }
 }
+
 
 
     body {
