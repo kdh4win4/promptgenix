@@ -192,36 +192,57 @@
     }
 
   /* Print friendliness */
-  @media print{
-    header, footer { display: none !important; }
-    body{ background:#fff; color:#111; }
-    p, li{ color:#111; }
-    h2{ color:#111; }
-    .box{ border:1px solid #999; background:#fff; }
-    .section{ max-width: 100%; padding: 0; }
+@media print {
+
+  /* 기존 print 설정 유지 */
+  header, footer { display: none !important; }
+  body { background:#fff; color:#111; }
+  p, li { color:#111; }
+  h2, h3 { color:#111; }
+  .box { border:1px solid #999; background:#fff; }
+  .section { max-width: 100%; padding: 0; }
+
+  /* ===== SBIR PRINT STABILITY (추가) ===== */
+
+  /* 웹은 그대로, PDF만 살짝 압축 */
+  body {
+    font-size: 95%;
+    line-height: 1.35;
   }
 
-  /* =========================
-     PRINT CONFIG (SBIR PDF)
-     - Website view: unchanged
-     - PDF output: stable 1-page layout
-     ========================= */
-  @media print {
-    @page {
-      size: Letter;
-      margin: 0.5in;
-    }
-
-    body {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-
-    h1, h2, h3, p, ul, li, .card, .callout {
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
+  /* 큰 블록이 페이지 중간에서 쪼개지지 않게 */
+  .card,
+  .box,
+  .callout,
+  table,
+  .grid,
+  .grid-2 {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
+
+  /* 섹션 간 여백 최소화 */
+  .section {
+    margin-bottom: 0.3in;
+  }
+
+  /* 제목 고아 방지 */
+  h2, h3 {
+    page-break-after: avoid;
+  }
+
+  /* 문단 마지막 한 줄 밀림 방지 */
+  p, li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* 페이지 규격 고정 */
+  @page {
+    size: Letter;
+    margin: 0.5in;
+  }
+}
   </style>
 </head>
 
