@@ -124,26 +124,42 @@
       text-align:center;
     }
 
-  /* Print friendliness */
-  @media print{
-    header, footer { display: none !important; }
-    body{ background:#fff; color:#111; }
-    p, li{ color:#111; }
-    h2{ color:#111; }
-    .box{ border:1px solid #999; background:#fff; }
-    .section{ max-width: 100%; padding: 0; }
+ /* =========================
+   PRINT CONFIG (SBIR PDF)
+   - Website view: unchanged
+   - PDF output: stable + compact
+   ========================= */
+@media print {
+  @page { size: Letter; margin: 0.5in; }
+
+  header, footer { display: none !important; }
+
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    line-height: 1.35;            /* <-- Aims 1-page helper */
   }
 
-  /* =========================
-     PRINT CONFIG (SBIR PDF)
-     - Website view: unchanged
-     - PDF output: stable 1-page layout
-     ========================= */
-  @media print {
-    @page {
-      size: Letter;
-      margin: 0.5in;
-    }
+  p, li, h1, h2, h3 { color: #111 !important; }
+
+  .section { max-width: 100% !important; padding: 0 !important; }
+
+  /* If you use .box cards */
+  .box { border: 1px solid #999 !important; background: #fff !important; }
+
+  /* Tighten lists slightly (helps 1-page without deleting text) */
+  ul { margin-top: 4px !important; margin-bottom: 4px !important; }
+  li { margin-bottom: 3px !important; }
+
+  /* Avoid awkward splits */
+  h1, h2, h3, p, ul, li, .box, .callout, .card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
 
     body {
       -webkit-print-color-adjust: exact;
