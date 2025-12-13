@@ -194,55 +194,51 @@
   /* Print friendliness */
 @media print {
 
-  /* 기존 print 설정 유지 */
+  /* Hide site chrome */
   header, footer { display: none !important; }
-  body { background:#fff; color:#111; }
-  p, li { color:#111; }
-  h2, h3 { color:#111; }
-  .box { border:1px solid #999; background:#fff; }
-  .section { max-width: 100%; padding: 0; }
 
-  /* ===== SBIR PRINT STABILITY (추가) ===== */
+  /* Reset layout quirks that create blank space */
+  .page, main, body {
+    min-height: auto !important;
+    height: auto !important;
+  }
+  main { flex: none !important; }
 
-  /* 웹은 그대로, PDF만 살짝 압축 */
-  body {
-    font-size: 95%;
-    line-height: 1.35;
+  /* Print colors */
+  body { background:#fff !important; color:#111 !important; }
+  p, li { color:#111 !important; }
+  h1, h2, h3 { color:#111 !important; }
+  a { color:#111 !important; text-decoration: none !important; }
+
+  /* Remove heavy effects that can confuse pagination */
+  * { box-shadow: none !important; }
+
+  /* Page setup */
+  @page { size: Letter; margin: 0.5in; }
+
+  /* Keep print density readable (not too aggressive) */
+  body { font-size: 95%; line-height: 1.32; }
+
+  /* IMPORTANT: Allow big blocks (table/cards) to split across pages */
+  table, thead, tbody, tr, td, th,
+  .grid-2, .card, .callout {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
   }
 
-  /* 큰 블록이 페이지 중간에서 쪼개지지 않게 */
-  .card,
-  .box,
-  .callout,
-  table,
-  .grid,
-  .grid-2 {
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
+  /* Avoid ugly breaks ONLY for small headings */
+  h2, h3 { break-after: avoid-page; page-break-after: avoid; }
 
-  /* 섹션 간 여백 최소화 */
-  .section {
-    margin-bottom: 0.3in;
-  }
+  /* Prevent single orphan lines */
+  p, li { orphans: 2; widows: 2; }
 
-  /* 제목 고아 방지 */
-  h2, h3 {
-    page-break-after: avoid;
-  }
-
-  /* 문단 마지막 한 줄 밀림 방지 */
-  p, li {
-    orphans: 3;
-    widows: 3;
-  }
-
-  /* 페이지 규격 고정 */
-  @page {
-    size: Letter;
-    margin: 0.5in;
-  }
+  /* Tighten spacing for print */
+  .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
+  .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
+  .card { padding: 10px 12px !important; }
+  .table th, .table td { padding: 7px 8px !important; }
 }
+
   </style>
 </head>
 
