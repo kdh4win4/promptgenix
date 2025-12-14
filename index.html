@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>PromptGenix – SBIR Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix SBIR Portal: quick navigation to aims, approach, commercialization, facilities, team, and use cases."/>
+  <meta name="description" content="PromptGenix SBIR Portal: evidence-weighted hypothesis intelligence engine for biomedical research."/>
   <style>
     *{ box-sizing:border-box; }
     body{
@@ -17,7 +17,6 @@
     a{ color:inherit; text-decoration:none; }
     .page{ min-height:100vh; display:flex; flex-direction:column; }
 
-    /* ===== Shared Header / Nav ===== */
     header{
       position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
@@ -25,55 +24,24 @@
       border-bottom: 1px solid rgba(148, 163, 184, 0.3);
     }
     .nav{
-      max-width:1120px;
-      margin:0 auto;
-      padding:14px 20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      flex-wrap:wrap;
+      max-width:1120px; margin:0 auto; padding:14px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
     }
-    .nav-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
+    .nav-left{ display:flex; align-items:center; gap:12px; }
     .logo-dot{
       width:28px; height:28px; border-radius:999px;
       background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
       box-shadow:0 0 18px rgba(56,189,248,.7);
-      flex:0 0 auto;
     }
-    .brand{
-      font-size:1.1rem;
-      font-weight:650;
-      letter-spacing:.04em;
-    }
-    .subbrand{
-      font-size:.72rem;
-      color:#9ca3af;
-      margin-top:2px;
-    }
+    .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
+    .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
 
-    .nav-links{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    .nav-links{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
     .nav-links a{
-      font-size:.88rem;
-      color:#9ca3af;
-      padding:6px 10px;
-      border-radius:999px;
+      font-size:.88rem; color:#9ca3af;
+      padding:6px 10px; border-radius:999px;
       border:1px solid rgba(148,163,184,0.18);
       background: rgba(2,6,23,0.25);
-    }
-    .nav-links a:hover{
-      color:#e5e7eb;
-      background: rgba(148,163,184,0.18);
-      border-color: rgba(148,163,184,0.35);
     }
     .nav-links a.active{
       color:#e5e7eb;
@@ -81,190 +49,78 @@
       border-color: rgba(148,163,184,0.55);
     }
 
-    /* ===== Layout ===== */
     main{ flex:1; }
-    .section{
-      max-width:1120px;
-      margin:0 auto;
-      padding:28px 20px;
-    }
+    .section{ max-width:1120px; margin:0 auto; padding:28px 20px; }
 
-    /* ===== Hero ===== */
     .hero{
-      padding-top: 18px;
+      padding-top:18px;
       display:grid;
       grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
       gap:18px;
-      align-items:start;
     }
 
-    .badge-row{
-      display:flex; flex-wrap:wrap; gap:8px;
-      margin-bottom: 12px;
-    }
+    .badge-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
     .badge{
-      font-size:.7rem;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      border-radius:999px;
-      padding:5px 11px;
-      border:1px solid rgba(251,191,36,0.6);
-      color:#fed7aa;
-      background: rgba(120,53,15,0.35);
-    }
-    .badge.alt{
-      border-color: rgba(56,189,248,0.7);
-      color:#bae6fd;
-      background: rgba(15,23,42,0.85);
+      font-size:.7rem; text-transform:uppercase; letter-spacing:.12em;
+      border-radius:999px; padding:5px 11px;
+      border:1px solid rgba(56,189,248,0.7);
+      color:#bae6fd; background: rgba(15,23,42,0.85);
     }
 
     .hero-title{
-      font-size: clamp(2.0rem, 2.4vw + 1.2rem, 2.8rem);
-      font-weight: 860;
-      letter-spacing: .01em;
-      color:#f9fafb;
-      margin: 0 0 12px;
+      font-size: clamp(2rem, 2.4vw + 1.2rem, 2.8rem);
+      font-weight:860; color:#f9fafb; margin:0 0 12px;
     }
     .hero-sub{
-      margin:0 0 14px;
-      color:#d1d5db;
-      font-size: .98rem;
-      max-width: 46rem;
+      font-size:.98rem; color:#d1d5db; max-width:46rem;
     }
 
-    .cta-row{
-      display:flex; flex-wrap:wrap; gap:10px;
-      align-items:center;
-      margin-top: 10px;
-    }
+    .cta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
     .btn{
       border-radius:999px;
-      border:1px solid rgba(148, 163, 184, 0.55);
+      border:1px solid rgba(148,163,184,0.55);
       padding:9px 14px;
       font-size:.88rem;
-      cursor:pointer;
-      background: transparent;
+      background:transparent;
       color:#e5e7eb;
-      display:inline-block;
     }
-    .btn:hover{ background: rgba(148, 163, 184, 0.18); }
     .btn-primary{
       border:none;
       background: linear-gradient(135deg,#22c55e,#22d3ee,#6366f1);
-      color:#020617;
-      font-weight:700;
-      box-shadow:0 0 22px rgba(59,130,246,0.5);
+      color:#020617; font-weight:700;
     }
-    .btn-primary:hover{ filter: brightness(1.05); }
 
     .hero-card{
-      border-radius: 18px;
-      padding: 16px 16px 14px;
-      background: radial-gradient(circle at 0 0,#0f172a,#020617 55%,#020617 100%);
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow: 0 18px 45px rgba(15,23,42,0.65);
+      border-radius:18px;
+      padding:16px;
+      background: radial-gradient(circle at 0 0,#0f172a,#020617 55%);
+      border:1px solid rgba(148,163,184,0.35);
     }
-    .hero-card .k{
-      font-size:.78rem;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:#a5b4fc;
-      margin-bottom:6px;
-    }
-    .hero-card .t{
-      font-size: 1.05rem;
-      font-weight: 720;
-      color:#f9fafb;
-      margin:0 0 8px;
-    }
-    .hero-card p{
-      margin:0 0 10px;
-      font-size:.88rem;
-      color:#d1d5db;
-    }
-    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+
+    .pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
     .pill{
       font-size:.72rem;
       padding:5px 9px;
       border-radius:999px;
       border:1px solid rgba(129,140,248,0.45);
-      background: rgba(2,6,23,0.25);
       color:#c7d2fe;
-      white-space:nowrap;
-    }
-
-    /* ===== Portal tiles ===== */
-    .kicker{
-      font-size:.78rem;
-      text-transform:uppercase;
-      letter-spacing:.18em;
-      color:#a5b4fc;
-      margin-bottom:6px;
-    }
-    h2{
-      font-size: 1.15rem;
-      font-weight: 760;
-      color:#f9fafb;
-      margin: 14px 0 8px;
-    }
-    p{
-      margin:0 0 10px;
-      font-size:.93rem;
-      color:#d1d5db;
     }
 
     .grid{
       display:grid;
       grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:14px;
-      margin-top: 10px;
+      gap:14px; margin-top:14px;
     }
     .tile{
       border-radius:16px;
-      padding:14px 14px 12px;
+      padding:14px;
       background: rgba(15,23,42,0.84);
       border:1px solid rgba(148,163,184,0.28);
-      box-shadow:0 18px 45px rgba(15,23,42,0.55);
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      min-height: 168px;
+      display:flex; flex-direction:column;
     }
-    .tile .title{
-      margin:0;
-      font-size:1.02rem;
-      color:#f9fafb;
-      font-weight:760;
-    }
-    .tile .desc{
-      margin:0;
-      font-size:.88rem;
-      color:#d1d5db;
-    }
-    .tile .meta2{
-      font-size:.78rem;
-      color:#9ca3af;
-      margin-top:auto;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .tile .go{
-      font-weight:700;
-      color:#c7d2fe;
-    }
-
-    .callout{
-      border-radius:14px;
-      padding:12px 14px;
-      border:1px dashed rgba(148,163,184,0.5);
-      background: rgba(15,23,42,0.75);
-      font-size:.88rem;
-      color:#e5e7eb;
-      margin-top:12px;
-    }
-    .callout strong{ color:#22c55e; }
+    .tile .title{ font-size:1.02rem; font-weight:760; }
+    .tile .desc{ font-size:.88rem; color:#d1d5db; }
+    .tile .go{ margin-top:auto; font-size:.8rem; color:#c7d2fe; }
 
     footer{
       border-top:1px solid rgba(31,41,55,0.9);
@@ -274,154 +130,90 @@
       text-align:center;
     }
 
-    @media (max-width: 980px){
-      .hero{ grid-template-columns: minmax(0,1fr); }
-      .grid{ grid-template-columns: minmax(0,1fr); }
-    }
-
-    @media print{
-      header, footer{ display:none !important; }
-      body{ background:#fff; color:#111; }
-      p{ color:#111; }
-      .kicker{ color:#111; }
-      .hero-card, .tile, .callout{ background:#fff; box-shadow:none; }
-      .section{ max-width:100%; padding:0; }
+    @media(max-width:980px){
+      .hero{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns:1fr; }
     }
   </style>
 </head>
 
 <body>
 <div class="page">
-  <header>
-    <div class="nav">
-      <div class="nav-left">
-        <div class="logo-dot"></div>
-        <div>
-          <div class="brand">PromptGenix</div>
-          <div class="subbrand">SBIR Portal</div>
-        </div>
-      </div>
-
-      <nav class="nav-links">
-        <a href="index.html" class="active">Portal</a>
-        <a href="sbir.html">SBIR</a>
-        <a href="aims.html">Aims</a>
-        <a href="approach.html">Approach</a>
-        <a href="commercialization.html">Commercialization</a>
-        <a href="facilities.html">Facilities</a>
-        <a href="team.html">Team</a>
-        <a href="use-cases.html">Use Cases</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="section hero">
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-dot"></div>
       <div>
-        <div class="badge-row">
-          <span class="badge">Women &amp; Minority-Owned BioAI</span>
-          <span class="badge alt">NIH / NIAID SBIR-ready</span>
-        </div>
-
-        <h1 class="hero-title">SBIR Portal: PromptGenix BioAI Automation Platform</h1>
-
-        <p class="hero-sub">
-          This portal is a reviewer-friendly hub for PromptGenix Phase I materials.
-          Navigate to Specific Aims, Research Strategy (Approach), Commercialization, Facilities &amp; Environment,
-          Company/Team, and Use Cases. All Phase I validation is planned using <strong>public datasets only</strong>.
-        </p>
-
-        <div class="cta-row">
-          <a class="btn btn-primary" href="sbir.html">Start here: SBIR Overview</a>
-          <a class="btn" href="aims.html">Go to Specific Aims</a>
-          <a class="btn" href="approach.html">Go to Approach</a>
-          <a class="btn" href="use-cases.html">View Use Cases</a>
-        </div>
-
-        <div class="callout">
-          <strong>Contact:</strong> <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
-          &nbsp;&middot;&nbsp; PromptGenix LLC &nbsp;&middot;&nbsp; Women &amp; Minority-Owned Small Business
-        </div>
+        <div class="brand">PromptGenix</div>
+        <div class="subbrand">SBIR Portal</div>
       </div>
+    </div>
+    <nav class="nav-links">
+      <a class="active" href="index.html">Portal</a>
+      <a href="sbir.html">SBIR</a>
+      <a href="aims.html">Aims</a>
+      <a href="approach.html">Approach</a>
+      <a href="commercialization.html">Commercialization</a>
+      <a href="facilities.html">Facilities</a>
+      <a href="team.html">Team</a>
+      <a href="use-cases.html">Use Cases</a>
+    </nav>
+  </div>
+</header>
 
-      <div class="hero-card">
-        <div class="k">Quick summary</div>
-        <div class="t">What PromptGenix does in Phase I</div>
-        <p>
-          Automates RNA-Seq and flow cytometry pipelines into reproducible outputs and
-          produces ranked, testable hypotheses with suggested experiments grounded in observed signals and citations.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Automation</span>
-          <span class="pill">Reproducibility</span>
-          <span class="pill">Hypothesis Generator</span>
-          <span class="pill">Public-data validation</span>
-        </div>
-      </div>
-    </section>
+<main>
+<section class="section hero">
+  <div>
+    <div class="badge-row">
+      <span class="badge">Evidence-Weighted Hypothesis Intelligence</span>
+      <span class="badge">NIH / NIAID SBIR Phase I</span>
+    </div>
 
-    <section class="section">
-      <div class="kicker">Portal contents</div>
-      <h2>Open the section you need (one click).</h2>
-      <p>
-        Each page is designed to be readable in a browser and printable to PDF for submission workflows.
-      </p>
+    <h1 class="hero-title">PromptGenix SBIR Portal</h1>
+    <p class="hero-sub">
+      PromptGenix is a BioAI <strong>hypothesis intelligence engine</strong> that integrates public biomedical data and
+      scientific literature to generate <strong>ranked, testable hypotheses with quantified uncertainty</strong>.
+      This portal provides reviewer-ready Phase I materials aligned to NIH SBIR expectations.
+    </p>
 
-      <div class="grid">
-        <a class="tile" href="sbir.html">
-          <div class="title">SBIR Overview</div>
-          <div class="desc">Problem, innovation, Phase I focus, and why it matters.</div>
-          <div class="meta2"><span>1 page</span><span class="go">Open →</span></div>
-        </a>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="sbir.html">Start: SBIR Overview</a>
+      <a class="btn" href="aims.html">Specific Aims</a>
+      <a class="btn" href="approach.html">Research Strategy</a>
+    </div>
+  </div>
 
-        <a class="tile" href="aims.html">
-          <div class="title">Specific Aims</div>
-          <div class="desc">Significance, innovation, objective/hypothesis, aims, expected outcomes.</div>
-          <div class="meta2"><span>1 page</span><span class="go">Open →</span></div>
-        </a>
+  <div class="hero-card">
+    <strong>Phase I focus</strong>
+    <p>
+      Demonstrate feasibility of an automated, evidence-linked decision engine that prioritizes biological hypotheses
+      using public datasets (e.g., GEO, SRA, FlowRepository) and literature-derived priors.
+    </p>
+    <div class="pill-row">
+      <span class="pill">Probabilistic ranking</span>
+      <span class="pill">Bayesian inference</span>
+      <span class="pill">Traceability</span>
+      <span class="pill">Public-data only</span>
+    </div>
+  </div>
+</section>
 
-        <a class="tile" href="approach.html">
-          <div class="title">Research Strategy – Approach</div>
-          <div class="desc">Phase I workflow, validation plan, KPIs, and Risks & Mitigation.</div>
-          <div class="meta2"><span>1–2 pages</span><span class="go">Open →</span></div>
-        </a>
+<section class="section">
+  <h2>Portal contents</h2>
+  <div class="grid">
+    <a class="tile" href="sbir.html"><div class="title">SBIR Overview</div><div class="desc">Problem, solution, and Phase I scope.</div><div class="go">Open →</div></a>
+    <a class="tile" href="aims.html"><div class="title">Specific Aims</div><div class="desc">Objective, hypothesis, and aims.</div><div class="go">Open →</div></a>
+    <a class="tile" href="approach.html"><div class="title">Approach</div><div class="desc">Workflow, validation, KPIs.</div><div class="go">Open →</div></a>
+    <a class="tile" href="commercialization.html"><div class="title">Commercialization</div><div class="desc">Market, value, Phase II path.</div><div class="go">Open →</div></a>
+    <a class="tile" href="facilities.html"><div class="title">Facilities</div><div class="desc">Execution environment.</div><div class="go">Open →</div></a>
+    <a class="tile" href="team.html"><div class="title">Team</div><div class="desc">Execution capability.</div><div class="go">Open →</div></a>
+  </div>
+</section>
+</main>
 
-        <a class="tile" href="commercialization.html">
-          <div class="title">Commercialization</div>
-          <div class="desc">Customers, value proposition, differentiation, business model, milestones.</div>
-          <div class="meta2"><span>1 page</span><span class="go">Open →</span></div>
-        </a>
-
-        <a class="tile" href="facilities.html">
-          <div class="title">Facilities & Environment</div>
-          <div class="desc">Local compute + cloud-ready path supporting Phase I deliverables.</div>
-          <div class="meta2"><span>1 page</span><span class="go">Open →</span></div>
-        </a>
-
-        <a class="tile" href="team.html">
-          <div class="title">Company / Team</div>
-          <div class="desc">Women-led operations + founder-led technical execution (Phase I readiness).</div>
-          <div class="meta2"><span>1 page</span><span class="go">Open →</span></div>
-        </a>
-
-        <a class="tile" href="use-cases.html">
-          <div class="title">Use Cases</div>
-          <div class="desc">Example artifacts for RNA-Seq, NGS automation, flow cytometry, and hypotheses.</div>
-          <div class="meta2"><span>visual</span><span class="go">Open →</span></div>
-        </a>
-      </div>
-
-      <div class="callout">
-        <strong>Reviewer note:</strong> This portal is intentionally scoped to Phase I feasibility and validation using public datasets
-        (GEO/SRA/FlowRepository). Sensitive partner data and IP are not required for Phase I proof.
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    PromptGenix · SBIR Portal ·
-    <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
-  </footer>
+<footer>
+  PromptGenix · SBIR Portal · <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
+</footer>
 </div>
 </body>
 </html>
