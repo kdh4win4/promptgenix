@@ -17,7 +17,6 @@
     a{ color:inherit; text-decoration:none; }
     .page{ min-height:100vh; display:flex; flex-direction:column; }
 
-    /* Shared header/nav (matches portal style) */
     header{
       position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
@@ -214,54 +213,34 @@
       .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
-  /* Print friendliness */
-@media print {
+    /* Print friendliness */
+    @media print {
+      header, footer { display: none !important; }
+      .page, main, body { min-height: auto !important; height: auto !important; }
+      main { flex: none !important; }
 
-  /* Hide site chrome */
-  header, footer { display: none !important; }
+      body { background:#fff !important; color:#111 !important; }
+      p, li { color:#111 !important; }
+      h1, h2, h3 { color:#111 !important; }
+      a { color:#111 !important; text-decoration: none !important; }
+      * { box-shadow: none !important; }
 
-  /* Reset layout quirks that create blank space */
-  .page, main, body {
-    min-height: auto !important;
-    height: auto !important;
-  }
-  main { flex: none !important; }
+      @page { size: Letter; margin: 0.5in; }
+      body { font-size: 95%; line-height: 1.32; }
 
-  /* Print colors */
-  body { background:#fff !important; color:#111 !important; }
-  p, li { color:#111 !important; }
-  h1, h2, h3 { color:#111 !important; }
-  a { color:#111 !important; text-decoration: none !important; }
+      table, thead, tbody, tr, td, th,
+      .grid-2, .card, .callout {
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+      }
+      h2, h3 { break-after: avoid-page; page-break-after: avoid; }
+      p, li { orphans: 2; widows: 2; }
 
-  /* Remove heavy effects that can confuse pagination */
-  * { box-shadow: none !important; }
-
-  /* Page setup */
-  @page { size: Letter; margin: 0.5in; }
-
-  /* Keep print density readable (not too aggressive) */
-  body { font-size: 95%; line-height: 1.32; }
-
-  /* IMPORTANT: Allow big blocks (table/cards) to split across pages */
-  table, thead, tbody, tr, td, th,
-  .grid-2, .card, .callout {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
-  }
-
-  /* Avoid ugly breaks ONLY for small headings */
-  h2, h3 { break-after: avoid-page; page-break-after: avoid; }
-
-  /* Prevent single orphan lines */
-  p, li { orphans: 2; widows: 2; }
-
-  /* Tighten spacing for print */
-  .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
-  .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
-  .card { padding: 10px 12px !important; }
-  .table th, .table td { padding: 7px 8px !important; }
-}
-
+      .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
+      .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
+      .card { padding: 10px 12px !important; }
+      .table th, .table td { padding: 7px 8px !important; }
+    }
   </style>
 </head>
 
@@ -300,26 +279,28 @@
       </div>
 
       <div class="kicker">Company structure</div>
-      <h2>Women-led operations with founder-led technical execution.</h2>
+      <h2>Women-led operations with founder-led scientific and technical execution.</h2>
       <p>
         PromptGenix is structured to qualify for women-owned and minority-owned small business programs while maintaining
-        PI-level scientific and engineering execution for SBIR Phase I deliverables. The CEO focuses on operations, compliance,
-        and commercialization readiness, while the founder CTO leads product architecture, pipeline hardening, and validation.
+        PI-level execution capacity for SBIR Phase I. The CEO leads operations, compliance, and commercialization readiness.
+        The founder/CTO leads product architecture and the Phase I technical work, centered on an
+        <strong>evidence-weighted hypothesis intelligence engine</strong> (ranked hypotheses + uncertainty + traceability).
       </p>
 
       <div class="grid-2">
         <div class="card">
           <h3>Core differentiation</h3>
           <ul>
-            <li><strong>Domain depth:</strong> immunology, infectious disease, vaccine/HIV study workflows</li>
-            <li><strong>Technical depth:</strong> RNA-Seq pipelines, flow cytometry analytics, reproducible reporting</li>
-            <li><strong>BioAI layer:</strong> hypothesis generation grounded in observed signals with traceable citations</li>
-            <li><strong>Deployment realism:</strong> local-first execution + optional secure cloud path (AWS VPC)</li>
+            <li><strong>Decision product:</strong> confidence-ranked, testable hypotheses with explicit evidence links</li>
+            <li><strong>Domain depth:</strong> immunology and infectious disease study workflows</li>
+            <li><strong>Quantitative rigor:</strong> statistical scoring + Bayesian inference to compute uncertainty</li>
+            <li><strong>Interpretability guardrails:</strong> LLM used for explanation only (“no evidence → no claim”)</li>
+            <li><strong>Deployment realism:</strong> local-first + optional secure cloud/on-prem paths</li>
           </ul>
           <div class="pill-row">
-            <span class="pill">Automation</span>
-            <span class="pill">Reproducibility</span>
-            <span class="pill">Interpretability</span>
+            <span class="pill">Evidence objects</span>
+            <span class="pill">Bayesian confidence</span>
+            <span class="pill">Traceability</span>
             <span class="pill">Actionability</span>
           </div>
         </div>
@@ -327,20 +308,20 @@
         <div class="card">
           <h3>Phase I execution capacity</h3>
           <ul>
-            <li><strong>Lean team:</strong> focused decision-making and rapid iteration</li>
-            <li><strong>Public-data validation:</strong> Phase I does not depend on restricted datasets</li>
-            <li><strong>Reviewer-friendly outputs:</strong> HTML/PDF reports and traceable reasoning</li>
-            <li><strong>Pilot readiness:</strong> structured onboarding + feedback templates for 2–3 pilot labs</li>
+            <li><strong>Lean team:</strong> fast decisions and rapid iteration</li>
+            <li><strong>Public-data validation:</strong> Phase I does not depend on restricted or proprietary datasets</li>
+            <li><strong>Reviewer-friendly outputs:</strong> evidence-linked HTML/PDF reports with uncertainty labels</li>
+            <li><strong>Pilot readiness:</strong> structured onboarding and feedback rubrics for 2–3 pilot users</li>
           </ul>
           <div class="callout">
-            <strong>Phase I posture:</strong> deliver measurable KPIs (turnaround time, reproducibility, usefulness of hypotheses)
+            <strong>Phase I posture:</strong> demonstrate measurable utility (time-to-hypothesis, reproducibility, traceability)
             using public datasets to minimize IP/data-use concerns.
           </div>
         </div>
       </div>
 
       <div class="kicker" style="margin-top:18px;">Key personnel</div>
-      <h2>Clearly defined roles aligned with Phase I deliverables.</h2>
+      <h2>Defined roles aligned with Phase I milestones and deliverables.</h2>
 
       <div class="grid-2">
         <div class="card">
@@ -352,9 +333,9 @@
               <span class="role">CEO</span>
             </div>
             <ul>
-              <li><strong>Operations & compliance:</strong> SBIR readiness documentation, process, and execution tracking</li>
-              <li><strong>Pilot logistics:</strong> coordinate onboarding, feedback collection, and partner communication</li>
-              <li><strong>Commercialization readiness:</strong> customer discovery, positioning, and stakeholder outreach</li>
+              <li><strong>Operations & compliance:</strong> SBIR documentation, execution tracking, and milestone reporting</li>
+              <li><strong>Pilot logistics:</strong> onboarding coordination, feedback collection, and partner communication</li>
+              <li><strong>Commercial readiness:</strong> customer discovery, positioning, and go-to-market planning</li>
               <li><strong>Program alignment:</strong> women-owned/minority-owned small business positioning</li>
             </ul>
           </div>
@@ -362,18 +343,20 @@
           <div class="profile">
             <div class="name">
               <strong>Dohoon Kim, MS</strong>
-              <span class="role">CTO &amp; Founder</span>
+              <span class="role">Founder &amp; CTO (Technical Lead)</span>
             </div>
             <ul>
-              <li><strong>Technical execution:</strong> pipeline hardening (RNA-Seq + flow) and automation integration</li>
-              <li><strong>BioAI layer:</strong> Hypothesis Generator producing ranked hypotheses + experiment suggestions</li>
-              <li><strong>Validation:</strong> public-data benchmarking and KPI measurement</li>
-              <li><strong>Reporting:</strong> reviewer-ready HTML/PDF outputs with traceability and version stamping</li>
+              <li><strong>Technical execution:</strong> evidence ingest, feature extraction, inference engine, and automation integration</li>
+              <li><strong>Decision engine:</strong> statistical scoring + Bayesian updating for posterior confidence ranking</li>
+              <li><strong>Traceability:</strong> evidence objects, citations, and “supporting vs. conflicting” coverage summaries</li>
+              <li><strong>Validation:</strong> public-data benchmarking, calibration checks, and KPI measurement</li>
+              <li><strong>Reporting:</strong> reviewer-ready HTML/PDF outputs with version stamping and audit-friendly logs</li>
             </ul>
           </div>
 
           <div class="callout" style="margin-top:12px;">
-            <strong>Advisory plan:</strong> engage 2–3 external scientific advisors or pilot collaborators, as available, to provide domain feedback and usability input.
+            <strong>Advisory plan:</strong> engage 2–3 external domain advisors and/or pilot collaborators (as available) for structured feedback
+            on usefulness, interpretability, and experimental actionability.
           </div>
         </div>
 
@@ -389,27 +372,32 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>D1</strong><br/>Harden pipelines</td>
-                <td>CTO leads integration/testing; CEO supports documentation and process readiness</td>
-                <td>Stable end-to-end runs on multiple public datasets</td>
+                <td><strong>D1</strong><br/>Evidence layer</td>
+                <td>CTO leads implementation/testing; CEO supports documentation and KPI tracking</td>
+                <td>Standardized evidence objects across multiple public datasets</td>
               </tr>
               <tr>
-                <td><strong>D2</strong><br/>Hypothesis Generator</td>
-                <td>CTO implements traceable hypotheses + experiments; CEO supports pilot rubric</td>
-                <td>Ranked hypotheses with evidence + citations + confidence flags</td>
+                <td><strong>D2</strong><br/>Decision engine</td>
+                <td>CTO implements Bayesian confidence ranking; CEO supports pilot rubric and review readiness</td>
+                <td>Ranked hypotheses with posterior confidence + uncertainty + evidence coverage</td>
               </tr>
               <tr>
                 <td><strong>D3</strong><br/>Reviewer-ready reports</td>
-                <td>CTO builds export + templates; CEO reviews clarity/consistency</td>
-                <td>HTML/PDF reports ready for SBIR reviewers and partner labs</td>
+                <td>CTO builds export/templates; CEO reviews clarity, consistency, and messaging</td>
+                <td>HTML/PDF reports with traceability and “no evidence → no claim” constraints</td>
+              </tr>
+              <tr>
+                <td><strong>D4</strong><br/>Pilot evaluation</td>
+                <td>CEO coordinates pilot logistics; CTO supports instrumentation and analysis of feedback</td>
+                <td>Measured KPIs (time-to-hypothesis, reproducibility, usefulness) supporting Phase II</td>
               </tr>
             </tbody>
           </table>
 
           <div class="callout">
             <strong>Success metrics (examples):</strong>
-            ≥70% faster turnaround vs manual workflows · ≥90% reproducibility across reruns ·
-            ≥80% pilot “useful/very useful” ratings for hypotheses.
+            ≥70% reduction in time-to-hypothesis vs baseline · ≥90% reproducibility across reruns ·
+            ≥80% pilot “useful/very useful” ratings for ranked hypotheses and next-step recommendations.
           </div>
         </div>
       </div>
@@ -419,27 +407,27 @@
 
       <div class="grid-3">
         <div class="card">
-          <h3>Workflow expansion</h3>
+          <h3>Product expansion</h3>
           <ul>
-            <li>More assay types (scRNA-Seq, multiome)</li>
-            <li>Broader repository ingestion</li>
-            <li>Standardized cohort-level comparisons</li>
+            <li>Broader repository ingestion and richer metadata normalization</li>
+            <li>Additional disease areas and hypothesis classes (targets, biomarkers, mechanisms)</li>
+            <li>Improved calibration and benchmarking across diverse contexts</li>
           </ul>
         </div>
         <div class="card">
-          <h3>Deployment & security</h3>
+          <h3>Deployment & governance</h3>
           <ul>
-            <li>Secure cloud deployments (VPC patterns)</li>
-            <li>Role-based access and audit-friendly logging</li>
-            <li>Partner-friendly data handling</li>
+            <li>Secure deployments (VPC/on-prem) with audit logging and role-based access</li>
+            <li>Governance controls and reproducibility instrumentation</li>
+            <li>Partner-friendly data handling and compliance workflows</li>
           </ul>
         </div>
         <div class="card">
-          <h3>Productization</h3>
+          <h3>Commercial scale</h3>
           <ul>
-            <li>UI workflows for non-experts</li>
-            <li>Onboarding templates and documentation</li>
-            <li>Subscription + enterprise options</li>
+            <li>UI workflows for non-expert users and core facilities</li>
+            <li>Repeatable onboarding, documentation, and support</li>
+            <li>Subscription + secure tier + enterprise pricing packages</li>
           </ul>
         </div>
       </div>
