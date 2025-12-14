@@ -195,54 +195,34 @@
       .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
-  /* Print friendliness */
-@media print {
+    /* Print friendliness */
+    @media print {
+      header, footer { display: none !important; }
+      .page, main, body { min-height: auto !important; height: auto !important; }
+      main { flex: none !important; }
 
-  /* Hide site chrome */
-  header, footer { display: none !important; }
+      body { background:#fff !important; color:#111 !important; }
+      p, li { color:#111 !important; }
+      h1, h2, h3 { color:#111 !important; }
+      a { color:#111 !important; text-decoration: none !important; }
+      * { box-shadow: none !important; }
 
-  /* Reset layout quirks that create blank space */
-  .page, main, body {
-    min-height: auto !important;
-    height: auto !important;
-  }
-  main { flex: none !important; }
+      @page { size: Letter; margin: 0.5in; }
+      body { font-size: 95%; line-height: 1.32; }
 
-  /* Print colors */
-  body { background:#fff !important; color:#111 !important; }
-  p, li { color:#111 !important; }
-  h1, h2, h3 { color:#111 !important; }
-  a { color:#111 !important; text-decoration: none !important; }
+      table, thead, tbody, tr, td, th,
+      .grid-2, .card, .callout {
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+      }
+      h2, h3 { break-after: avoid-page; page-break-after: avoid; }
+      p, li { orphans: 2; widows: 2; }
 
-  /* Remove heavy effects that can confuse pagination */
-  * { box-shadow: none !important; }
-
-  /* Page setup */
-  @page { size: Letter; margin: 0.5in; }
-
-  /* Keep print density readable (not too aggressive) */
-  body { font-size: 95%; line-height: 1.32; }
-
-  /* IMPORTANT: Allow big blocks (table/cards) to split across pages */
-  table, thead, tbody, tr, td, th,
-  .grid-2, .card, .callout {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
-  }
-
-  /* Avoid ugly breaks ONLY for small headings */
-  h2, h3 { break-after: avoid-page; page-break-after: avoid; }
-
-  /* Prevent single orphan lines */
-  p, li { orphans: 2; widows: 2; }
-
-  /* Tighten spacing for print */
-  .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
-  .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
-  .card { padding: 10px 12px !important; }
-  .table th, .table td { padding: 7px 8px !important; }
-}
-
+      .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
+      .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
+      .card { padding: 10px 12px !important; }
+      .table th, .table td { padding: 7px 8px !important; }
+    }
   </style>
 </head>
 
@@ -281,72 +261,76 @@
       </div>
 
       <div class="kicker">Overview</div>
-      <h2>Phase I execution is supported by a modern local compute environment and secure cloud-ready workflows.</h2>
+      <h2>Phase I execution is supported by a modern local compute environment and secure, cloud-ready workflows.</h2>
       <p>
-        PromptGenix Phase I focuses on automated analysis pipelines (RNA-Seq + flow cytometry) and a literature-aware
-        Hypothesis Generator. The work is designed to run reproducibly on a dedicated local workstation for rapid iteration,
-        with optional secure deployment in a cloud environment (e.g., AWS VPC) for scale testing.
+        PromptGenix Phase I focuses on an <strong>evidence-weighted hypothesis intelligence engine</strong> that integrates public biomedical datasets
+        and literature. Development is supported by a dedicated local workstation for rapid iteration and deterministic reruns, with an optional
+        secure cloud path (e.g., AWS VPC) for scalability and collaboration testing as needed.
+      </p>
+      <p>
+        Phase I validation will use <strong>public datasets only</strong> to avoid IP and data-use constraints, while demonstrating feasibility,
+        reproducibility, and transparent evidence linking suitable for SBIR review.
       </p>
 
       <div class="grid-2">
         <div class="card">
           <h3>Local development environment</h3>
           <ul>
-            <li><strong>Dedicated workstation:</strong> high-memory Mac Studio-class system suitable for omics workflows</li>
-            <li><strong>Core toolchain:</strong> Python/R analysis stack; versioned environments; reproducible outputs</li>
-            <li><strong>Pipelines supported:</strong> RNA-Seq (QC → alignment → DEG → enrichment) and flow cytometry analysis</li>
-            <li><strong>Report generation:</strong> exportable HTML/PDF outputs for reviewers and collaborators</li>
+            <li><strong>Dedicated workstation:</strong> high-memory Mac Studio-class system for rapid prototyping and iterative development</li>
+            <li><strong>Core toolchain:</strong> Python/R for evidence feature extraction, inference, and report generation</li>
+            <li><strong>Reproducibility:</strong> versioned environments, pinned dependencies, config snapshots, and checksums</li>
+            <li><strong>Artifacts:</strong> exportable HTML/PDF reports, evidence objects, and audit-friendly logs</li>
           </ul>
           <div class="pill-row">
             <span class="pill">Local-first</span>
-            <span class="pill">Reproducible runs</span>
-            <span class="pill">HTML/PDF reporting</span>
+            <span class="pill">Deterministic reruns</span>
+            <span class="pill">Evidence objects</span>
+            <span class="pill">HTML/PDF outputs</span>
           </div>
         </div>
 
         <div class="card">
           <h3>Secure & scalable deployment option</h3>
           <ul>
-            <li><strong>AWS-ready:</strong> design supports deployment in a secure VPC for scale and collaboration</li>
-            <li><strong>Data separation:</strong> public-data validation in Phase I; sensitive datasets remain external</li>
-            <li><strong>Controlled access:</strong> role-based accounts; audit-friendly storage patterns (as applicable)</li>
-            <li><strong>Portability:</strong> pipelines and configs can move between local and cloud execution</li>
+            <li><strong>AWS-ready architecture:</strong> supports deployment in a secure VPC for scale testing and controlled collaboration</li>
+            <li><strong>Data separation:</strong> Phase I uses public data; sensitive datasets remain external to PromptGenix environments</li>
+            <li><strong>Controlled access:</strong> role-based access patterns and audit-friendly storage options (as applicable)</li>
+            <li><strong>Portability:</strong> reproducible configs enable consistent execution across local and cloud contexts</li>
           </ul>
           <div class="callout">
-            <strong>Phase I policy alignment:</strong> validation will use GEO/SRA/FlowRepository public datasets to avoid IP
-            and data-use constraints while demonstrating feasibility and performance.
+            <strong>Phase I policy alignment:</strong> evaluation uses GEO/SRA/FlowRepository and public literature sources to ensure clean SBIR review.
           </div>
         </div>
       </div>
 
       <div class="kicker" style="margin-top:18px;">Resources supporting Phase I</div>
-      <h2>Software, datasets, and operational supports aligned to SBIR deliverables.</h2>
+      <h2>Software, public datasets, and operational supports aligned to SBIR deliverables.</h2>
 
       <div class="grid-3">
         <div class="card">
           <h3>Software stack</h3>
           <ul>
-            <li><strong>Analysis:</strong> Python + R pipelines for omics and immunology workflows</li>
-            <li><strong>Automation:</strong> deterministic configs, versioned outputs, repeatable reruns</li>
-            <li><strong>LLM layer:</strong> literature-aware reasoning and traceable hypothesis generation</li>
+            <li><strong>Evidence layer:</strong> standardized extraction of effect sizes, uncertainty, reproducibility, and context descriptors</li>
+            <li><strong>Inference:</strong> statistical scoring + Bayesian updating for posterior confidence estimates</li>
+            <li><strong>Interpretability:</strong> LLM used only for explanation constrained by evidence links (“no evidence → no claim”)</li>
           </ul>
         </div>
 
         <div class="card">
-          <h3>Validation datasets</h3>
+          <h3>Validation sources</h3>
           <ul>
-            <li><strong>RNA-Seq/scRNA-Seq:</strong> GEO and SRA accessions</li>
-            <li><strong>Flow cytometry:</strong> FlowRepository datasets</li>
-            <li><strong>Evaluation:</strong> runtime, reproducibility, and usefulness of AI hypotheses</li>
+            <li><strong>Public datasets:</strong> GEO/SRA (omics) and FlowRepository (immune profiling)</li>
+            <li><strong>Public literature:</strong> PubMed/PMC for priors and traceable citations</li>
+            <li><strong>Evaluation focus:</strong> traceability, reproducibility, calibrated uncertainty, and utility</li>
           </ul>
         </div>
 
         <div class="card">
           <h3>Operational supports</h3>
           <ul>
-            <li><strong>Documentation:</strong> SBIR portal pages + reviewer-ready outputs</li>
-            <li><strong>Pilot readiness:</strong> structured onboarding and feedback templates</li>
-            <li><strong>Collaboration:</strong> channels for partner labs (letters of support in Phase II)</li>
+            <li><strong>Documentation:</strong> SBIR portal pages + reviewer-ready evidence-linked reports</li>
+            <li><strong>Pilot readiness:</strong> structured onboarding and feedback templates for partner labs</li>
+            <li><strong>Collaboration:</strong> mechanisms to support letters of support and Phase II pilot expansion</li>
           </ul>
         </div>
       </div>
@@ -365,26 +349,26 @@
         <tbody>
           <tr>
             <td><strong>Fast iteration</strong></td>
-            <td>Local compute enables rapid pipeline debugging and report template refinement</td>
-            <td>Stable end-to-end workflows on multiple public datasets</td>
+            <td>Local compute enables rapid evidence-layer development, inference tuning, and report refinement</td>
+            <td>Stable end-to-end hypothesis ranking on multiple public datasets with deterministic reruns</td>
           </tr>
           <tr>
             <td><strong>Reproducibility</strong></td>
-            <td>Versioned configs and deterministic runs; exportable artifacts</td>
-            <td>Rerun-consistent outputs; reviewer-ready HTML/PDF reports</td>
+            <td>Pinned versions, config snapshots, and checksums; exportable evidence objects and logs</td>
+            <td>Rerun-consistent outputs; reviewer-ready artifacts with traceability and uncertainty labeling</td>
           </tr>
           <tr>
             <td><strong>Scalability testing</strong></td>
-            <td>Cloud-ready architecture (optional) to evaluate heavier workloads and multi-user patterns</td>
-            <td>Evidence of feasibility to scale in Phase II deployments</td>
+            <td>Cloud-ready execution path (optional) for heavier workloads and multi-user patterns</td>
+            <td>Feasibility evidence for Phase II secure deployments and multi-site pilots</td>
           </tr>
         </tbody>
       </table>
 
       <div class="callout">
-        <strong>Bottom line:</strong> the current facilities and environment are sufficient to deliver Phase I milestones
-        (pipeline hardening, hypothesis generator traceability, and measurable validation on public datasets), while
-        supporting a clean path to secure scale-out in Phase II.
+        <strong>Bottom line:</strong> The current facilities and environment are sufficient to deliver Phase I milestones
+        (evidence ingest, hypothesis prioritization, traceable reporting, and measurable validation on public data),
+        while maintaining a clean path to secure scale-out in Phase II.
       </div>
     </section>
   </main>
