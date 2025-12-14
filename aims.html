@@ -17,7 +17,6 @@
     a{ color:inherit; text-decoration:none; }
     .page{ min-height:100vh; display:flex; flex-direction:column; }
 
-    /* Shared header/nav (matches index.html) */
     header{
       position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
@@ -108,7 +107,7 @@
       color:#d1d5db;
       font-size: .92rem;
     }
-    li{ margin-bottom: 4px; }
+    li{ margin-bottom: 6px; }
 
     .fine{
       font-size:.78rem;
@@ -124,66 +123,28 @@
       text-align:center;
     }
 
-/* =========================
-   PRINT CONFIG (SBIR – FINAL)
-   ========================= */
-@media print {
-
-  @page {
-    size: Letter;
-    margin: 0.5in;
-  }
-
-  header, footer {
-    display: none !important;
-  }
-
-  body {
-    background: #fff;
-    color: #111;
-    font-size: 11.2pt;      /* 🔑 핵심 1 */
-    line-height: 1.28;      /* 🔑 핵심 2 */
-  }
-
-  h1 { font-size: 16pt; }
-  h2 { font-size: 12.5pt; margin-top: 10px; }
-  h3 { font-size: 11.5pt; }
-
-  p, li {
-    color: #111;
-    margin-bottom: 4px;
-  }
-
-  ul {
-    margin-top: 4px;
-    margin-bottom: 6px;
-  }
-
-  .section {
-    max-width: 100%;
-    padding: 0;
-    margin-bottom: 10px;
-  }
-
-  .box {
-    border: 1px solid #999;
-    background: #fff;
-    padding: 8px;
-  }
-}
-
-
-
-    body {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+    /* =========================
+       PRINT CONFIG (SBIR – FINAL)
+       ========================= */
+    @media print {
+      @page { size: Letter; margin: 0.5in; }
+      header, footer { display: none !important; }
+      body {
+        background: #fff;
+        color: #111;
+        font-size: 11.2pt;
+        line-height: 1.28;
+      }
+      h1 { font-size: 16pt; }
+      h2 { font-size: 12.5pt; margin-top: 10px; }
+      p, li { color: #111; margin-bottom: 4px; }
+      ul { margin-top: 4px; margin-bottom: 6px; }
+      .section { max-width: 100%; padding: 0; margin-bottom: 10px; }
+      .box { border: 1px solid #999; background: #fff; padding: 8px; }
     }
 
-    h1, h2, h3, p, ul, li, .card, .callout {
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
-  }  
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h1, h2, h3, p, ul, li, .box { break-inside: avoid; page-break-inside: avoid; }
   </style>
 </head>
 
@@ -214,7 +175,7 @@
   <main>
     <section class="section">
       <div class="topline">
-        <h1 class="doc-title">Specific Aims (Phase I): PromptGenix – BioAI Automation Platform</h1>
+        <h1 class="doc-title">Specific Aims (Phase I): PromptGenix – Hypothesis Intelligence Engine for Public Biomedical Data</h1>
         <div class="meta">
           PromptGenix LLC (Women &amp; Minority-Owned) &middot; Contact: dohoon.kim1@icloud.com &middot;
           Website: promptgenix.org/sbir.html
@@ -223,48 +184,78 @@
 
       <h2>Significance</h2>
       <p>
-        Immunology and infectious disease programs generate large volumes of RNA-Seq, single-cell RNA-Seq,
-        and high-dimensional flow cytometry data, yet analysis often depends on fragmented tools, custom scripts,
-        and scarce expert time. This drives long turnaround, inconsistent reproducibility, and delayed biological interpretation.
+        Public biomedical resources now contain vast volumes of omics and immune profiling datasets and a rapidly expanding scientific literature,
+        yet researchers still face a critical bottleneck: <strong>turning heterogeneous evidence into prioritized, testable hypotheses</strong>.
+        Most workflows rely on fragmented tools, bespoke scripts, and scarce expert time, leading to long turnaround, inconsistent reproducibility,
+        and delayed experimental decisions.
       </p>
       <p>
-        The bottleneck is not only computation, but scientific synthesis—specifically, the lack of scalable, reproducible mechanisms to translate multi-omic outputs into ranked hypotheses and concrete experimental decisions.
+        The key gap is not only computation, but evidence-weighted scientific synthesis—specifically, the lack of scalable and transparent mechanisms
+        to integrate public datasets and literature into <strong>ranked hypotheses with quantified uncertainty</strong>.
       </p>
 
       <h2>Innovation</h2>
       <p>
-        PromptGenix introduces an integrated BioAI co-investigator that combines end-to-end automated omics pipelines
-        with an internal, literature-aware LLM layer and a <strong>Hypothesis Generator</strong>.
-        Instead of producing only static plots and summaries, PromptGenix ranks mechanistic hypotheses and proposes
-        concrete follow-up experiments grounded in traceable PubMed-aware reasoning.
+        PromptGenix introduces a <strong>hypothesis intelligence engine</strong> that prioritizes mechanistic hypotheses using
+        <strong>statistical evidence modeling</strong> and <strong>Bayesian updating</strong> over public biomedical data and literature-derived priors.
+        Large language models are used strictly for <strong>interpretability</strong>—to explain rankings and cite supporting or conflicting sources—
+        not to determine confidence.
+      </p>
+      <p>
+        Unlike tools that primarily produce analysis outputs or narrative summaries, PromptGenix delivers
+        <strong>evidence-linked hypothesis rankings</strong> with explicit uncertainty labeling and actionable next-step recommendations.
       </p>
 
       <h2>Overall objective &amp; central hypothesis</h2>
       <div class="box">
-        <p><strong>Objective:</strong> Deliver a validated, reproducible Phase I prototype that automates RNA-Seq and flow cytometry workflows
-          and generates reviewer-ready reports with ranked hypotheses and suggested validation experiments.</p>
-        <p><strong>Central hypothesis:</strong> Standardized automated pipelines combined with traceable, literature-aware LLM reasoning
-          will reduce analysis turnaround time and increase interpretability, enabling faster, higher-quality study decisions
-          in immunology and infectious disease research.</p>
+        <p>
+          <strong>Objective:</strong> Deliver a validated Phase I prototype that automatically retrieves public datasets and literature,
+          constructs standardized evidence objects, and outputs <strong>ranked biological hypotheses with probabilistic confidence</strong>,
+          traceable evidence links, and recommended follow-up experiments.
+        </p>
+        <p>
+          <strong>Central hypothesis:</strong> An evidence-weighted decision engine that combines statistical scoring and Bayesian inference
+          with constrained LLM interpretability will reduce hypothesis generation time while improving transparency, reproducibility,
+          and usefulness for guiding study design decisions in immunology and infectious disease research.
+        </p>
       </div>
 
       <h2>Specific aims</h2>
       <ul>
-        <li><strong>Aim 1.</strong> Harden end-to-end automated RNA-Seq and flow cytometry pipelines using public datasets (GEO, SRA, FlowRepository).</li>
-        <li><strong>Aim 2.</strong> Implement a traceable Hypothesis Generator that ranks biological hypotheses and proposes validation experiments with PubMed-aware citations.</li>
-        <li><strong>Aim 3.</strong> Generate exportable HTML/PDF reports and evaluate usability through structured 2–3 pilot studies, measuring turnaround time, reproducibility across reruns, and perceived usefulness of AI-generated hypotheses.</li>
+        <li>
+          <strong>Aim 1.</strong> Build a robust public-data ingest and evidence feature layer that generates standardized evidence objects
+          (effect sizes, uncertainty, reproducibility, and context descriptors) from selected public datasets and associated metadata.
+        </li>
+        <li>
+          <strong>Aim 2.</strong> Implement an evidence-weighted hypothesis prioritization engine using statistical scoring and Bayesian updating
+          to compute posterior confidence distributions and rank candidate hypotheses with explicit uncertainty annotations.
+        </li>
+        <li>
+          <strong>Aim 3.</strong> Deliver reviewer-ready HTML/PDF outputs and pilot usability evaluation demonstrating traceability and utility:
+          ranked hypotheses with confidence bands, evidence coverage (supporting vs. conflicting), citations, and recommended next steps.
+        </li>
       </ul>
 
       <h2>Expected outcomes &amp; deliverables</h2>
       <ul>
-        <li>Validated prototype producing reproducible outputs across reruns (versioned configs + reports).</li>
-        <li>Reviewer-ready reports generated within &lt;24 hours from raw data inputs (dataset-dependent).</li>
-        <li>Measured reductions in turnaround time and positive user feedback on AI-generated hypotheses.</li>
+        <li>
+          A validated prototype that produces deterministic, reproducible evidence objects and ranked hypotheses across reruns
+          (versioned configs, checksums, and traceable artifacts).
+        </li>
+        <li>
+          Evidence-weighted hypothesis outputs with posterior confidence estimates and clear uncertainty labeling,
+          including links to supporting and conflicting evidence.
+        </li>
+        <li>
+          Reviewer-ready reports generated within &lt;24 hours for accession-driven runs (dataset-dependent),
+          with reduced manual synthesis time in pilot feedback.
+        </li>
       </ul>
 
       <h2>Impact</h2>
       <p>
-        Successful completion of Phase I will deliver a validated, SBIR-ready prototype with measurable performance gains, de-risking Phase II scale-out to multi-site immunology studies.
+        Successful completion of Phase I will de-risk Phase II development of a scalable hypothesis intelligence platform that enables faster,
+        more transparent evidence integration and prioritization for experimental planning—supporting, not replacing, human scientific decision-making.
       </p>
 
       <div class="fine">
