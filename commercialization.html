@@ -17,7 +17,6 @@
     a{ color:inherit; text-decoration:none; }
     .page{ min-height:100vh; display:flex; flex-direction:column; }
 
-    /* Shared header/nav (matches portal style) */
     header{
       position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
@@ -187,55 +186,34 @@
       .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
-  /* Print friendliness */
-@media print {
+    /* Print friendliness */
+    @media print {
+      header, footer { display: none !important; }
+      .page, main, body { min-height: auto !important; height: auto !important; }
+      main { flex: none !important; }
 
-  /* Hide site chrome */
-  header, footer { display: none !important; }
+      body { background:#fff !important; color:#111 !important; }
+      p, li { color:#111 !important; }
+      h1, h2, h3 { color:#111 !important; }
+      a { color:#111 !important; text-decoration: none !important; }
+      * { box-shadow: none !important; }
 
-  /* Reset layout quirks that create blank space */
-  .page, main, body {
-    min-height: auto !important;
-    height: auto !important;
-  }
-  main { flex: none !important; }
+      @page { size: Letter; margin: 0.5in; }
+      body { font-size: 95%; line-height: 1.32; }
 
-  /* Print colors */
-  body { background:#fff !important; color:#111 !important; }
-  p, li { color:#111 !important; }
-  h1, h2, h3 { color:#111 !important; }
-  a { color:#111 !important; text-decoration: none !important; }
+      table, thead, tbody, tr, td, th,
+      .grid-2, .card, .callout {
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+      }
+      h2, h3 { break-after: avoid-page; page-break-after: avoid; }
+      p, li { orphans: 2; widows: 2; }
 
-  /* Remove heavy effects that can confuse pagination */
-  * { box-shadow: none !important; }
-
-  /* Page setup */
-  @page { size: Letter; margin: 0.5in; }
-
-  /* Keep print density readable (not too aggressive) */
-  body { font-size: 95%; line-height: 1.32; }
-
-  /* IMPORTANT: Allow big blocks (table/cards) to split across pages */
-  table, thead, tbody, tr, td, th,
-  .grid-2, .card, .callout {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
-  }
-
-  /* Avoid ugly breaks ONLY for small headings */
-  h2, h3 { break-after: avoid-page; page-break-after: avoid; }
-
-  /* Prevent single orphan lines */
-  p, li { orphans: 2; widows: 2; }
-
-  /* Tighten spacing for print */
-  .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
-  .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
-  .card { padding: 10px 12px !important; }
-  .table th, .table td { padding: 7px 8px !important; }
-}
-
-
+      .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
+      .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
+      .card { padding: 10px 12px !important; }
+      .table th, .table td { padding: 7px 8px !important; }
+    }
   </style>
 </head>
 
@@ -274,44 +252,48 @@
       </div>
 
       <div class="kicker">Positioning</div>
-      <h2>BioAI “co-investigator” that reduces analysis time and increases scientific actionability.</h2>
+      <h2>Evidence-weighted hypothesis intelligence engine for faster, more transparent scientific decisions.</h2>
       <p>
-        PromptGenix commercializes an end-to-end automation platform for RNA-Seq and flow cytometry that generates
-        reproducible pipeline outputs <em>and</em> reviewer-friendly interpretation—including ranked hypotheses and
-        concrete follow-up experiments with traceable literature-aware citations.
+        PromptGenix commercializes a <strong>hypothesis intelligence platform</strong> that integrates public biomedical datasets and scientific
+        literature to produce <strong>ranked, testable hypotheses with probabilistic confidence</strong>, explicit evidence links, and
+        actionable next-step recommendations. The platform is designed to <strong>support</strong> (not replace) human scientific judgment by
+        making evidence integration faster, reproducible, and reviewer-friendly.
       </p>
+      <div class="callout">
+        <strong>Commercial focus:</strong> sell the decision product (ranked hypotheses + uncertainty + traceability), not “data analysis as a service.”
+      </div>
 
       <div class="grid-2">
         <div class="card">
           <h3>Primary customers</h3>
           <ul>
-            <li><strong>NIH-funded academic labs</strong> doing immunology, infectious disease, HIV/vaccine studies</li>
-            <li><strong>Government research groups</strong> needing fast, reproducible analytics (secure/on-prem options)</li>
-            <li><strong>CROs & biotech teams</strong> seeking scalable turnaround and standardized reporting</li>
-            <li><strong>Core facilities</strong> supporting multiple PIs with consistent pipelines and templates</li>
+            <li><strong>NIH-funded academic labs</strong> in immunology, infectious disease, vaccine/HIV research</li>
+            <li><strong>Government research groups</strong> needing reproducible, auditable decision support (secure/on-prem options)</li>
+            <li><strong>Biotech & translational teams</strong> prioritizing targets, biomarkers, and experiments under time constraints</li>
+            <li><strong>CROs & core facilities</strong> supporting multiple projects with standardized, traceable deliverables</li>
           </ul>
           <div class="pill-row">
             <span class="pill">Academic</span>
             <span class="pill">Government</span>
-            <span class="pill">CRO / Biotech</span>
-            <span class="pill">Core facilities</span>
+            <span class="pill">Biotech</span>
+            <span class="pill">CRO / Core</span>
           </div>
         </div>
 
         <div class="card">
           <h3>Value proposition</h3>
           <ul>
-            <li><strong>Speed:</strong> reduce analysis turnaround from weeks to days (or &lt;24h for standard runs)</li>
+            <li><strong>Faster hypothesis-to-experiment:</strong> compress synthesis from weeks to days (or &lt;24h for accession-driven runs)</li>
+            <li><strong>Confidence with uncertainty:</strong> probabilistic ranking + credible intervals and evidence coverage</li>
+            <li><strong>Traceability:</strong> every hypothesis links to evidence objects and cited sources (supporting vs. conflicting)</li>
             <li><strong>Reproducibility:</strong> versioned configs, deterministic reruns, exportable artifacts</li>
-            <li><strong>Interpretability:</strong> plain-language summaries + figures + hypothesis list</li>
-            <li><strong>Actionability:</strong> experiment suggestions (flow panels, contrasts, subset analyses)</li>
-            <li><strong>Deployment options:</strong> local Mac Studio or secure AWS VPC (data-sensitive workflows)</li>
+            <li><strong>Flexible deployment:</strong> local workstation, secure VPC, or on-prem for sensitive settings</li>
           </ul>
         </div>
       </div>
 
       <div class="kicker" style="margin-top:18px;">Competitive landscape</div>
-      <h2>Differentiation vs. point tools and general-purpose AI assistants.</h2>
+      <h2>Differentiation vs. point tools, workflow frameworks, and general-purpose AI assistants.</h2>
 
       <table class="table" aria-label="Competitive differentiation table">
         <thead>
@@ -323,58 +305,68 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Point tools</strong><br/>FlowJo, Seurat, GSEA, etc.</td>
+            <td><strong>Point tools</strong><br/>Seurat, GSEA, FlowJo, etc.</td>
             <td>Best-in-class for specific steps; familiar to labs.</td>
-            <td>Unifies steps into reproducible pipelines + consistent reporting; reduces manual glue code and rework.</td>
+            <td>
+              Converts outputs into <strong>standardized evidence objects</strong> and produces <strong>ranked hypotheses</strong> with uncertainty,
+              reducing manual synthesis and “glue code” across tools.
+            </td>
           </tr>
           <tr>
-            <td><strong>Workflow scripting</strong><br/>custom pipelines</td>
+            <td><strong>Workflow scripting</strong><br/>custom pipelines / notebooks</td>
             <td>Flexible; tailored to a lab’s preferences.</td>
-            <td>Standardized, maintainable product with deterministic configs and templates; less brittle, easier onboarding.</td>
+            <td>
+              Productized, maintainable engine with deterministic configs and reusable templates; easier onboarding and consistent QA/traceability.
+            </td>
           </tr>
           <tr>
             <td><strong>Generic LLM assistants</strong></td>
             <td>Fast writing/summarization; broad coverage.</td>
-            <td>Hypothesis Generator is traceable, evidence-linked, and grounded in observed pipeline signals with citations and confidence flags.</td>
+            <td>
+              Evidence-weighted inference + “no evidence, no claim” guardrails; LLM used for explanation only, constrained by evidence links,
+              citations, and uncertainty flags.
+            </td>
           </tr>
         </tbody>
       </table>
 
       <div class="kicker" style="margin-top:18px;">Business model</div>
-      <h2>Flexible pricing aligned to lab budgets and security requirements.</h2>
+      <h2>Subscription-first, with deployment tiers for security and scale.</h2>
 
       <div class="grid-2">
         <div class="card">
           <h3>Initial go-to-market</h3>
           <ul>
-            <li><strong>Pilot program:</strong> 2–3 partner labs (Phase I) with structured KPIs + usability feedback</li>
-            <li><strong>Letters of support:</strong> pilot partners and collaborating PIs (Phase II readiness)</li>
-            <li><strong>Visibility:</strong> SBIR portal pages + demo reports on public datasets</li>
+            <li><strong>Pilot program:</strong> 2–3 partner labs (Phase I) with structured KPIs (traceability, usefulness, reproducibility)</li>
+            <li><strong>Letters of support:</strong> pilot partners and collaborating PIs to demonstrate Phase II readiness</li>
+            <li><strong>Proof assets:</strong> public demo reports + reproducible runs using public datasets and clear “confidence outputs”</li>
+            <li><strong>Early channel:</strong> NIH-funded networks, core facilities, and government groups needing auditable decision support</li>
           </ul>
           <div class="callout">
-            <strong>Near-term traction:</strong> pilots → references → Phase II scale-out.
+            <strong>Near-term traction:</strong> pilots → references → paid evaluations → Phase II scale-out.
           </div>
         </div>
 
         <div class="card">
           <h3>Revenue options</h3>
           <ul>
-            <li><strong>Subscription:</strong> per lab / per seat (software + templates + updates)</li>
-            <li><strong>Compute add-on:</strong> managed cloud runs (optional) for heavier datasets</li>
-            <li><strong>Service + software:</strong> onboarding + customization + reporting packages</li>
-            <li><strong>Enterprise:</strong> secure deployment in customer AWS VPC / on-prem environments</li>
+            <li><strong>Subscription (SaaS):</strong> per seat / per lab for hypothesis engine + updates + templates</li>
+            <li><strong>Secure tier:</strong> customer VPC / on-prem deployment package (government, regulated biotech)</li>
+            <li><strong>Compute add-on:</strong> managed runs for heavy workloads (optional)</li>
+            <li><strong>Services:</strong> onboarding, workflow mapping, and support (non-recurring, accelerates adoption)</li>
+            <li><strong>Enterprise:</strong> multi-team deployments, SSO, audit logging, and expanded governance</li>
           </ul>
           <div class="pill-row">
             <span class="pill">SaaS</span>
+            <span class="pill">Secure tier</span>
             <span class="pill">Hybrid</span>
-            <span class="pill">On-prem</span>
-            <span class="pill">Services</span>
+            <span class="pill">Enterprise</span>
           </div>
         </div>
       </div>
 
       <div class="kicker" style="margin-top:18px;">Milestones</div>
-      <h2>Phase I creates a sellable prototype; Phase II scales adoption.</h2>
+      <h2>Phase I proves decision value; Phase II scales adoption and revenue.</h2>
 
       <table class="table" aria-label="Commercialization milestones table">
         <thead>
@@ -388,40 +380,36 @@
           <tr>
             <td><strong>Phase I</strong></td>
             <td>
-              Harden pipelines on public datasets; Hypothesis Generator with traceability; reviewer-ready reports;
-              pilot usability and KPI evaluation.
+              Evidence layer + hypothesis decision engine; traceable reports with confidence bands; pilot KPI evaluation; initial packaging for
+              deterministic reruns and audit-friendly artifacts.
             </td>
             <td>
-              Demonstrable value for partner labs; basis for pricing; Phase II-ready product roadmap.
+              Demonstrable decision support value; priceable product scope; partner references and Phase II-ready roadmap.
             </td>
           </tr>
           <tr>
             <td><strong>Phase II</strong></td>
             <td>
-              Expanded dataset coverage; improved UI/automation; multi-site pilots; packaging for secure deployments;
-              support and onboarding workflows.
+              Expanded modality coverage and dataset breadth; improved UI and automation; multi-site pilots; governance and secure deployments;
+              repeatable onboarding and support workflows.
             </td>
             <td>
-              Paid subscriptions and enterprise deployments; repeatable onboarding; scalable revenue.
+              Paid subscriptions and secure deployments; repeatable customer acquisition; scalable revenue and partnerships.
             </td>
           </tr>
         </tbody>
       </table>
 
-      <p class="section-text">
-  Phase I establishes technical feasibility and reviewer trust; Phase II will scale PromptGenix to multi-site cohorts,
-  secure deployments, and revenue-generating pilot partnerships with NIH-funded labs and CROs.
-</p>
-
       <div class="callout">
-        <strong>Commercial thesis:</strong> Labs will adopt PromptGenix when it demonstrably reduces analysis time, improves reproducibility across reruns, and produces hypotheses that directly inform study design decisions.
+        <strong>Commercial thesis:</strong> Customers adopt PromptGenix when it demonstrably reduces hypothesis generation time,
+        improves transparency and reproducibility, and produces confidence-ranked hypotheses that directly inform study design decisions.
       </div>
-<p class="section-text">
-  Building on Phase I validation, Phase II will expand PromptGenix to multi-site cohorts and secure deployments,
-  integrate additional omics modalities, and establish revenue-generating pilot partnerships with NIH-funded labs and CROs.
-</p>
 
-      
+      <p>
+        Phase I establishes technical feasibility and reviewer trust using public datasets; Phase II will scale PromptGenix to additional disease areas,
+        expand decision-engine calibration, and convert pilot partnerships into revenue through subscription and secure deployment tiers.
+      </p>
+
     </section>
   </main>
 
