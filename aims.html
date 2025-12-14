@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – Specific Aims (Phase I)</title>
+  <title>PromptGenix – Specific Aims (Phase I) v3</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix SBIR Phase I Specific Aims: significance, innovation, objective, central hypothesis, aims, outcomes, impact."/>
+  <meta name="description" content="PromptGenix SBIR Phase I Specific Aims v3 (compressed for 1 page): significance, innovation, objective, aims, outcomes, impact."/>
   <style>
     * { box-sizing: border-box; }
     body{
@@ -17,6 +17,7 @@
     a{ color:inherit; text-decoration:none; }
     .page{ min-height:100vh; display:flex; flex-direction:column; }
 
+    /* Shared header/nav */
     header{
       position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
@@ -35,7 +36,6 @@
     }
     .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
     .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
-
     .nav-links{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
     .nav-links a{
       font-size:.88rem; color:#9ca3af;
@@ -60,16 +60,15 @@
       margin: 0 auto;
       padding: 28px 20px;
     }
-
     .topline{
       display:flex; flex-wrap:wrap; gap:10px;
       align-items:center; justify-content:space-between;
       padding-top: 16px;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
     .doc-title{
-      font-size: 1.25rem;
-      font-weight: 800;
+      font-size: 1.18rem;
+      font-weight: 820;
       color:#f9fafb;
       margin: 0;
     }
@@ -79,40 +78,38 @@
     }
 
     h2{
-      font-size: .9rem;
+      font-size: .86rem;
       letter-spacing: .14em;
       text-transform: uppercase;
       color:#a5b4fc;
-      margin: 18px 0 8px;
+      margin: 14px 0 6px;
     }
-
     p{
-      margin: 0 0 10px;
-      font-size: .93rem;
+      margin: 0 0 8px;
+      font-size: .92rem;
       color:#d1d5db;
     }
-
     .box{
-      margin: 10px 0 12px;
+      margin: 8px 0 10px;
       border-radius: 14px;
-      padding: 12px 14px;
+      padding: 10px 12px;
       border: 1px solid rgba(148,163,184,0.35);
       background: rgba(15,23,42,0.75);
     }
     .box strong{ color:#22c55e; }
 
     ul{
-      margin: 6px 0 10px;
+      margin: 6px 0 8px;
       padding-left: 1.1rem;
       color:#d1d5db;
       font-size: .92rem;
     }
-    li{ margin-bottom: 6px; }
+    li{ margin-bottom: 4px; }
 
     .fine{
       font-size:.78rem;
       color:#9ca3af;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     footer{
@@ -123,28 +120,31 @@
       text-align:center;
     }
 
-    /* =========================
-       PRINT CONFIG (SBIR – FINAL)
-       ========================= */
+    /* PRINT CONFIG (SBIR – 1 page) */
     @media print {
       @page { size: Letter; margin: 0.5in; }
       header, footer { display: none !important; }
-      body {
-        background: #fff;
-        color: #111;
-        font-size: 11.2pt;
-        line-height: 1.28;
-      }
-      h1 { font-size: 16pt; }
-      h2 { font-size: 12.5pt; margin-top: 10px; }
-      p, li { color: #111; margin-bottom: 4px; }
-      ul { margin-top: 4px; margin-bottom: 6px; }
-      .section { max-width: 100%; padding: 0; margin-bottom: 10px; }
-      .box { border: 1px solid #999; background: #fff; padding: 8px; }
-    }
 
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    h1, h2, h3, p, ul, li, .box { break-inside: avoid; page-break-inside: avoid; }
+      body {
+        background:#fff !important;
+        color:#111 !important;
+        font-size: 11.0pt;
+        line-height: 1.26;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .section { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+      p, li { color:#111 !important; margin-bottom: 3px !important; }
+      h2 { color:#111 !important; margin-top: 10px !important; margin-bottom: 4px !important; }
+      .doc-title { color:#111 !important; }
+      .meta { color:#333 !important; }
+      .box { background:#fff !important; border:1px solid #999 !important; padding: 7px 8px !important; }
+      a { color:#111 !important; text-decoration:none !important; }
+
+      /* prevent awkward splits */
+      h2, .box { break-after: avoid-page; page-break-after: avoid; }
+      p, li { orphans: 2; widows: 2; }
+    }
   </style>
 </head>
 
@@ -175,7 +175,7 @@
   <main>
     <section class="section">
       <div class="topline">
-        <h1 class="doc-title">Specific Aims (Phase I): PromptGenix – Hypothesis Intelligence Engine for Public Biomedical Data</h1>
+        <h1 class="doc-title">Specific Aims (Phase I): PromptGenix – Hypothesis Intelligence Engine for Public Biomedical Data (v3)</h1>
         <div class="meta">
           PromptGenix LLC (Women &amp; Minority-Owned) &middot; Contact: dohoon.kim1@icloud.com &middot;
           Website: promptgenix.org/sbir.html
@@ -184,78 +184,53 @@
 
       <h2>Significance</h2>
       <p>
-        Public biomedical resources now contain vast volumes of omics and immune profiling datasets and a rapidly expanding scientific literature,
-        yet researchers still face a critical bottleneck: <strong>turning heterogeneous evidence into prioritized, testable hypotheses</strong>.
-        Most workflows rely on fragmented tools, bespoke scripts, and scarce expert time, leading to long turnaround, inconsistent reproducibility,
-        and delayed experimental decisions.
-      </p>
-      <p>
-        The key gap is not only computation, but evidence-weighted scientific synthesis—specifically, the lack of scalable and transparent mechanisms
-        to integrate public datasets and literature into <strong>ranked hypotheses with quantified uncertainty</strong>.
+        Public biomedical resources contain vast omics/immune profiling datasets and a rapidly expanding literature,
+        yet a key bottleneck remains: converting heterogeneous evidence into <strong>prioritized, testable hypotheses</strong>
+        with <strong>quantified uncertainty</strong>. Fragmented tools and bespoke scripts slow turnaround and reduce reproducibility,
+        while interpretation depends on scarce expert time. What is missing is a scalable, transparent mechanism for
+        evidence-weighted scientific synthesis and decision support.
       </p>
 
       <h2>Innovation</h2>
       <p>
         PromptGenix introduces a <strong>hypothesis intelligence engine</strong> that prioritizes mechanistic hypotheses using
-        <strong>statistical evidence modeling</strong> and <strong>Bayesian updating</strong> over public biomedical data and literature-derived priors.
-        Large language models are used strictly for <strong>interpretability</strong>—to explain rankings and cite supporting or conflicting sources—
-        not to determine confidence.
-      </p>
-      <p>
-        Unlike tools that primarily produce analysis outputs or narrative summaries, PromptGenix delivers
-        <strong>evidence-linked hypothesis rankings</strong> with explicit uncertainty labeling and actionable next-step recommendations.
+        statistical evidence modeling and Bayesian updating over public biomedical data and literature-derived priors.
+        LLMs are constrained to <strong>interpretability</strong> (explaining rankings, summarizing evidence, citing sources) rather than
+        determining confidence. Unlike tools that produce plots or narrative summaries alone, PromptGenix delivers
+        <strong>evidence-linked hypothesis rankings</strong> with explicit uncertainty labeling and actionable next steps.
       </p>
 
       <h2>Overall objective &amp; central hypothesis</h2>
       <div class="box">
-        <p>
-          <strong>Objective:</strong> Deliver a validated Phase I prototype that automatically retrieves public datasets and literature,
-          constructs standardized evidence objects, and outputs <strong>ranked biological hypotheses with probabilistic confidence</strong>,
-          traceable evidence links, and recommended follow-up experiments.
-        </p>
-        <p>
-          <strong>Central hypothesis:</strong> An evidence-weighted decision engine that combines statistical scoring and Bayesian inference
-          with constrained LLM interpretability will reduce hypothesis generation time while improving transparency, reproducibility,
-          and usefulness for guiding study design decisions in immunology and infectious disease research.
-        </p>
+        <p><strong>Objective:</strong> Deliver a validated Phase I prototype that retrieves public datasets and literature,
+          constructs standardized evidence objects, and outputs ranked biological hypotheses with probabilistic confidence,
+          traceable evidence links, and recommended follow-up experiments.</p>
+        <p><strong>Central hypothesis:</strong> An evidence-weighted decision engine combining statistical scoring/Bayesian inference with
+          constrained LLM interpretability will reduce time-to-hypothesis while improving transparency, reproducibility,
+          and usefulness for study design decisions in immunology and infectious disease research.</p>
       </div>
 
       <h2>Specific aims</h2>
       <ul>
-        <li>
-          <strong>Aim 1.</strong> Build a robust public-data ingest and evidence feature layer that generates standardized evidence objects
-          (effect sizes, uncertainty, reproducibility, and context descriptors) from selected public datasets and associated metadata.
-        </li>
-        <li>
-          <strong>Aim 2.</strong> Implement an evidence-weighted hypothesis prioritization engine using statistical scoring and Bayesian updating
-          to compute posterior confidence distributions and rank candidate hypotheses with explicit uncertainty annotations.
-        </li>
-        <li>
-          <strong>Aim 3.</strong> Deliver reviewer-ready HTML/PDF outputs and pilot usability evaluation demonstrating traceability and utility:
-          ranked hypotheses with confidence bands, evidence coverage (supporting vs. conflicting), citations, and recommended next steps.
-        </li>
+        <li><strong>Aim 1.</strong> Build a robust public-data ingest and evidence feature layer that generates standardized evidence objects
+          (effect sizes, uncertainty-aware descriptors, reproducibility checks, context) from selected datasets and metadata.</li>
+        <li><strong>Aim 2.</strong> Implement an evidence-weighted hypothesis prioritization engine using statistical scoring and Bayesian updating
+          to compute posterior confidence and rank candidate hypotheses with explicit uncertainty annotations.</li>
+        <li><strong>Aim 3.</strong> Deliver reviewer-ready HTML/PDF outputs and evaluate usability via 2–3 pilot studies, measuring traceability,
+          rerun reproducibility, turnaround time, and “useful” ratings for hypothesis recommendations.</li>
       </ul>
 
       <h2>Expected outcomes &amp; deliverables</h2>
       <ul>
-        <li>
-          A validated prototype that produces deterministic, reproducible evidence objects and ranked hypotheses across reruns
-          (versioned configs, checksums, and traceable artifacts).
-        </li>
-        <li>
-          Evidence-weighted hypothesis outputs with posterior confidence estimates and clear uncertainty labeling,
-          including links to supporting and conflicting evidence.
-        </li>
-        <li>
-          Reviewer-ready reports generated within &lt;24 hours for accession-driven runs (dataset-dependent),
-          with reduced manual synthesis time in pilot feedback.
-        </li>
+        <li>Deterministic, reproducible evidence objects and ranked hypotheses across reruns (versioned configs, checksums, traceable artifacts).</li>
+        <li>Evidence-linked hypotheses with posterior confidence estimates and clear support vs. conflict coverage.</li>
+        <li>Reviewer-ready reports generated within &lt;24 hours for accession-driven runs (dataset-dependent), with reduced manual synthesis time.</li>
       </ul>
 
       <h2>Impact</h2>
       <p>
-        Successful completion of Phase I will de-risk Phase II development of a scalable hypothesis intelligence platform that enables faster,
-        more transparent evidence integration and prioritization for experimental planning—supporting, not replacing, human scientific decision-making.
+        Successful completion of Phase I will de-risk Phase II development of a scalable hypothesis intelligence platform for faster,
+        more transparent evidence integration and prioritization—supporting, not replacing, human scientific decision-making.
       </p>
 
       <div class="fine">
