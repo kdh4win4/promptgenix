@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>PromptGenix – Research Strategy (Approach, Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix SBIR Phase I Approach: workflow, validation plan, milestones, KPIs, and risks & mitigation."/>
+  <meta name="description" content="PromptGenix SBIR Phase I Approach: evidence-weighted hypothesis prioritization workflow, validation plan, milestones, KPIs, and risks & mitigation."/>
   <style>
     * { box-sizing: border-box; }
     body{
@@ -17,7 +17,6 @@
     a{ color:inherit; text-decoration:none; }
     .page{ min-height:100vh; display:flex; flex-direction:column; }
 
-    /* Shared header/nav (matches index.html) */
     header{
       position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
@@ -191,54 +190,34 @@
       .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
-  /* Print friendliness */
-@media print {
+    /* Print friendliness */
+    @media print {
+      header, footer { display: none !important; }
+      .page, main, body { min-height: auto !important; height: auto !important; }
+      main { flex: none !important; }
 
-  /* Hide site chrome */
-  header, footer { display: none !important; }
+      body { background:#fff !important; color:#111 !important; }
+      p, li { color:#111 !important; }
+      h1, h2, h3 { color:#111 !important; }
+      a { color:#111 !important; text-decoration: none !important; }
+      * { box-shadow: none !important; }
 
-  /* Reset layout quirks that create blank space */
-  .page, main, body {
-    min-height: auto !important;
-    height: auto !important;
-  }
-  main { flex: none !important; }
+      @page { size: Letter; margin: 0.5in; }
+      body { font-size: 95%; line-height: 1.32; }
 
-  /* Print colors */
-  body { background:#fff !important; color:#111 !important; }
-  p, li { color:#111 !important; }
-  h1, h2, h3 { color:#111 !important; }
-  a { color:#111 !important; text-decoration: none !important; }
+      table, thead, tbody, tr, td, th,
+      .grid-2, .card, .callout {
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+      }
+      h2, h3 { break-after: avoid-page; page-break-after: avoid; }
+      p, li { orphans: 2; widows: 2; }
 
-  /* Remove heavy effects that can confuse pagination */
-  * { box-shadow: none !important; }
-
-  /* Page setup */
-  @page { size: Letter; margin: 0.5in; }
-
-  /* Keep print density readable (not too aggressive) */
-  body { font-size: 95%; line-height: 1.32; }
-
-  /* IMPORTANT: Allow big blocks (table/cards) to split across pages */
-  table, thead, tbody, tr, td, th,
-  .grid-2, .card, .callout {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
-  }
-
-  /* Avoid ugly breaks ONLY for small headings */
-  h2, h3 { break-after: avoid-page; page-break-after: avoid; }
-
-  /* Prevent single orphan lines */
-  p, li { orphans: 2; widows: 2; }
-
-  /* Tighten spacing for print */
-  .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
-  .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
-  .card { padding: 10px 12px !important; }
-  .table th, .table td { padding: 7px 8px !important; }
-}
-
+      .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
+      .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
+      .card { padding: 10px 12px !important; }
+      .table th, .table td { padding: 7px 8px !important; }
+    }
   </style>
 </head>
 
@@ -276,46 +255,64 @@
       </div>
 
       <div class="kicker">Phase I goal</div>
-      <h2>Build a validated, reproducible prototype that produces pipeline results and ranked hypotheses from public datasets.</h2>
+      <h2>Build a validated prototype that prioritizes testable biological hypotheses using evidence-weighted inference over public data and literature.</h2>
       <p>
-        Phase I focuses on engineering robustness, reproducibility, and measurable performance gains.
-        Validation will rely exclusively on public datasets (e.g., GEO/SRA for RNA-Seq and FlowRepository for flow cytometry),
+        Phase I focuses on engineering robustness, reproducibility, and measurable scientific utility for a
+        <strong>hypothesis intelligence engine</strong>.
+        Validation will rely exclusively on public sources (e.g., GEO/SRA, FlowRepository, and PubMed/PMC),
         minimizing IP or data-use conflicts while enabling transparent evaluation.
+      </p>
+      <p>
+        In this project, analysis pipelines are treated as <strong>evidence generators</strong>—not the end product.
+        The primary Phase I deliverable is a system that produces <strong>ranked hypotheses with probabilistic confidence</strong>,
+        explicit evidence links, and clear uncertainty labeling.
       </p>
 
       <div class="grid-2">
         <div class="card">
           <h3>Workflow overview</h3>
           <ul>
-            <li><strong>Inputs:</strong> FASTQ (bulk or single-cell), FCS files, or public accession IDs.</li>
-            <li><strong>Automated pipelines:</strong> QC → preprocessing → analysis (DEG, signatures, enrichment / gating / subsets).</li>
-            <li><strong>Outputs:</strong> versioned results + reviewer-ready HTML/PDF report + structured artifacts for reuse.</li>
-            <li><strong>LLM layer:</strong> converts results into mechanistic narratives under strict traceability constraints, requiring explicit linkage to observed pipeline outputs and cited literature.</li>
+            <li><strong>Inputs:</strong> Disease-, protein-, pathway-, or cell-type–centric questions, optionally linked to public accession IDs.</li>
+            <li><strong>Evidence pool:</strong> automated retrieval of relevant public datasets + associated metadata + literature signals.</li>
+            <li><strong>Evidence generation:</strong> standardized feature extraction (effect sizes, uncertainty, reproducibility, cohort/context descriptors).</li>
+            <li><strong>Decision engine:</strong> statistical scoring + Bayesian updating to compute confidence distributions for candidate hypotheses.</li>
+            <li><strong>Interpretability layer:</strong> LLM produces explanations constrained by evidence objects (no evidence → no claim).</li>
+            <li><strong>Outputs:</strong> ranked hypotheses + confidence bands + “why” rationale + recommended follow-up experiments.</li>
           </ul>
           <div class="pill-row">
-            <span class="pill">Reproducible configs</span>
-            <span class="pill">Versioned outputs</span>
-            <span class="pill">HTML/PDF reports</span>
-            <span class="pill">Traceable citations</span>
+            <span class="pill">Evidence objects</span>
+            <span class="pill">Bayesian updating</span>
+            <span class="pill">Uncertainty labels</span>
+            <span class="pill">Traceable outputs</span>
           </div>
         </div>
 
         <div class="card">
-          <h3>Hypothesis Generator (traceable)</h3>
+          <h3>Hypothesis Prioritization Engine (traceable)</h3>
           <p>
-            The Hypothesis Generator is designed to produce <strong>testable</strong> and <strong>ranked</strong> hypotheses
-            grounded in literature-aware reasoning.
+            PromptGenix prioritizes <strong>testable hypotheses</strong> by combining quantitative evidence with structured biological priors.
+            Large language models are used <strong>only</strong> to contextualize and explain rankings—not to determine them.
           </p>
           <ul>
-            <li><strong>Evidence stitching:</strong> connect observed signals (DE genes, pathways, immune subsets) to plausible mechanisms.</li>
-            <li><strong>Ranking:</strong> prioritize by consistency with dataset signals, coherence with known biology, and actionability.</li>
-            <li><strong>Experiments:</strong> recommend concrete next steps (flow panels, contrasts, subset analyses, validation assays).</li>
-            <li><strong>Traceability:</strong> include PubMed-style citations and “why this hypothesis” rationale for reviewer transparency.</li>
+            <li><strong>Candidate hypothesis set:</strong> generated from structured entities (disease/protein/cell-type) and literature-derived relations.</li>
+            <li><strong>Evidence strength:</strong> effect size + uncertainty + directionality + reproducibility across datasets/contexts.</li>
+            <li><strong>Bayesian confidence:</strong> priors (known biology, pathways, cell specificity) updated by observed evidence to yield posteriors.</li>
+            <li><strong>Ranking outputs:</strong> posterior mean + credible interval + evidence coverage (supporting vs. conflicting).</li>
+            <li><strong>Actionability:</strong> each hypothesis includes suggested next-step experiments/analyses and required data.</li>
           </ul>
           <div class="callout">
-            <strong>Phase I emphasis:</strong> traceable reasoning over “black-box” generation.
+            <strong>Phase I emphasis:</strong> transparent ranking with uncertainty, not “black-box” generation.
           </div>
         </div>
+      </div>
+
+      <div class="kicker" style="margin-top:18px;">How confidence is computed</div>
+      <h2>Probabilistic confidence is derived from evidence features and Bayesian updating.</h2>
+      <div class="callout">
+        <strong>Conceptual model:</strong>
+        For each hypothesis <em>H</em>, we define a prior probability <em>P(H)</em> from structured biological knowledge (literature, pathways, cell specificity).
+        We then compute evidence likelihood <em>P(E|H)</em> from standardized evidence features (effect size, uncertainty, reproducibility, context).
+        The system produces a posterior confidence <em>P(H|E)</em>, reported with a credible interval and explicit evidence coverage.
       </div>
 
       <div class="kicker" style="margin-top:18px;">Phase I validation plan</div>
@@ -331,43 +328,44 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>WP1</strong><br/>Pipelines</td>
+            <td><strong>WP1</strong><br/>Evidence layer</td>
             <td>
-              Harden automated RNA-Seq and flow cytometry pipelines across multiple public datasets.
-              Standardize configuration, logging, and export formats to enable deterministic reruns.
+              Build a robust ingest + evidence feature extraction layer for selected public datasets.
+              Generate standardized evidence objects (effect sizes, uncertainty, reproducibility, and context descriptors)
+              suitable for deterministic re-runs and downstream inference.
             </td>
             <td>
               ≥90% reproducibility across reruns (same inputs/configs).<br/>
-              ≥70% reduction in turnaround time vs. manual workflow baseline.
+              Evidence objects produced for ≥80% of targeted datasets despite heterogeneity.
             </td>
           </tr>
           <tr>
-            <td><strong>WP2</strong><br/>Hypotheses</td>
+            <td><strong>WP2</strong><br/>Decision engine</td>
             <td>
-              Implement Hypothesis Generator producing ranked hypotheses with supporting evidence from pipeline outputs
-              and traceable literature-aware citations.
+              Implement statistical scoring and Bayesian updating to compute posterior confidence distributions for candidate hypotheses.
+              Produce ranked outputs with uncertainty annotations and explicit supporting vs. conflicting evidence summaries.
             </td>
             <td>
-              ≥80% “useful” rating by pilot users, defined as hypotheses that directly inform at least one concrete follow-up analysis or experimental decision.<br/>
-              Clear traceability: each hypothesis includes evidence + citations.
+              Calibrated confidence outputs (posterior intervals behave as expected in held-out tests).<br/>
+              Clear traceability: each ranked hypothesis links to evidence objects + citations.
             </td>
           </tr>
           <tr>
-            <td><strong>WP3</strong><br/>Reports</td>
+            <td><strong>WP3</strong><br/>Interpretability & reports</td>
             <td>
-              Generate reviewer-ready HTML/PDF outputs (figures, tables, narrative, hypotheses, experiment plan).
-              Improve readability and reduce manual post-processing.
+              Generate reviewer-ready HTML/PDF artifacts that include: ranked hypotheses, confidence bands, evidence coverage,
+              citations, and recommended next steps. LLM narratives are constrained to evidence objects and must cite sources.
             </td>
             <td>
-              Report generated within &lt;24 hours from raw inputs (dataset-dependent).<br/>
-              Reduced manual editing time (tracked in pilot feedback).
+              End-to-end run completes within &lt;24 hours from accession-driven inputs (dataset-dependent).<br/>
+              ≥80% “useful” rating by pilot users (guides at least one concrete experimental/analysis decision).
             </td>
           </tr>
         </tbody>
       </table>
 
       <div class="callout">
-        <strong>Data-use boundary:</strong> Phase I evaluation uses public datasets only (GEO/SRA/FlowRepository),
+        <strong>Data-use boundary:</strong> Phase I evaluation uses public datasets only (GEO/SRA/FlowRepository) and public literature sources,
         enabling clean SBIR review and minimizing IP concerns.
       </div>
 
@@ -378,31 +376,34 @@
         <div class="card">
           <h3>Technical risks</h3>
           <ul>
-            <li><strong>Dataset heterogeneity:</strong> inconsistent metadata / formats across repositories.</li>
-            <li><strong>Compute variability:</strong> differences between local Mac Studio and cloud environments.</li>
-            <li><strong>Model drift / hallucinations:</strong> LLM may overstate evidence without guardrails.</li>
+            <li><strong>Dataset heterogeneity:</strong> inconsistent metadata, formats, and cohort contexts across repositories.</li>
+            <li><strong>Evidence sparsity:</strong> some hypotheses may lack sufficient supporting data or have conflicting signals.</li>
+            <li><strong>Compute variability:</strong> differences between local and cloud environments affecting deterministic reruns.</li>
+            <li><strong>LLM overreach:</strong> narrative may overstate conclusions without strict constraints.</li>
           </ul>
         </div>
 
         <div class="card">
           <h3>Mitigation strategies</h3>
           <ul>
-            <li><strong>Robust ingest layer:</strong> schema detection + validation + standardized output templates.</li>
-            <li><strong>Deterministic runs:</strong> pinned versions, config snapshots, and re-run checksums.</li>
-            <li><strong>Traceability guardrails:</strong> require citations/evidence per hypothesis; label uncertainty explicitly.</li>
-            <li><strong>Fallback mode:</strong> if citations are weak, generate “candidate hypotheses” with a clear confidence flag and recommended data needs.</li>
+            <li><strong>Robust ingest:</strong> schema detection + validation + standardized evidence templates and QC gates.</li>
+            <li><strong>Evidence coverage labeling:</strong> explicit “supporting vs. conflicting vs. missing” flags per hypothesis.</li>
+            <li><strong>Deterministic runs:</strong> pinned versions, config snapshots, and checksums for reproducibility.</li>
+            <li><strong>Traceability guardrails:</strong> LLM can only reference approved evidence objects; no evidence → no claim.</li>
+            <li><strong>Fallback mode:</strong> if evidence is weak, output “candidate hypotheses” with low-confidence tags and data-needed guidance.</li>
           </ul>
         </div>
       </div>
 
       <div class="callout">
-        <strong>Reviewer-friendly principle:</strong> Every claim must be traceable to (1) observed data outputs or (2) cited literature,
+        <strong>Reviewer-friendly principle:</strong> Every claim must be traceable to (1) evidence objects derived from public data or (2) cited literature,
         with uncertainty explicitly stated.
       </div>
+
       <div class="callout">
-  <strong>Phase I success criterion:</strong> Phase I does not require all generated hypotheses to be biologically correct,
-  but rather demonstrable traceability, transparent ranking rationale, and usefulness for guiding study design decisions.
-</div>
+        <strong>Phase I success criterion:</strong> Phase I does not require all prioritized hypotheses to be biologically correct,
+        but rather demonstrable traceability, calibrated uncertainty, transparent ranking rationale, and usefulness for guiding study design decisions.
+      </div>
 
     </section>
   </main>
