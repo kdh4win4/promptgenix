@@ -97,7 +97,7 @@
 
     p{
       margin: 0 0 10px;
-      font-size: .93rem;
+      font-size: .95rem; /* 살짝 키움 */
       color:#d1d5db;
     }
 
@@ -129,14 +129,14 @@
       margin: 6px 0 0;
       padding-left: 1.1rem;
       color:#d1d5db;
-      font-size: .92rem;
+      font-size: .94rem; /* 살짝 키움 */
     }
     li{ margin-bottom: 6px; }
     li strong{ color:#e5e7eb; }
 
     .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
     .pill{
-      font-size:.72rem;
+      font-size:.74rem;
       padding: 5px 9px;
       border-radius: 999px;
       border: 1px solid rgba(129,140,248,0.45);
@@ -149,12 +149,13 @@
       padding: 12px 14px;
       border: 1px dashed rgba(148,163,184,0.5);
       background: rgba(15,23,42,0.75);
-      font-size: .88rem;
+      font-size: .92rem; /* 키움 */
       color:#e5e7eb;
       margin-top: 12px;
     }
     .callout strong{ color:#22c55e; }
 
+    /* 표 글씨/패딩 키움 */
     .table{
       width:100%;
       border-collapse: collapse;
@@ -165,14 +166,14 @@
       background: rgba(15,23,42,0.6);
     }
     .table th, .table td{
-      padding: 10px 10px;
+      padding: 12px 12px;         /* 키움 */
       border-bottom: 1px solid rgba(148,163,184,0.18);
       vertical-align: top;
-      font-size: .88rem;
-      color:#d1d5db;
+      font-size: .95rem;          /* 키움 */
+      color:#e5e7eb;
     }
     .table th{
-      font-size: .78rem;
+      font-size: .82rem;
       text-transform: uppercase;
       letter-spacing: .14em;
       color:#a5b4fc;
@@ -192,23 +193,23 @@
     }
 
     /* =========================================================
-       Figure styles (FIX: make diagram readable on dark bg)
+       Figure styles (UPDATED: horizontal flow + bigger text + better colors)
        ========================================================= */
     .pgx-figure{
       margin: 16px 0 0;
     }
     .pgx-figure figcaption{
       margin: 12px 0 10px;
-      font-size: 13px;
+      font-size: 13.5px;
       color: #e5e7eb;
     }
 
-    /* White panel container so SVG doesn't blend into dark page */
+    /* 큰 패널: 순백 대신 슬레이트 톤 */
     .pgx-figure-panel{
-      background: #ffffff;
+      background: #f1f5f9;                /* slate-100 */
       border-radius: 14px;
-      padding: 16px 14px;
-      border: 1px solid rgba(0,0,0,0.18);
+      padding: 14px 14px;
+      border: 1px solid rgba(15,23,42,0.25);
       box-shadow: 0 10px 28px rgba(0,0,0,0.35);
     }
 
@@ -218,21 +219,29 @@
       height:auto;
     }
 
-    /* SVG strokes/fills (high contrast) */
-    .pgx-figure-panel svg rect{
-      fill:#ffffff;
-      stroke:#111827;
+    /* SVG: 박스는 순백 말고 아주 연한 회색(눈부심↓), 스트로크는 짙게 */
+    .pgx-figure-panel svg .box{
+      fill:#f8fafc;                        /* slate-50 */
+      stroke:#0f172a;                      /* slate-900 */
       stroke-width:2;
     }
-    .pgx-figure-panel svg line{
-      stroke:#111827;
+    .pgx-figure-panel svg .box-soft{
+      fill:#e2e8f0;                        /* slate-200 */
+      stroke:#0f172a;
       stroke-width:2;
+    }
+    .pgx-figure-panel svg .arrow{
+      stroke:#0f172a;
+      stroke-width:2.2;
     }
     .pgx-figure-panel svg marker path{
-      fill:#111827;
+      fill:#0f172a;
+    }
+    .pgx-figure-panel svg text{
+      fill:#0b1220;
     }
 
-    /* Slightly tighten text on small screens so it doesn't wrap awkwardly */
+    /* 작은 화면에서는 SVG 텍스트/박스가 너무 빽빽해지므로 자동 축소 */
     @media (max-width: 520px){
       .pgx-figure-panel{ padding: 12px 10px; }
     }
@@ -250,21 +259,17 @@
       * { box-shadow: none !important; }
 
       @page { size: Letter; margin: 0.5in; }
-      body { font-size: 95%; line-height: 1.32; }
+      body { font-size: 98%; line-height: 1.32; }
 
       table, thead, tbody, tr, td, th,
       .grid-2, .card, .callout, figure, .pgx-figure-panel {
         break-inside: auto !important;
         page-break-inside: auto !important;
       }
-      h2, h3 { break-after: avoid-page; page-break-after: avoid; }
-      p, li { orphans: 2; widows: 2; }
 
       .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
       .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
-      .card { padding: 10px 12px !important; }
 
-      /* Ensure figure prints crisp and framed */
       .pgx-figure figcaption { color:#111 !important; }
       .pgx-figure-panel{
         background:#fff !important;
@@ -333,6 +338,7 @@
             <li><strong>Interpretability layer:</strong> LLM produces explanations constrained by evidence objects (no evidence → no claim).</li>
             <li><strong>Outputs:</strong> ranked hypotheses + confidence bands + “why” rationale + recommended follow-up experiments.</li>
           </ul>
+
           <div class="pill-row">
             <span class="pill">Evidence objects</span>
             <span class="pill">Bayesian updating</span>
@@ -340,62 +346,89 @@
             <span class="pill">Traceable outputs</span>
           </div>
 
-          <!-- Figure (fixed: add white panel container) -->
+          <!-- Figure (UPDATED: horizontal flow, bigger text, non-white panel) -->
           <figure class="pgx-figure">
             <figcaption><strong>Figure X.</strong> Bayesian Evidence-to-Confidence Workflow (PromptGenix Decision Engine)</figcaption>
 
             <div class="pgx-figure-panel">
-              <svg viewBox="0 0 900 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bayesian Evidence-to-Confidence Flow">
+              <!-- Horizontal flow SVG -->
+              <svg viewBox="0 0 1200 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bayesian Evidence-to-Confidence Flow (Horizontal)">
                 <defs>
                   <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
                     <path d="M0,0 L12,6 L0,12 Z"></path>
                   </marker>
                 </defs>
 
-                <g font-family="Arial, sans-serif" font-size="16">
-                  <rect x="210" y="20"  width="480" height="70" rx="10"></rect>
-                  <text x="450" y="50" text-anchor="middle" font-weight="700">User Query</text>
-                  <text x="450" y="72" text-anchor="middle">(disease / protein / cell-type)</text>
+                <!-- Typography: 크게 -->
+                <g font-family="Arial, sans-serif" font-size="18">
+                  <!-- Top row: 1~5 -->
+                  <!-- Box 1 -->
+                  <rect class="box" x="30" y="40" width="210" height="90" rx="12"></rect>
+                  <text x="135" y="70" text-anchor="middle" font-weight="700">User Query</text>
+                  <text x="135" y="96" text-anchor="middle" font-size="15">(disease / protein</text>
+                  <text x="135" y="116" text-anchor="middle" font-size="15">/ cell-type)</text>
 
-                  <rect x="210" y="120" width="480" height="90" rx="10"></rect>
-                  <text x="450" y="150" text-anchor="middle" font-weight="700">(1) Retrieval Layer</text>
-                  <text x="450" y="172" text-anchor="middle">Public datasets + literature</text>
-                  <text x="450" y="194" text-anchor="middle">(GEO/SRA/FlowRepository/ImmPort, PubMed/PMC)</text>
+                  <!-- Arrow -->
+                  <line class="arrow" x1="240" y1="85" x2="285" y2="85" marker-end="url(#arrow)"></line>
 
-                  <rect x="210" y="250" width="480" height="90" rx="10"></rect>
-                  <text x="450" y="280" text-anchor="middle" font-weight="700">(2) Harmonization Layer</text>
-                  <text x="450" y="302" text-anchor="middle">Metadata normalization, QC</text>
-                  <text x="450" y="324" text-anchor="middle">Batch / study effects modeling</text>
+                  <!-- Box 2 -->
+                  <rect class="box" x="285" y="40" width="220" height="90" rx="12"></rect>
+                  <text x="395" y="68" text-anchor="middle" font-weight="700">(1) Retrieval</text>
+                  <text x="395" y="94" text-anchor="middle" font-size="15">Public datasets</text>
+                  <text x="395" y="114" text-anchor="middle" font-size="15">+ literature</text>
 
-                  <rect x="210" y="380" width="480" height="80" rx="10"></rect>
-                  <text x="450" y="410" text-anchor="middle" font-weight="700">(3) Candidate Hypothesis Generator</text>
-                  <text x="450" y="434" text-anchor="middle">Structured hypothesis templates</text>
+                  <line class="arrow" x1="505" y1="85" x2="550" y2="85" marker-end="url(#arrow)"></line>
 
-                  <rect x="210" y="490" width="480" height="90" rx="10"></rect>
-                  <text x="450" y="520" text-anchor="middle" font-weight="700">(4) Evidence Extraction (per dataset)</text>
-                  <text x="450" y="542" text-anchor="middle">Effect sizes + uncertainty + quality weights</text>
-                  <text x="450" y="564" text-anchor="middle">Directional consistency</text>
+                  <!-- Box 3 -->
+                  <rect class="box" x="550" y="40" width="230" height="90" rx="12"></rect>
+                  <text x="665" y="68" text-anchor="middle" font-weight="700">(2) Harmonization</text>
+                  <text x="665" y="94" text-anchor="middle" font-size="15">Metadata normalization</text>
+                  <text x="665" y="114" text-anchor="middle" font-size="15">QC + batch modeling</text>
 
-                  <rect x="210" y="620" width="480" height="90" rx="10"></rect>
-                  <text x="450" y="650" text-anchor="middle" font-weight="700">(5) Bayesian Update (Core)</text>
-                  <text x="450" y="672" text-anchor="middle">Prior P(H) × Likelihood P(E|H) → Posterior P(H|E)</text>
-                  <text x="450" y="694" text-anchor="middle">Confidence distribution for ranking</text>
+                  <line class="arrow" x1="780" y1="85" x2="825" y2="85" marker-end="url(#arrow)"></line>
 
-                  <rect x="60"  y="730" width="360" height="80" rx="10"></rect>
-                  <text x="240" y="760" text-anchor="middle" font-weight="700">(6) Confidence Output</text>
-                  <text x="240" y="784" text-anchor="middle">mean/median + 95% CrI + robustness</text>
+                  <!-- Box 4 -->
+                  <rect class="box" x="825" y="40" width="250" height="90" rx="12"></rect>
+                  <text x="950" y="68" text-anchor="middle" font-weight="700">(3) Hypotheses</text>
+                  <text x="950" y="94" text-anchor="middle" font-size="15">Structured templates</text>
+                  <text x="950" y="114" text-anchor="middle" font-size="15">(testable statements)</text>
 
-                  <rect x="480" y="730" width="360" height="80" rx="10"></rect>
-                  <text x="660" y="760" text-anchor="middle" font-weight="700">(7) Interpretability Layer (LLM)</text>
-                  <text x="660" y="784" text-anchor="middle">Evidence-constrained rationale + next experiments</text>
+                  <line class="arrow" x1="1075" y1="85" x2="1120" y2="85" marker-end="url(#arrow)"></line>
 
-                  <line x1="450" y1="90"  x2="450" y2="120" marker-end="url(#arrow)"></line>
-                  <line x1="450" y1="210" x2="450" y2="250" marker-end="url(#arrow)"></line>
-                  <line x1="450" y1="340" x2="450" y2="380" marker-end="url(#arrow)"></line>
-                  <line x1="450" y1="460" x2="450" y2="490" marker-end="url(#arrow)"></line>
-                  <line x1="450" y1="580" x2="450" y2="620" marker-end="url(#arrow)"></line>
-                  <line x1="300" y1="710" x2="240" y2="730" marker-end="url(#arrow)"></line>
-                  <line x1="600" y1="710" x2="660" y2="730" marker-end="url(#arrow)"></line>
+                  <!-- Box 5 (core) -->
+                  <rect class="box-soft" x="1120" y="40" width="240" height="90" rx="12"></rect>
+                  <text x="1240" y="68" text-anchor="middle" font-weight="800">(5) Bayesian Update</text>
+                  <text x="1240" y="94" text-anchor="middle" font-size="15">Prior P(H) × Likelihood</text>
+                  <text x="1240" y="114" text-anchor="middle" font-size="15">→ Posterior P(H|E)</text>
+                </g>
+
+                <!-- Middle Box 4.5 (evidence extraction) positioned between 3 and 5 as a callout -->
+                <g font-family="Arial, sans-serif">
+                  <rect class="box" x="860" y="155" width="440" height="85" rx="12"></rect>
+                  <text x="1080" y="185" text-anchor="middle" font-size="18" font-weight="700">(4) Evidence Extraction (per dataset)</text>
+                  <text x="1080" y="210" text-anchor="middle" font-size="15">Effect sizes + uncertainty + quality weights + directional consistency</text>
+
+                  <!-- Down/up connectors -->
+                  <line class="arrow" x1="950" y1="130" x2="950" y2="155" marker-end="url(#arrow)"></line>
+                  <line class="arrow" x1="1240" y1="155" x2="1240" y2="130" marker-end="url(#arrow)"></line>
+                </g>
+
+                <!-- Bottom row: outputs -->
+                <g font-family="Arial, sans-serif" font-size="18">
+                  <rect class="box" x="320" y="265" width="360" height="80" rx="12"></rect>
+                  <text x="500" y="295" text-anchor="middle" font-weight="800">(6) Confidence Output</text>
+                  <text x="500" y="320" text-anchor="middle" font-size="15">Posterior mean/median + 95% CrI + robustness</text>
+
+                  <rect class="box" x="720" y="265" width="420" height="80" rx="12"></rect>
+                  <text x="930" y="295" text-anchor="middle" font-weight="800">(7) Interpretability Layer (LLM)</text>
+                  <text x="930" y="320" text-anchor="middle" font-size="15">Evidence-constrained rationale + next experiments</text>
+
+                  <!-- From Bayesian core to outputs -->
+                  <line class="arrow" x1="1240" y1="130" x2="1240" y2="240" marker-end="url(#arrow)"></line>
+                  <line class="arrow" x1="1240" y1="240" x2="500" y2="240" marker-end="url(#arrow)"></line>
+                  <line class="arrow" x1="1240" y1="240" x2="930" y2="240" marker-end="url(#arrow)"></line>
+                  <line class="arrow" x1="500" y1="240" x2="500" y2="265" marker-end="url(#arrow)"></line>
+                  <line class="arrow" x1="930" y1="240" x2="930" y2="265" marker-end="url(#arrow)"></line>
                 </g>
               </svg>
             </div>
