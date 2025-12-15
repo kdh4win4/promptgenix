@@ -5,6 +5,7 @@
   <title>PromptGenix – Research Strategy (Approach, Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="PromptGenix SBIR Phase I Approach: evidence-weighted hypothesis prioritization workflow, validation plan, milestones, KPIs, and risks & mitigation."/>
+
   <style>
     * { box-sizing: border-box; }
     body{
@@ -190,6 +191,52 @@
       .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
+    /* =========================================================
+       Figure styles (FIX: make diagram readable on dark bg)
+       ========================================================= */
+    .pgx-figure{
+      margin: 16px 0 0;
+    }
+    .pgx-figure figcaption{
+      margin: 12px 0 10px;
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+
+    /* White panel container so SVG doesn't blend into dark page */
+    .pgx-figure-panel{
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 16px 14px;
+      border: 1px solid rgba(0,0,0,0.18);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    }
+
+    .pgx-figure-panel svg{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    /* SVG strokes/fills (high contrast) */
+    .pgx-figure-panel svg rect{
+      fill:#ffffff;
+      stroke:#111827;
+      stroke-width:2;
+    }
+    .pgx-figure-panel svg line{
+      stroke:#111827;
+      stroke-width:2;
+    }
+    .pgx-figure-panel svg marker path{
+      fill:#111827;
+    }
+
+    /* Slightly tighten text on small screens so it doesn't wrap awkwardly */
+    @media (max-width: 520px){
+      .pgx-figure-panel{ padding: 12px 10px; }
+    }
+
     /* Print friendliness */
     @media print {
       header, footer { display: none !important; }
@@ -206,7 +253,7 @@
       body { font-size: 95%; line-height: 1.32; }
 
       table, thead, tbody, tr, td, th,
-      .grid-2, .card, .callout {
+      .grid-2, .card, .callout, figure, .pgx-figure-panel {
         break-inside: auto !important;
         page-break-inside: auto !important;
       }
@@ -216,7 +263,14 @@
       .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
       .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
       .card { padding: 10px 12px !important; }
-      .table th, .table td { padding: 7px 8px !important; }
+
+      /* Ensure figure prints crisp and framed */
+      .pgx-figure figcaption { color:#111 !important; }
+      .pgx-figure-panel{
+        background:#fff !important;
+        border: 1px solid #111 !important;
+        padding: 10px 10px !important;
+      }
     }
   </style>
 </head>
@@ -285,77 +339,69 @@
             <span class="pill">Uncertainty labels</span>
             <span class="pill">Traceable outputs</span>
           </div>
-<figure class="pgx-figure">
-  <figcaption><strong>Figure X.</strong> Bayesian Evidence-to-Confidence Bayesian Workflow (PromptGenix Decision Engine)</figcaption>
 
-  <svg viewBox="0 0 900 780" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bayesian Evidence-to-Confidence Flow">
-    <defs>
-      <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-        <path d="M0,0 L12,6 L0,12 Z"></path>
-      </marker>
-    </defs>
+          <!-- Figure (fixed: add white panel container) -->
+          <figure class="pgx-figure">
+            <figcaption><strong>Figure X.</strong> Bayesian Evidence-to-Confidence Workflow (PromptGenix Decision Engine)</figcaption>
 
-    <!-- Box style -->
-    <g font-family="Arial, sans-serif" font-size="16">
-      <!-- Boxes -->
-      <rect x="210" y="20"  width="480" height="70" rx="10"></rect>
-      <text x="450" y="50" text-anchor="middle" font-weight="700">User Query</text>
-      <text x="450" y="72" text-anchor="middle">(disease / protein / cell-type)</text>
+            <div class="pgx-figure-panel">
+              <svg viewBox="0 0 900 780" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bayesian Evidence-to-Confidence Flow">
+                <defs>
+                  <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                    <path d="M0,0 L12,6 L0,12 Z"></path>
+                  </marker>
+                </defs>
 
-      <rect x="210" y="120" width="480" height="90" rx="10"></rect>
-      <text x="450" y="150" text-anchor="middle" font-weight="700">(1) Retrieval Layer</text>
-      <text x="450" y="172" text-anchor="middle">Public datasets + literature</text>
-      <text x="450" y="194" text-anchor="middle">(GEO/SRA/FlowRepository/ImmPort, PubMed/PMC)</text>
+                <g font-family="Arial, sans-serif" font-size="16">
+                  <rect x="210" y="20"  width="480" height="70" rx="10"></rect>
+                  <text x="450" y="50" text-anchor="middle" font-weight="700">User Query</text>
+                  <text x="450" y="72" text-anchor="middle">(disease / protein / cell-type)</text>
 
-      <rect x="210" y="250" width="480" height="90" rx="10"></rect>
-      <text x="450" y="280" text-anchor="middle" font-weight="700">(2) Harmonization Layer</text>
-      <text x="450" y="302" text-anchor="middle">Metadata normalization, QC</text>
-      <text x="450" y="324" text-anchor="middle">Batch / study effects modeling</text>
+                  <rect x="210" y="120" width="480" height="90" rx="10"></rect>
+                  <text x="450" y="150" text-anchor="middle" font-weight="700">(1) Retrieval Layer</text>
+                  <text x="450" y="172" text-anchor="middle">Public datasets + literature</text>
+                  <text x="450" y="194" text-anchor="middle">(GEO/SRA/FlowRepository/ImmPort, PubMed/PMC)</text>
 
-      <rect x="210" y="380" width="480" height="80" rx="10"></rect>
-      <text x="450" y="410" text-anchor="middle" font-weight="700">(3) Candidate Hypothesis Generator</text>
-      <text x="450" y="434" text-anchor="middle">Structured hypothesis templates</text>
+                  <rect x="210" y="250" width="480" height="90" rx="10"></rect>
+                  <text x="450" y="280" text-anchor="middle" font-weight="700">(2) Harmonization Layer</text>
+                  <text x="450" y="302" text-anchor="middle">Metadata normalization, QC</text>
+                  <text x="450" y="324" text-anchor="middle">Batch / study effects modeling</text>
 
-      <rect x="210" y="490" width="480" height="90" rx="10"></rect>
-      <text x="450" y="520" text-anchor="middle" font-weight="700">(4) Evidence Extraction (per dataset)</text>
-      <text x="450" y="542" text-anchor="middle">Effect sizes + uncertainty + quality weights</text>
-      <text x="450" y="564" text-anchor="middle">Directional consistency</text>
+                  <rect x="210" y="380" width="480" height="80" rx="10"></rect>
+                  <text x="450" y="410" text-anchor="middle" font-weight="700">(3) Candidate Hypothesis Generator</text>
+                  <text x="450" y="434" text-anchor="middle">Structured hypothesis templates</text>
 
-      <rect x="210" y="620" width="480" height="90" rx="10"></rect>
-      <text x="450" y="650" text-anchor="middle" font-weight="700">(5) Bayesian Update (Core)</text>
-      <text x="450" y="672" text-anchor="middle">Prior P(H) × Likelihood P(E|H) → Posterior P(H|E)</text>
-      <text x="450" y="694" text-anchor="middle">Confidence distribution for ranking</text>
+                  <rect x="210" y="490" width="480" height="90" rx="10"></rect>
+                  <text x="450" y="520" text-anchor="middle" font-weight="700">(4) Evidence Extraction (per dataset)</text>
+                  <text x="450" y="542" text-anchor="middle">Effect sizes + uncertainty + quality weights</text>
+                  <text x="450" y="564" text-anchor="middle">Directional consistency</text>
 
-      <rect x="60"  y="730" width="360" height="80" rx="10"></rect>
-      <text x="240" y="760" text-anchor="middle" font-weight="700">(6) Confidence Output</text>
-      <text x="240" y="784" text-anchor="middle">mean/median + 95% CrI + robustness</text>
+                  <rect x="210" y="620" width="480" height="90" rx="10"></rect>
+                  <text x="450" y="650" text-anchor="middle" font-weight="700">(5) Bayesian Update (Core)</text>
+                  <text x="450" y="672" text-anchor="middle">Prior P(H) × Likelihood P(E|H) → Posterior P(H|E)</text>
+                  <text x="450" y="694" text-anchor="middle">Confidence distribution for ranking</text>
 
-      <rect x="480" y="730" width="360" height="80" rx="10"></rect>
-      <text x="660" y="760" text-anchor="middle" font-weight="700">(7) Interpretability Layer (LLM)</text>
-      <text x="660" y="784" text-anchor="middle">Evidence-constrained rationale + next experiments</text>
+                  <rect x="60"  y="730" width="360" height="80" rx="10"></rect>
+                  <text x="240" y="760" text-anchor="middle" font-weight="700">(6) Confidence Output</text>
+                  <text x="240" y="784" text-anchor="middle">mean/median + 95% CrI + robustness</text>
 
-      <!-- Arrows -->
-      <line x1="450" y1="90"  x2="450" y2="120" marker-end="url(#arrow)"></line>
-      <line x1="450" y1="210" x2="450" y2="250" marker-end="url(#arrow)"></line>
-      <line x1="450" y1="340" x2="450" y2="380" marker-end="url(#arrow)"></line>
-      <line x1="450" y1="460" x2="450" y2="490" marker-end="url(#arrow)"></line>
-      <line x1="450" y1="580" x2="450" y2="620" marker-end="url(#arrow)"></line>
-      <line x1="300" y1="710" x2="240" y2="730" marker-end="url(#arrow)"></line>
-      <line x1="600" y1="710" x2="660" y2="730" marker-end="url(#arrow)"></line>
-    </g>
-  </svg>
-</figure>
+                  <rect x="480" y="730" width="360" height="80" rx="10"></rect>
+                  <text x="660" y="760" text-anchor="middle" font-weight="700">(7) Interpretability Layer (LLM)</text>
+                  <text x="660" y="784" text-anchor="middle">Evidence-constrained rationale + next experiments</text>
 
-<style>
-  .pgx-figure { margin: 16px 0; }
-  .pgx-figure figcaption { margin-bottom: 8px; font-size: 14px; }
-  /* SVG strokes/fills (no colors specified; default black/white look) */
-  .pgx-figure svg rect { fill: white; stroke: black; stroke-width: 2; }
-  .pgx-figure svg line { stroke: black; stroke-width: 2; }
-  .pgx-figure svg marker path { fill: black; }
-</style>
+                  <line x1="450" y1="90"  x2="450" y2="120" marker-end="url(#arrow)"></line>
+                  <line x1="450" y1="210" x2="450" y2="250" marker-end="url(#arrow)"></line>
+                  <line x1="450" y1="340" x2="450" y2="380" marker-end="url(#arrow)"></line>
+                  <line x1="450" y1="460" x2="450" y2="490" marker-end="url(#arrow)"></line>
+                  <line x1="450" y1="580" x2="450" y2="620" marker-end="url(#arrow)"></line>
+                  <line x1="300" y1="710" x2="240" y2="730" marker-end="url(#arrow)"></line>
+                  <line x1="600" y1="710" x2="660" y2="730" marker-end="url(#arrow)"></line>
+                </g>
+              </svg>
+            </div>
+          </figure>
+          <!-- /Figure -->
 
-          
         </div>
 
         <div class="card">
