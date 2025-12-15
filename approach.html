@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -192,9 +193,7 @@
       .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
-    /* =========================================================
-       Figure styles
-       ========================================================= */
+    /* Figure styles */
     .pgx-figure{ margin: 0; }
     .pgx-figure figcaption{
       margin: 10px 0 10px;
@@ -207,6 +206,7 @@
       padding: 14px 14px;
       border: 1px solid rgba(15,23,42,0.25);
       box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      overflow:hidden; /* ensures nothing can visually clip outside */
     }
     .pgx-figure-panel svg{
       display:block;
@@ -295,7 +295,6 @@
         explicit evidence links, and clear uncertainty labeling.
       </p>
 
-      <!-- Two columns -->
       <div class="grid-2">
         <div class="card">
           <h3>Workflow overview</h3>
@@ -334,7 +333,7 @@
         </div>
       </div>
 
-      <!-- FULL-WIDTH FIGURE (tidy 2-row layout) -->
+      <!-- FULL-WIDTH FIGURE -->
       <div class="card" style="margin-top:18px;">
         <h3>Bayesian Evidence-to-Confidence Workflow (Figure X)</h3>
 
@@ -342,17 +341,17 @@
           <figcaption><strong>Figure X.</strong> Two-row layout: top (User Query → 1 → 2 → 3), bottom (4 → 5 → 6 → 7) with a single connector (3 → 4).</figcaption>
 
           <div class="pgx-figure-panel">
-            <svg viewBox="0 0 1400 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bayesian Evidence-to-Confidence Flow (Two-row tidy)">
+            <!-- Key fix: move (7) box slightly left AND widen viewBox width margin
+                 so the right edge never clips on any rounding/scaling -->
+            <svg viewBox="0 0 1420 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bayesian Evidence-to-Confidence Flow (Two-row tidy)">
               <defs>
                 <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
                   <path d="M0,0 L12,6 L0,12 Z"></path>
                 </marker>
               </defs>
 
-              <!-- ---------- TOP ROW: User Query, 1, 2, 3 ---------- -->
+              <!-- TOP ROW -->
               <g font-family="Arial, sans-serif" font-size="18">
-                <!-- positions -->
-                <!-- yTop = 50 -->
                 <rect class="box" x="70" y="50" width="240" height="92" rx="12"></rect>
                 <text x="190" y="82" text-anchor="middle" font-weight="800">User Query</text>
                 <text x="190" y="108" text-anchor="middle" font-size="15">(disease / protein</text>
@@ -379,12 +378,11 @@
                 <text x="1170" y="128" text-anchor="middle" font-size="15">(testable statements)</text>
               </g>
 
-              <!-- ---------- SINGLE CONNECTOR: 3 -> 4 (down arrow) ---------- -->
+              <!-- Connector: 3 -> 4 -->
               <line class="arrow" x1="1170" y1="142" x2="1170" y2="205" marker-end="url(#arrow)"></line>
 
-              <!-- ---------- BOTTOM ROW: 4, 5, 6, 7 ---------- -->
+              <!-- BOTTOM ROW -->
               <g font-family="Arial, sans-serif" font-size="18">
-                <!-- yBot = 225 -->
                 <rect class="box" x="70" y="225" width="360" height="92" rx="12"></rect>
                 <text x="250" y="257" text-anchor="middle" font-weight="800">(4) Evidence Extraction</text>
                 <text x="250" y="283" text-anchor="middle" font-size="15">Effect sizes + uncertainty</text>
@@ -404,15 +402,16 @@
                 <text x="995" y="283" text-anchor="middle" font-size="15">Posterior mean/median</text>
                 <text x="995" y="303" text-anchor="middle" font-size="15">+ 95% CrI + robustness</text>
 
-                <line class="arrow" x1="1120" y1="271" x2="1170" y2="271" marker-end="url(#arrow)"></line>
+                <line class="arrow" x1="1120" y1="271" x2="1160" y2="271" marker-end="url(#arrow)"></line>
 
-                <rect class="box" x="1170" y="225" width="260" height="92" rx="12"></rect>
-                <text x="1300" y="257" text-anchor="middle" font-weight="800">(7) Interpretability</text>
-                <text x="1300" y="283" text-anchor="middle" font-size="15">LLM rationale constrained</text>
-                <text x="1300" y="303" text-anchor="middle" font-size="15">to evidence + next steps</text>
+                <!-- FIX: (7) moved left by 20px (1170->1150), arrow end adjusted -->
+                <rect class="box" x="1150" y="225" width="260" height="92" rx="12"></rect>
+                <text x="1280" y="257" text-anchor="middle" font-weight="800">(7) Interpretability</text>
+                <text x="1280" y="283" text-anchor="middle" font-size="15">LLM rationale constrained</text>
+                <text x="1280" y="303" text-anchor="middle" font-size="15">to evidence + next steps</text>
               </g>
 
-              <!-- Optional subtle row labels (can remove) -->
+              <!-- Optional labels -->
               <g font-family="Arial, sans-serif" font-size="14" opacity="0.55">
                 <text x="70" y="30">Top row</text>
                 <text x="70" y="210">Bottom row</text>
@@ -421,7 +420,6 @@
           </div>
         </figure>
       </div>
-      <!-- /FULL-WIDTH FIGURE -->
 
       <div class="kicker" style="margin-top:18px;">How confidence is computed</div>
       <h2>Probabilistic confidence is derived from evidence features and Bayesian updating.</h2>
@@ -532,3 +530,4 @@
 </div>
 </body>
 </html>
+```
