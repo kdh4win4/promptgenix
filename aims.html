@@ -2,247 +2,214 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – Specific Aims (Phase I) v3</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix SBIR Phase I Specific Aims v3 (compressed for 1 page): significance, innovation, objective, aims, outcomes, impact."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>PromptGenix – Specific Aims (Phase I)</title>
+  <meta name="description" content="PromptGenix SBIR Phase I Specific Aims: hypothesis intelligence engine for public biomedical data."/>
   <style>
-    * { box-sizing: border-box; }
+    :root{
+      --bg:#020617; --panel:#0b1220; --panel2:#0f172a;
+      --text:#e5e7eb; --muted:#9ca3af; --line:#1f2937;
+      --accent:#60a5fa; --accent2:#34d399; --warn:#fbbf24;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:#020617;
-      color:#e5e7eb;
-      line-height:1.45;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,sans-serif;
+      background:radial-gradient(1200px 600px at 15% -10%, rgba(96,165,250,.18), transparent 55%),
+                 radial-gradient(900px 500px at 90% 10%, rgba(52,211,153,.12), transparent 55%),
+                 var(--bg);
+      color:var(--text);
+      line-height:1.55;
     }
-    a{ color:inherit; text-decoration:none; }
-    .page{ min-height:100vh; display:flex; flex-direction:column; }
-
-    /* Shared header/nav */
-    header{
-      position:sticky; top:0; z-index:30;
-      backdrop-filter: blur(14px);
-      background: rgba(15, 23, 42, 0.92);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    a{color:inherit}
+    .wrap{max-width:980px;margin:0 auto;padding:28px 18px 60px}
+    .topbar{
+      display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+      padding:14px 16px;border:1px solid var(--line);background:rgba(15,23,42,.55);
+      border-radius:16px;backdrop-filter: blur(10px);
     }
-    .nav{
-      max-width:1120px; margin:0 auto; padding:14px 20px;
-      display:flex; align-items:center; justify-content:space-between; gap:18px;
+    .brand{display:flex;flex-direction:column;gap:4px}
+    .brand h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .brand .sub{color:var(--muted);font-size:13px}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{
+      font-size:12px;color:var(--text);
+      padding:6px 10px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(11,18,32,.7)
     }
-    .nav-left{ display:flex; align-items:center; gap:12px; }
-    .logo-dot{
-      width:28px; height:28px; border-radius:999px;
-      background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
-      box-shadow:0 0 18px rgba(56,189,248,.7);
+    .hero{margin-top:18px;padding:22px 18px;border-radius:18px;border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(15,23,42,.72), rgba(11,18,32,.62));
     }
-    .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
-    .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
-    .nav-links{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
-    .nav-links a{
-      font-size:.88rem; color:#9ca3af;
-      padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(148,163,184,0.18);
-      background: rgba(2,6,23,0.25);
+    .hero h2{margin:0 0 6px;font-size:22px}
+    .hero p{margin:10px 0 0;color:var(--muted)}
+    .grid{display:grid;gap:14px;margin-top:14px}
+    @media (min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    .card{
+      border:1px solid var(--line);border-radius:18px;
+      background:rgba(11,18,32,.72);
+      padding:18px;
     }
-    .nav-links a:hover{
-      color:#e5e7eb;
-      background: rgba(148,163,184,0.18);
-      border-color: rgba(148,163,184,0.35);
+    .card h3{
+      margin:0 0 10px;font-size:14px;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--muted);
     }
-    .nav-links a.active{
-      color:#e5e7eb;
-      background: rgba(148,163,184,0.18);
-      border-color: rgba(148,163,184,0.55);
+    .card p{margin:0;color:var(--text)}
+    .muted{color:var(--muted)}
+    .section{margin-top:14px}
+    .aims{margin-top:12px}
+    .aim{
+      border:1px solid var(--line);border-radius:16px;padding:14px 14px 12px;
+      background:rgba(15,23,42,.55);
+      margin-top:10px;
     }
-
-    main{ flex:1; }
-    .section{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 28px 20px;
+    .aim .title{
+      display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;
+      margin:0 0 6px;
+      font-weight:700;
     }
-    .topline{
-      display:flex; flex-wrap:wrap; gap:10px;
-      align-items:center; justify-content:space-between;
-      padding-top: 16px;
-      margin-bottom: 10px;
+    .badge{
+      font-size:12px;
+      padding:4px 10px;border-radius:999px;border:1px solid rgba(96,165,250,.35);
+      background:rgba(96,165,250,.12);color:var(--text);
     }
-    .doc-title{
-      font-size: 1.18rem;
-      font-weight: 820;
-      color:#f9fafb;
-      margin: 0;
+    .aim p{margin:0;color:var(--text)}
+    .footer{
+      margin-top:18px;padding-top:14px;border-top:1px solid var(--line);
+      color:var(--muted);font-size:12.5px;
+      display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between
     }
-    .meta{
-      font-size:.78rem;
-      color:#9ca3af;
+    .kicker{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:12px;border:1px dashed rgba(251,191,36,.4);
+      background:rgba(251,191,36,.08);color:var(--text);font-size:12.5px
     }
-
-    h2{
-      font-size: .86rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color:#a5b4fc;
-      margin: 14px 0 6px;
-    }
-    p{
-      margin: 0 0 8px;
-      font-size: .92rem;
-      color:#d1d5db;
-    }
-    .box{
-      margin: 8px 0 10px;
-      border-radius: 14px;
-      padding: 10px 12px;
-      border: 1px solid rgba(148,163,184,0.35);
-      background: rgba(15,23,42,0.75);
-    }
-    .box strong{ color:#22c55e; }
-
-    ul{
-      margin: 6px 0 8px;
-      padding-left: 1.1rem;
-      color:#d1d5db;
-      font-size: .92rem;
-    }
-    li{ margin-bottom: 4px; }
-
-    .fine{
-      font-size:.78rem;
-      color:#9ca3af;
-      margin-top: 8px;
-    }
-
-    footer{
-      border-top:1px solid rgba(31,41,55,0.9);
-      padding:16px;
-      font-size:.78rem;
-      color:#6b7280;
-      text-align:center;
-    }
-
-    /* PRINT CONFIG (SBIR – 1 page) */
-    @media print {
-      @page { size: Letter; margin: 0.5in; }
-      header, footer { display: none !important; }
-
-      body {
-        background:#fff !important;
-        color:#111 !important;
-        font-size: 11.0pt;
-        line-height: 1.26;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-      .section { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-      p, li { color:#111 !important; margin-bottom: 3px !important; }
-      h2 { color:#111 !important; margin-top: 10px !important; margin-bottom: 4px !important; }
-      .doc-title { color:#111 !important; }
-      .meta { color:#333 !important; }
-      .box { background:#fff !important; border:1px solid #999 !important; padding: 7px 8px !important; }
-      a { color:#111 !important; text-decoration:none !important; }
-
-      /* prevent awkward splits */
-      h2, .box { break-after: avoid-page; page-break-after: avoid; }
-      p, li { orphans: 2; widows: 2; }
-    }
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
   </style>
 </head>
 
 <body>
-<div class="page">
-  <header>
-    <div class="nav">
-      <div class="nav-left">
-        <div class="logo-dot"></div>
-        <div>
-          <div class="brand">PromptGenix</div>
-          <div class="subbrand">SBIR Portal</div>
+  <main class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <h1>PromptGenix – Specific Aims (Phase I)</h1>
+        <div class="sub">
+          Hypothesis Intelligence Engine for Public Biomedical Data · SBIR (NIH/NIAID focus)
         </div>
       </div>
-      <nav class="nav-links">
-        <a href="index.html">Portal</a>
-        <a href="sbir.html">SBIR</a>
-        <a href="aims.html" class="active">Aims</a>
-        <a href="approach.html">Approach</a>
-        <a href="commercialization.html">Commercialization</a>
-        <a href="facilities.html">Facilities</a>
-        <a href="team.html">Team</a>
-        <a href="use-cases.html">Use Cases</a>
-      </nav>
-    </div>
-  </header>
+      <div class="chips" aria-label="tags">
+        <span class="chip">Public-data validation</span>
+        <span class="chip">Bayesian evidence updating</span>
+        <span class="chip">Reproducibility + traceability</span>
+        <span class="chip">LLM for interpretability only</span>
+      </div>
+    </header>
 
-  <main>
-    <section class="section">
-      <div class="topline">
-        <h1 class="doc-title">Specific Aims (Phase I): PromptGenix – Hypothesis Intelligence Engine for Public Biomedical Data (v3)</h1>
-        <div class="meta">
-          PromptGenix LLC (Women &amp; Minority-Owned) &middot; Contact: dohoon.kim1@icloud.com &middot;
-          Website: promptgenix.org/sbir.html
+    <section class="hero">
+      <h2>Goal: Faster, transparent, evidence-weighted hypothesis prioritization</h2>
+      <div class="kicker">
+        <span class="mono">Phase I deliverable:</span>
+        a validated prototype that outputs ranked hypotheses with quantified uncertainty and traceable evidence links
+      </div>
+      <p>
+        PromptGenix automates retrieval of <strong>public omics datasets</strong> and <strong>scientific literature</strong>,
+        converts them into standardized <em>evidence objects</em>, and produces <strong>ranked, testable biological hypotheses</strong>
+        with explicit uncertainty and actionable next steps.
+      </p>
+    </section>
+
+    <section class="grid section">
+      <article class="card">
+        <h3>Significance</h3>
+        <p>
+          Public biomedical repositories contain vast volumes of omics and immune profiling datasets, yet researchers still face a
+          critical bottleneck: converting heterogeneous evidence into prioritized, testable hypotheses.
+          Current workflows rely on fragmented tools, ad hoc scripts, and expert-driven synthesis, resulting in slow turnaround,
+          poor reproducibility, and opaque decision-making. What is missing is a scalable, transparent mechanism to integrate
+          public datasets and literature into ranked hypotheses with quantified uncertainty.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Innovation</h3>
+        <p>
+          PromptGenix introduces a <strong>hypothesis intelligence engine</strong> that prioritizes hypotheses using
+          <strong>statistical evidence modeling and Bayesian updating</strong> over public biomedical data and
+          literature-derived priors. Large language models are used <strong>only for interpretability</strong>—to explain rankings
+          and cite supporting or conflicting evidence—<strong>never to assign confidence</strong>. The system delivers
+          <strong>evidence-linked rankings</strong> with explicit uncertainty and recommended next experiments.
+        </p>
+      </article>
+    </section>
+
+    <section class="card section">
+      <h3>Overall Objective & Central Hypothesis</h3>
+      <p>
+        <strong>Objective:</strong> Develop and validate a Phase I prototype that automatically retrieves public datasets and
+        literature, constructs standardized evidence objects, and outputs ranked biological hypotheses with probabilistic confidence,
+        traceable evidence links, and recommended follow-up experiments.
+      </p>
+      <p style="margin-top:10px">
+        <strong>Central Hypothesis:</strong> An evidence-weighted decision engine combining statistical scoring, Bayesian inference,
+        and constrained LLM-based interpretation will reduce hypothesis generation time while improving transparency,
+        reproducibility, and utility for experimental study design in immunology and infectious disease research.
+      </p>
+    </section>
+
+    <section class="aims section">
+      <div class="card">
+        <h3>Specific Aims</h3>
+
+        <div class="aim">
+          <div class="title">
+            <span class="badge">Aim 1</span>
+            Construct a standardized public-data evidence layer
+          </div>
+          <p>
+            Develop automated pipelines to ingest selected public omics datasets and associated metadata and generate deterministic
+            evidence objects capturing effect size, uncertainty, reproducibility indicators, and biological context.
+          </p>
         </div>
+
+        <div class="aim">
+          <div class="title">
+            <span class="badge">Aim 2</span>
+            Implement an evidence-weighted hypothesis prioritization engine
+          </div>
+          <p>
+            Apply statistical scoring and Bayesian updating to integrate multiple evidence objects, compute posterior confidence
+            distributions, and rank candidate biological hypotheses with explicit uncertainty annotations.
+          </p>
+        </div>
+
+        <div class="aim">
+          <div class="title">
+            <span class="badge">Aim 3</span>
+            Demonstrate traceable, reviewer-ready outputs and usability
+          </div>
+          <p>
+            Generate HTML/PDF reports that present ranked hypotheses with confidence bands, supporting versus conflicting evidence
+            coverage, citations, and recommended next experiments, and conduct a pilot usability evaluation focused on interpretability
+            and decision support.
+          </p>
+        </div>
+
+        <p class="muted" style="margin-top:12px">
+          <strong>Expected outcomes:</strong> deterministic, reproducible hypothesis rankings across reruns; quantified uncertainty;
+          transparent evidence traceability; reviewer-ready reports generated within &lt;24 hours for accession-driven runs (dataset-dependent).
+        </p>
       </div>
+    </section>
 
-      <h2>Significance</h2>
-      <p>
-        Public biomedical resources contain vast omics/immune profiling datasets and a rapidly expanding literature,
-        yet a key bottleneck remains: converting heterogeneous evidence into <strong>prioritized, testable hypotheses</strong>
-        with <strong>quantified uncertainty</strong>. Fragmented tools and bespoke scripts slow turnaround and reduce reproducibility,
-        while interpretation depends on scarce expert time. What is missing is a scalable, transparent mechanism for
-        evidence-weighted scientific synthesis and decision support.
-      </p>
-
-      <h2>Innovation</h2>
-      <p>
-        PromptGenix introduces a <strong>hypothesis intelligence engine</strong> that prioritizes mechanistic hypotheses using
-        statistical evidence modeling and Bayesian updating over public biomedical data and literature-derived priors.
-        LLMs are constrained to <strong>interpretability</strong> (explaining rankings, summarizing evidence, citing sources) rather than
-        determining confidence. Unlike tools that produce plots or narrative summaries alone, PromptGenix delivers
-        <strong>evidence-linked hypothesis rankings</strong> with explicit uncertainty labeling and actionable next steps.
-      </p>
-
-      <h2>Overall objective &amp; central hypothesis</h2>
-      <div class="box">
-        <p><strong>Objective:</strong> Deliver a validated Phase I prototype that retrieves public datasets and literature,
-          constructs standardized evidence objects, and outputs ranked biological hypotheses with probabilistic confidence,
-          traceable evidence links, and recommended follow-up experiments.</p>
-        <p><strong>Central hypothesis:</strong> An evidence-weighted decision engine combining statistical scoring/Bayesian inference with
-          constrained LLM interpretability will reduce time-to-hypothesis while improving transparency, reproducibility,
-          and usefulness for study design decisions in immunology and infectious disease research.</p>
+    <section class="footer" aria-label="footer">
+      <div>
+        <strong>PromptGenix LLC</strong> · Women & Minority-Owned Small Business
       </div>
-
-      <h2>Specific aims</h2>
-      <ul>
-        <li><strong>Aim 1.</strong> Build a robust public-data ingest and evidence feature layer that generates standardized evidence objects
-          (effect sizes, uncertainty-aware descriptors, reproducibility checks, context) from selected datasets and metadata.</li>
-        <li><strong>Aim 2.</strong> Implement an evidence-weighted hypothesis prioritization engine using statistical scoring and Bayesian updating
-          to compute posterior confidence and rank candidate hypotheses with explicit uncertainty annotations.</li>
-        <li><strong>Aim 3.</strong> Deliver reviewer-ready HTML/PDF outputs and evaluate usability via 2–3 pilot studies, measuring traceability,
-          rerun reproducibility, turnaround time, and “useful” ratings for hypothesis recommendations.</li>
-      </ul>
-
-      <h2>Expected outcomes &amp; deliverables</h2>
-      <ul>
-        <li>Deterministic, reproducible evidence objects and ranked hypotheses across reruns (versioned configs, checksums, traceable artifacts).</li>
-        <li>Evidence-linked hypotheses with posterior confidence estimates and clear support vs. conflict coverage.</li>
-        <li>Reviewer-ready reports generated within &lt;24 hours for accession-driven runs (dataset-dependent), with reduced manual synthesis time.</li>
-      </ul>
-
-      <h2>Impact</h2>
-      <p>
-        Successful completion of Phase I will de-risk Phase II development of a scalable hypothesis intelligence platform for faster,
-        more transparent evidence integration and prioritization—supporting, not replacing, human scientific decision-making.
-      </p>
-
-      <div class="fine">
-        Phase I SBIR – NIH/NIAID focus &middot; Public-data validation &middot; Women &amp; Minority-Owned Small Business
+      <div class="muted">
+        Contact: <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a> ·
+        <a href="https://promptgenix.org/sbir.html" target="_blank" rel="noopener">promptgenix.org/sbir.html</a>
       </div>
     </section>
   </main>
-
-  <footer>
-    PromptGenix &middot; SBIR Portal &middot;
-    <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
-  </footer>
-</div>
 </body>
 </html>
