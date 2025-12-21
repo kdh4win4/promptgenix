@@ -2,11 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – Use Cases</title>
+  <title>PromptGenix – Use Cases (Public-Data Demos, Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix use cases: RNA-Seq, NGS, and Flow Cytometry automation with an AI hypothesis generator."/>
+  <meta name="description" content="PromptGenix SBIR Phase I Use Cases: 2–3 public-data demo scenarios showing Bayesian posterior confidence, credible intervals, and evidence coverage with traceable outputs."/>
+
+  <!-- MathJax for real equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
   <style>
-    *{ box-sizing:border-box; }
+    * { box-sizing: border-box; }
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -17,7 +27,6 @@
     a{ color:inherit; text-decoration:none; }
     .page{ min-height:100vh; display:flex; flex-direction:column; }
 
-    /* Shared header/nav (matches portal style) */
     header{
       position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
@@ -27,14 +36,12 @@
     .nav{
       max-width:1120px; margin:0 auto; padding:14px 20px;
       display:flex; align-items:center; justify-content:space-between; gap:18px;
-      flex-wrap:wrap;
     }
     .nav-left{ display:flex; align-items:center; gap:12px; }
     .logo-dot{
       width:28px; height:28px; border-radius:999px;
       background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
       box-shadow:0 0 18px rgba(56,189,248,.7);
-      flex:0 0 auto;
     }
     .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
     .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
@@ -58,10 +65,11 @@
     }
 
     main{ flex:1; }
+
     .section{
-      max-width:1120px;
-      margin:0 auto;
-      padding:28px 20px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 20px;
     }
 
     .topline{
@@ -71,8 +79,8 @@
       margin-bottom: 14px;
     }
     .doc-title{
-      font-size: 1.55rem;
-      font-weight: 860;
+      font-size: 1.35rem;
+      font-weight: 820;
       color:#f9fafb;
       margin: 0;
     }
@@ -82,103 +90,138 @@
     }
 
     .kicker{
-      font-size:.78rem;
-      text-transform:uppercase;
-      letter-spacing:.18em;
-      color:#a5b4fc;
-      margin-bottom:6px;
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: #a5b4fc;
+      margin: 14px 0 6px;
     }
+
     h2{
-      font-size:1.12rem;
-      font-weight:760;
+      font-size: 1.12rem;
+      font-weight: 780;
       color:#f9fafb;
-      margin:14px 0 8px;
+      margin: 12px 0 8px;
     }
+
     p{
-      margin:0 0 10px;
-      font-size:.93rem;
+      margin: 0 0 10px;
+      font-size: .95rem;
       color:#d1d5db;
     }
 
-    .hero-img{
-      width:100%;
-      max-width: 980px;
-      border-radius: 16px;
-      display:block;
-      margin: 18px auto 0;
-      border: 1px solid rgba(148,163,184,0.22);
-      box-shadow: 0 18px 45px rgba(15,23,42,0.75);
-    }
-
-    .tag-row{
-      margin-top: 10px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      font-size:.78rem;
-      color:#9ca3af;
-      justify-content:center;
-    }
-    .tag-row span{
-      padding:4px 10px;
-      border-radius:999px;
-      border:1px solid rgba(75,85,99,0.9);
-      background: rgba(15,23,42,0.9);
-    }
-
-    .grid{
+    .grid-2{
       display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:14px;
-      margin-top: 12px;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap:18px;
+      margin-top: 10px;
+      align-items:start;
     }
+
     .card{
-      border-radius:16px;
-      padding:14px 14px 12px;
+      border-radius: 16px;
+      padding: 14px 16px;
       background: rgba(15,23,42,0.84);
       border: 1px solid rgba(148,163,184,0.28);
       box-shadow: 0 18px 45px rgba(15,23,42,0.55);
-      display:flex;
-      flex-direction:column;
-      gap:10px;
     }
+
     .card h3{
-      margin:0;
-      font-size:1.02rem;
-      color:#f9fafb;
-    }
-    .card p{
-      margin:0;
-      font-size:.88rem;
-      color:#d1d5db;
-    }
-    .thumb{
-      width:100%;
-      border-radius: 14px;
-      border: 1px solid rgba(148,163,184,0.18);
-      background: rgba(2,6,23,0.25);
-      display:block;
+      margin: 0 0 8px;
+      font-size: .95rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color:#a5b4fc;
     }
 
     ul{
-      margin:6px 0 0;
-      padding-left:1.1rem;
+      margin: 6px 0 0;
+      padding-left: 1.1rem;
       color:#d1d5db;
-      font-size:.9rem;
+      font-size: .94rem;
     }
-    li{ margin-bottom:6px; }
+    li{ margin-bottom: 6px; }
     li strong{ color:#e5e7eb; }
 
+    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill{
+      font-size:.74rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(129,140,248,0.45);
+      background: rgba(2,6,23,0.25);
+      color:#c7d2fe;
+    }
+
     .callout{
-      border-radius:14px;
-      padding:12px 14px;
-      border:1px dashed rgba(148,163,184,0.5);
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px dashed rgba(148,163,184,0.5);
       background: rgba(15,23,42,0.75);
-      font-size:.88rem;
+      font-size: .92rem;
       color:#e5e7eb;
-      margin-top:12px;
+      margin-top: 12px;
     }
     .callout strong{ color:#22c55e; }
+
+    /* equation block that looks “math-like” even before MathJax loads */
+    .eq{
+      margin-top:10px;
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.35);
+      overflow-x:auto;
+    }
+    .eq .label{
+      display:block;
+      font-size:.78rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#a5b4fc;
+      margin-bottom:6px;
+    }
+
+    /* Table */
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow:hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: rgba(15,23,42,0.6);
+    }
+    .table th, .table td{
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(148,163,184,0.18);
+      vertical-align: top;
+      font-size: .95rem;
+      color:#e5e7eb;
+    }
+    .table th{
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color:#a5b4fc;
+      background: rgba(2,6,23,0.35);
+    }
+
+    .badge{
+      display:inline-block;
+      font-size:.72rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.25);
+      color:#e5e7eb;
+      margin-right:6px;
+      margin-bottom:6px;
+      white-space:nowrap;
+    }
+    .good{ border-color: rgba(34,197,94,0.55); color:#bbf7d0; }
+    .warn{ border-color: rgba(245,158,11,0.55); color:#fde68a; }
+    .bad{  border-color: rgba(239,68,68,0.55); color:#fecaca; }
 
     footer{
       border-top:1px solid rgba(31,41,55,0.9);
@@ -188,58 +231,26 @@
       text-align:center;
     }
 
-    @media (max-width: 980px){
-      .grid{ grid-template-columns: minmax(0,1fr); }
+    @media (max-width: 920px){
+      .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
-  /* Print friendliness */
-@media print {
-
-  /* Hide site chrome */
-  header, footer { display: none !important; }
-
-  /* Reset layout quirks that create blank space */
-  .page, main, body {
-    min-height: auto !important;
-    height: auto !important;
-  }
-  main { flex: none !important; }
-
-  /* Print colors */
-  body { background:#fff !important; color:#111 !important; }
-  p, li { color:#111 !important; }
-  h1, h2, h3 { color:#111 !important; }
-  a { color:#111 !important; text-decoration: none !important; }
-
-  /* Remove heavy effects that can confuse pagination */
-  * { box-shadow: none !important; }
-
-  /* Page setup */
-  @page { size: Letter; margin: 0.5in; }
-
-  /* Keep print density readable (not too aggressive) */
-  body { font-size: 95%; line-height: 1.32; }
-
-  /* IMPORTANT: Allow big blocks (table/cards) to split across pages */
-  table, thead, tbody, tr, td, th,
-  .grid-2, .card, .callout {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
-  }
-
-  /* Avoid ugly breaks ONLY for small headings */
-  h2, h3 { break-after: avoid-page; page-break-after: avoid; }
-
-  /* Prevent single orphan lines */
-  p, li { orphans: 2; widows: 2; }
-
-  /* Tighten spacing for print */
-  .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
-  .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
-  .card { padding: 10px 12px !important; }
-  .table th, .table td { padding: 7px 8px !important; }
-}
-
+    /* Print */
+    @media print {
+      header, footer { display: none !important; }
+      body { background:#fff !important; color:#111 !important; }
+      p, li, .meta { color:#111 !important; }
+      h1, h2, h3 { color:#111 !important; }
+      .kicker { color:#111 !important; }
+      .card, .callout, .eq { background:#fff !important; border:1px solid #111 !important; }
+      .table { background:#fff !important; border:1px solid #111 !important; }
+      .table th { color:#111 !important; background:#f3f4f6 !important; }
+      .table th, .table td { color:#111 !important; border-bottom:1px solid #111 !important; }
+      .pill, .badge { color:#111 !important; border:1px solid #111 !important; background:#fff !important; }
+      * { box-shadow: none !important; }
+      @page { size: Letter; margin: 0.5in; }
+      .section { max-width: 100% !important; padding: 0 !important; }
+    }
   </style>
 </head>
 
@@ -254,7 +265,6 @@
           <div class="subbrand">SBIR Portal</div>
         </div>
       </div>
-
       <nav class="nav-links">
         <a href="index.html">Portal</a>
         <a href="sbir.html">SBIR</a>
@@ -271,109 +281,313 @@
   <main>
     <section class="section">
       <div class="topline">
-        <h1 class="doc-title">Use Cases</h1>
+        <h1 class="doc-title">Use Cases – Public-Data Demo Scenarios (Phase I)</h1>
         <div class="meta">
-          PromptGenix &middot; Automated RNA-Seq + Flow Cytometry + BioAI Hypothesis Generator
+          PromptGenix LLC &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
         </div>
       </div>
 
-      <div class="kicker">What PromptGenix delivers</div>
-      <h2>From raw files to reproducible results and ranked hypotheses.</h2>
+      <div class="kicker">Why these demos</div>
       <p>
-        PromptGenix automates core workflows used in NIH-funded labs: RNA-Seq (QC → alignment → DEG → enrichment/signatures)
-        and flow cytometry (preprocessing → gating/subsetting → comparative analysis). On top of this, an internal LLM layer
-        produces structured interpretation and a ranked list of testable hypotheses with suggested follow-up experiments.
+        Phase I demonstrations use <strong>public datasets</strong> (e.g., GEO/SRA, FlowRepository) and <strong>public literature</strong> (PubMed/PMC)
+        to show feasibility, traceability, and calibrated uncertainty in hypothesis prioritization. Consistent with the Phase I design,
+        <strong>confidence is computed by the Bayesian engine</strong>; the <strong>LLM is used only for evidence-constrained explanations</strong>.
       </p>
 
-      <!-- Keep your main montage image path -->
-      <img
-        src="assets/img/usecases/usecases_main.png"
-        alt="PromptGenix use case montage"
-        class="hero-img"
-      />
-
-      <div class="tag-row">
-        <span>UMAP / t-SNE</span>
-        <span>Differential expression</span>
-        <span>Immune signatures</span>
-        <span>Cell subset gating</span>
-        <span>Gene set enrichment</span>
-        <span>Hypothesis ranking</span>
-      </div>
-
-      <div class="kicker" style="margin-top:18px;">Six example panels</div>
-      <h2>High-level examples (visual placeholders for SBIR web portal).</h2>
-      <p>
-        These panels illustrate the kinds of artifacts PromptGenix generates. In Phase I validation, examples will be
-        reproduced on public datasets (GEO/SRA/FlowRepository) to avoid any data-use or IP conflicts.
-      </p>
-
-      <div class="grid">
+      <div class="grid-2">
         <div class="card">
-          <img class="thumb" src="assets/img/usecases/usecase_01_flow.png" alt="Flow cytometry automated gating and subset comparison"/>
-          <h3>Flow Cytometry</h3>
-          <p>Automated preprocessing, subset discovery, group comparisons, and reviewer-ready plots.</p>
+          <h3>What each demo outputs</h3>
           <ul>
-            <li><strong>Inputs:</strong> FCS or FlowRepository IDs</li>
-            <li><strong>Outputs:</strong> subsets, markers, comparisons</li>
+            <li><strong>Ranked hypotheses</strong> as testable statements (templates).</li>
+            <li><strong>Posterior confidence</strong> with <strong>credible intervals (CrI)</strong>.</li>
+            <li><strong>Evidence coverage</strong>: supporting vs. conflicting vs. missing.</li>
+            <li><strong>Traceability</strong>: every score links to evidence objects + citations.</li>
+            <li><strong>Actionability</strong>: recommended next-step experiments/analyses.</li>
           </ul>
+          <div class="pill-row">
+            <span class="pill">Posterior \(P(H\mid E)\)</span>
+            <span class="pill">95% CrI</span>
+            <span class="pill">Coverage</span>
+            <span class="pill">Evidence-linked</span>
+          </div>
         </div>
 
         <div class="card">
-          <img class="thumb" src="assets/img/usecases/usecase_02_rnaseq.png" alt="Bulk RNA-Seq pipeline and differential expression"/>
-          <h3>Bulk RNA-Seq</h3>
-          <p>QC → alignment → counts → DEG → enrichment/signature interpretation in one reproducible run.</p>
-          <ul>
-            <li><strong>Inputs:</strong> FASTQ or GEO/SRA IDs</li>
-            <li><strong>Outputs:</strong> DEG, volcano, pathways</li>
-          </ul>
-        </div>
+          <h3>Bayesian scoring (engine)</h3>
+          <p style="margin-bottom:8px;">
+            For each hypothesis \(H\), we construct a structured prior and update with standardized evidence features.
+            The engine outputs a posterior distribution (not a single opaque score).
+          </p>
 
-        <div class="card">
-          <img class="thumb" src="assets/img/usecases/usecase_03_sc.png" alt="Single-cell RNA-Seq clustering and marker discovery"/>
-          <h3>Single-cell RNA-Seq</h3>
-          <p>Clustering, marker discovery, cell-type annotation, and subset-level contrasts.</p>
-          <ul>
-            <li><strong>Inputs:</strong> h5ad / counts</li>
-            <li><strong>Outputs:</strong> UMAP, markers, signatures</li>
-          </ul>
-        </div>
+          <div class="eq">
+            <span class="label">Core update</span>
+            \[
+              P(H\mid E) \propto P(H)\,P(E\mid H)
+            \]
+          </div>
 
-        <div class="card">
-          <img class="thumb" src="assets/img/usecases/usecase_04_ngs.png" alt="NGS automation and QC reporting"/>
-          <h3>NGS Workflow Automation</h3>
-          <p>Standardized ingest + QC + reporting to reduce manual glue work and re-analysis.</p>
-          <ul>
-            <li><strong>Inputs:</strong> FASTQ/metadata</li>
-            <li><strong>Outputs:</strong> QC report, run logs</li>
-          </ul>
-        </div>
+          <div class="eq">
+            <span class="label">Operational example (phase I)</span>
+            \[
+              \text{logit}\big(P(H\mid E)\big)
+              = \text{logit}\big(P(H)\big) + \sum_{j=1}^{m} w_j \, s_j(E)
+            \]
+            <div style="margin-top:8px; font-size:.92rem; color:#d1d5db;">
+              where \(s_j(E)\) are evidence-derived features (e.g., effect size, uncertainty, cross-dataset consistency, QC),
+              and \(w_j\) are fixed / learned weights under deterministic versioning.
+            </div>
+          </div>
 
-        <div class="card">
-          <img class="thumb" src="assets/img/usecases/usecase_05_enrichment.png" alt="Gene set enrichment and immune signatures"/>
-          <h3>Signatures & Enrichment</h3>
-          <p>GSEA/GSVA-style outputs with immune-signature interpretation and traceability.</p>
-          <ul>
-            <li><strong>Outputs:</strong> enriched sets, rank plots</li>
-            <li><strong>Use:</strong> grant/paper-ready summaries</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <img class="thumb" src="assets/img/usecases/usecase_06_hypothesis.png" alt="AI hypothesis generator with citations"/>
-          <h3>Hypothesis Generator</h3>
-          <p>Ranked hypotheses + suggested validation experiments, grounded in observed signals and citations.</p>
-          <ul>
-            <li><strong>Outputs:</strong> hypotheses, confidence, rationale</li>
-            <li><strong>Next steps:</strong> experiment suggestions</li>
-          </ul>
+          <div class="callout">
+            <strong>Interpretability rule:</strong> The LLM can only explain what is present in evidence objects and citations;
+            <em>no evidence → no claim</em>.
+          </div>
         </div>
       </div>
 
-      <div class="callout">
-        <strong>Phase I boundary:</strong> all validation examples will be generated on public datasets (GEO/SRA/FlowRepository),
-        and the Hypothesis Generator will require evidence + citations for each ranked claim.
+      <div class="kicker">Demo 1</div>
+      <h2>RNA-Seq meta-evidence: “Pathway activation in Disease Y is consistent across cohorts.”</h2>
+
+      <div class="card">
+        <h3>Scenario</h3>
+        <div class="pill-row">
+          <span class="badge">Public RNA-Seq</span>
+          <span class="badge">Cross-study consistency</span>
+          <span class="badge good">Strong supporting evidence</span>
+        </div>
+
+        <p>
+          A user queries a disease-centric question and requests hypotheses about mechanisms that are reproducible across public cohorts.
+          PromptGenix retrieves multiple GEO/SRA studies, runs standardized processing, and creates evidence objects per dataset
+          (effect size, uncertainty, QC, context descriptors).
+        </p>
+
+        <table class="table" aria-label="Demo 1 example outputs table">
+          <thead>
+            <tr>
+              <th style="width:34%;">Hypothesis template</th>
+              <th style="width:22%;">Posterior / 95% CrI</th>
+              <th style="width:22%;">Coverage</th>
+              <th style="width:22%;">Next steps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>H1:</strong> “Pathway \(X\) is upregulated in Disease \(Y\) vs controls.”
+              </td>
+              <td>
+                \(P(H_1\mid E)=0.86\) <br/>
+                95% CrI \([0.78,\,0.92]\)
+              </td>
+              <td>
+                <span class="badge good">Supporting: 5</span>
+                <span class="badge warn">Conflicting: 1</span>
+                <span class="badge">Missing: 0</span>
+              </td>
+              <td>
+                Targeted qPCR panel for pathway genes; validate in an independent cohort;
+                test upstream regulator perturbation.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>H2:</strong> “Gene \(G\) is a context-specific driver (cell-type enriched) in Disease \(Y\).”
+              </td>
+              <td>
+                \(P(H_2\mid E)=0.63\) <br/>
+                95% CrI \([0.49,\,0.76]\)
+              </td>
+              <td>
+                <span class="badge good">Supporting: 3</span>
+                <span class="badge warn">Conflicting: 2</span>
+                <span class="badge">Missing: 1</span>
+              </td>
+              <td>
+                Stratify by metadata (age/sex/tissue); check cell-type markers; run sensitivity analysis
+                with alternative normalization/QC thresholds.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>Traceability:</strong> Each posterior links to evidence objects (per-study effect sizes, SE/CI, QC flags, batch/study descriptors)
+          and citations that support or contradict the hypothesis.
+        </div>
       </div>
+
+      <div class="kicker">Demo 2</div>
+      <h2>Flow cytometry evidence: “A cell subset expands and correlates with outcome.”</h2>
+
+      <div class="card">
+        <h3>Scenario</h3>
+        <div class="pill-row">
+          <span class="badge">Public Flow cytometry</span>
+          <span class="badge">Subset frequency</span>
+          <span class="badge warn">Mixed evidence</span>
+        </div>
+
+        <p>
+          A user asks whether a specific immune subset (e.g., activated T cell phenotype) differs between groups.
+          PromptGenix retrieves public FCS/processed matrices where available, standardizes metadata, and extracts
+          evidence features (frequency differences, uncertainty, batch/study effects, and robustness checks).
+        </p>
+
+        <table class="table" aria-label="Demo 2 example outputs table">
+          <thead>
+            <tr>
+              <th style="width:34%;">Hypothesis template</th>
+              <th style="width:22%;">Posterior / 95% CrI</th>
+              <th style="width:22%;">Coverage</th>
+              <th style="width:22%;">Next steps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>H3:</strong> “Subset \(S\) frequency is higher in Group A vs Group B.”
+              </td>
+              <td>
+                \(P(H_3\mid E)=0.71\) <br/>
+                95% CrI \([0.58,\,0.82]\)
+              </td>
+              <td>
+                <span class="badge good">Supporting: 4</span>
+                <span class="badge warn">Conflicting: 3</span>
+                <span class="badge">Missing: 0</span>
+              </td>
+              <td>
+                Report sensitivity to batch correction; confirm with orthogonal marker panel;
+                define pre-registered gating/threshold rules for validation.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>H4:</strong> “Subset \(S\) correlates with outcome \(O\) (direction consistent).”
+              </td>
+              <td>
+                \(P(H_4\mid E)=0.57\) <br/>
+                95% CrI \([0.41,\,0.72]\)
+              </td>
+              <td>
+                <span class="badge good">Supporting: 2</span>
+                <span class="badge warn">Conflicting: 2</span>
+                <span class="badge">Missing: 3</span>
+              </td>
+              <td>
+                Acquire additional cohorts; harmonize outcome definition; run robustness checks with alternative models.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="eq">
+          <span class="label">Coverage summary (reported)</span>
+          \[
+            \text{Coverage}(H) = \big(\#\text{support},\,\#\text{conflict},\,\#\text{missing}\big),
+            \quad
+            \text{reported alongside } P(H\mid E)\text{ and CrI.}
+          \]
+        </div>
+      </div>
+
+      <div class="kicker">Demo 3</div>
+      <h2>Evidence synthesis: “Mechanism is supported by both omics and immune profiling.”</h2>
+
+      <div class="card">
+        <h3>Scenario</h3>
+        <div class="pill-row">
+          <span class="badge">Multi-modal</span>
+          <span class="badge">RNA-Seq + Flow</span>
+          <span class="badge good">Convergent signals</span>
+        </div>
+
+        <p>
+          A user wants hypotheses that are supported across modalities (gene expression + immune phenotypes).
+          PromptGenix constructs modality-specific evidence objects and performs an integrated update that favors
+          robust cross-modal agreement while surfacing conflicts explicitly.
+        </p>
+
+        <div class="eq">
+          <span class="label">Multi-source update (illustrative)</span>
+          \[
+            \text{logit}\big(P(H\mid E_{\text{RNA}}, E_{\text{Flow}})\big)
+            = \text{logit}\big(P(H)\big)
+            + \alpha \, S_{\text{RNA}} + \beta \, S_{\text{Flow}}
+            - \gamma \, S_{\text{conflict}}
+          \]
+          <div style="margin-top:8px; font-size:.92rem; color:#d1d5db;">
+            where \(S_{\text{RNA}}\) and \(S_{\text{Flow}}\) summarize standardized evidence strength per modality, and
+            \(S_{\text{conflict}}\) penalizes directional contradictions or context mismatches.
+          </div>
+        </div>
+
+        <table class="table" aria-label="Demo 3 example outputs table">
+          <thead>
+            <tr>
+              <th style="width:34%;">Hypothesis template</th>
+              <th style="width:22%;">Posterior / 95% CrI</th>
+              <th style="width:22%;">Coverage</th>
+              <th style="width:22%;">Next steps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>H5:</strong> “Mechanism \(M\) explains both transcriptional and immune-phenotype changes.”
+              </td>
+              <td>
+                \(P(H_5\mid E)=0.80\) <br/>
+                95% CrI \([0.69,\,0.88]\)
+              </td>
+              <td>
+                <span class="badge good">Supporting: 6</span>
+                <span class="badge warn">Conflicting: 1</span>
+                <span class="badge">Missing: 1</span>
+              </td>
+              <td>
+                Propose a minimal validation set: confirm pathway activation + phenotype shift in a single prospective dataset;
+                prioritize perturbation targets.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>LLM role here:</strong> produce a reviewer-friendly narrative explaining why the engine ranked \(H_5\) high,
+          explicitly citing supporting and conflicting evidence links; it does not change \(P(H\mid E)\).
+        </div>
+      </div>
+
+      <div class="kicker">Phase I evaluation outputs</div>
+      <h2>What reviewers will see in the generated report</h2>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Report artifacts</h3>
+          <ul>
+            <li>Ranked hypothesis table: posterior + CrI + coverage.</li>
+            <li>Evidence appendix: per-study effect sizes, uncertainty, QC, and context.</li>
+            <li>Citation panel: supporting vs. conflicting papers (with timestamps/links).</li>
+            <li>“Next steps” plan: minimal experiments + required data.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Phase I KPIs (examples)</h3>
+          <ul>
+            <li><strong>Runtime:</strong> accession-driven report generated within &lt;24 hours (dataset-dependent).</li>
+            <li><strong>Reproducibility:</strong> deterministic reruns with pinned versions + config snapshots + checksums.</li>
+            <li><strong>Usefulness:</strong> pilot feedback that rankings guided ≥1 concrete analysis/experiment decision.</li>
+            <li><strong>Traceability:</strong> every ranked hypothesis links to evidence objects + citations.</li>
+          </ul>
+          <div class="callout">
+            <strong>Reviewer-friendly principle:</strong> transparent ranking with uncertainty — not black-box generation.
+          </div>
+        </div>
+      </div>
+
     </section>
   </main>
 
