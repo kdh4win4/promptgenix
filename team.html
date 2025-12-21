@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>PromptGenix – Team (Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix SBIR Phase I Team: roles, responsibilities, and technical capability for evidence-weighted Bayesian hypothesis prioritization with evidence-constrained LLM interpretability."/>
+  <meta name="description" content="PromptGenix SBIR Phase I Team: roles, responsibilities, execution plan, and guardrails (LLM for explanation; Bayesian engine for confidence)." />
 
   <style>
     * { box-sizing: border-box; }
@@ -56,6 +56,7 @@
     }
 
     main{ flex:1; }
+
     .section{
       max-width: 1120px;
       margin: 0 auto;
@@ -93,6 +94,13 @@
       color:#f9fafb;
       margin: 12px 0 8px;
     }
+    h3{
+      margin: 0 0 8px;
+      font-size: .95rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color:#a5b4fc;
+    }
 
     p{
       margin: 0 0 10px;
@@ -102,10 +110,13 @@
 
     .grid-2{
       display:grid;
-      grid-template-columns: minmax(0,1.15fr) minmax(0,0.85fr);
+      grid-template-columns: minmax(0,1.05fr) minmax(0,1fr);
       gap:18px;
       margin-top: 10px;
       align-items:start;
+    }
+    @media (max-width: 920px){
+      .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
     .card{
@@ -116,14 +127,6 @@
       box-shadow: 0 18px 45px rgba(15,23,42,0.55);
     }
 
-    .card h3{
-      margin: 0 0 8px;
-      font-size: .95rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color:#a5b4fc;
-    }
-
     ul{
       margin: 6px 0 0;
       padding-left: 1.1rem;
@@ -132,6 +135,16 @@
     }
     li{ margin-bottom: 6px; }
     li strong{ color:#e5e7eb; }
+
+    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill{
+      font-size:.74rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(129,140,248,0.45);
+      background: rgba(2,6,23,0.25);
+      color:#c7d2fe;
+    }
 
     .callout{
       border-radius: 14px;
@@ -144,17 +157,7 @@
     }
     .callout strong{ color:#22c55e; }
 
-    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .pill{
-      font-size:.74rem;
-      padding: 5px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(129,140,248,0.45);
-      background: rgba(2,6,23,0.25);
-      color:#c7d2fe;
-    }
-
-    .mini-table{
+    .table{
       width:100%;
       border-collapse: collapse;
       margin-top: 10px;
@@ -163,37 +166,19 @@
       border: 1px solid rgba(148,163,184,0.28);
       background: rgba(15,23,42,0.6);
     }
-    .mini-table th, .mini-table td{
-      padding: 10px 12px;
+    .table th, .table td{
+      padding: 12px 12px;
       border-bottom: 1px solid rgba(148,163,184,0.18);
       vertical-align: top;
-      font-size: .92rem;
+      font-size: .95rem;
       color:#e5e7eb;
     }
-    .mini-table th{
-      font-size: .8rem;
+    .table th{
+      font-size: .82rem;
       text-transform: uppercase;
       letter-spacing: .14em;
       color:#a5b4fc;
       background: rgba(2,6,23,0.35);
-      width: 28%;
-    }
-
-    .equation{
-      margin-top: 8px;
-      border-radius: 14px;
-      padding: 12px 14px;
-      border: 1px solid rgba(148,163,184,0.28);
-      background: rgba(2,6,23,0.45);
-      overflow-x:auto;
-    }
-    .equation pre{
-      margin:0;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: .90rem;
-      color:#e5e7eb;
-      line-height: 1.45;
-      white-space: pre;
     }
 
     footer{
@@ -204,21 +189,19 @@
       text-align:center;
     }
 
-    @media (max-width: 920px){
-      .grid-2{ grid-template-columns: minmax(0,1fr); }
-    }
-
+    /* Print */
     @media print {
       header, footer { display: none !important; }
       body { background:#fff !important; color:#111 !important; }
-      p, li, td, th { color:#111 !important; }
+      p, li { color:#111 !important; }
       h1, h2, h3 { color:#111 !important; }
-      .card, .callout, .equation, .mini-table { background:#fff !important; border:1px solid #111 !important; box-shadow:none !important; }
-      .kicker { color:#111 !important; }
-      .pill{ border:1px solid #111 !important; color:#111 !important; background:#fff !important; }
-      pre { color:#111 !important; }
+      * { box-shadow: none !important; }
       @page { size: Letter; margin: 0.5in; }
       .section { max-width: 100% !important; padding: 0 !important; }
+      .card { border:1px solid #111 !important; background:#fff !important; }
+      .table { border:1px solid #111 !important; background:#fff !important; }
+      .table th { background:#fff !important; }
+      .callout { background:#fff !important; border:1px dashed #111 !important; }
     }
   </style>
 </head>
@@ -250,130 +233,147 @@
   <main>
     <section class="section">
       <div class="topline">
-        <h1 class="doc-title">Team (Phase I): Roles, Responsibilities, and Execution Readiness</h1>
+        <h1 class="doc-title">Team (Phase I): Roles, Responsibilities & Execution</h1>
         <div class="meta">
           PromptGenix LLC &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
         </div>
       </div>
 
-      <div class="kicker">Team strategy</div>
-      <h2>Separate “confidence” from “explanation” by design.</h2>
+      <div class="kicker">Core principle</div>
+      <h2>LLM explains; Bayesian engine determines confidence.</h2>
       <p>
-        PromptGenix is engineered to maintain reviewer trust by clearly separating (i) <strong>quantitative confidence</strong> from
-        (ii) <strong>narrative interpretation</strong>. Confidence is computed by a deterministic, evidence-weighted
-        <strong>Bayesian decision engine</strong>, while the LLM is constrained to explain rankings and cite supporting or conflicting sources.
+        PromptGenix is intentionally designed to be reviewer-traceable:
+        probabilistic confidence (posterior mean + credible interval + evidence coverage) is computed by an
+        <strong>evidence-weighted Bayesian decision engine</strong>, while the LLM is used <strong>only</strong> for interpretability—
+        to produce human-readable rationales and cite supporting or conflicting sources.
       </p>
+      <div class="callout">
+        <strong>Guardrail:</strong> “No evidence object → no claim.” The LLM cannot invent confidence or override posterior confidence.
+      </div>
 
+      <div class="kicker">Team structure</div>
       <div class="grid-2">
         <div class="card">
-          <h3>Phase I leadership & execution roles</h3>
-          <table class="mini-table" aria-label="Team roles and responsibilities">
-            <thead>
-              <tr>
-                <th>Role</th>
-                <th>Primary responsibilities (Phase I)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>PI / Technical Lead</strong><br/>Computational Biology & Biostatistics</td>
-                <td>
-                  Overall architecture and delivery; evidence-layer design; Bayesian scoring and calibration; reproducibility controls
-                  (version pinning, configs, checksums); pilot evaluations and KPI reporting; integration of RNA-Seq and flow cytometry workflows.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Scientific Product</strong><br/>Workflow & reporting</td>
-                <td>
-                  Define hypothesis templates and actionability criteria; ensure outputs are reviewer-ready (HTML/PDF),
-                  with traceable evidence links, uncertainty labeling, and recommended validation experiments.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>LLM Interpretability</strong><br/>Evidence-constrained narrative</td>
-                <td>
-                  Implement guardrails so the LLM can only reference approved evidence objects and cited literature;
-                  generate consistent “why” rationales, supporting vs. conflicting evidence summaries, and next-step recommendations.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>QA / Validation</strong><br/>Testing & KPIs</td>
-                <td>
-                  Build test harnesses for deterministic reruns; evaluate posterior calibration behavior and evidence coverage;
-                  document usability feedback, turnaround time, and traceability completeness in pilot public-data studies.
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <h3>Key personnel & responsibilities</h3>
+          <ul>
+            <li><strong>PI / Technical Lead (Bioinformatics & Biostatistics):</strong>
+              overall architecture; evidence feature design; Bayesian model specification; evaluation design; milestone delivery.</li>
+            <li><strong>Pipeline Engineering Lead:</strong>
+              deterministic RNA-Seq + flow cytometry evidence generation; QC gates; metadata harmonization; version pinning and reproducible builds.</li>
+            <li><strong>ML / NLP Engineer (Interpretability Layer):</strong>
+              constrained prompting; citation enforcement; claim filtering; template-driven narratives; safety + hallucination control.</li>
+            <li><strong>Product/UX & Reporting:</strong>
+              reviewer-ready HTML/PDF reports; figure/table generation; traceability links (evidence IDs, configs, run logs).</li>
+            <li><strong>Advisory Support (as-needed):</strong>
+              domain review (immunology/infectious disease), methods critique, and usability feedback on pilot public-data studies.</li>
+          </ul>
 
           <div class="pill-row">
             <span class="pill">Deterministic pipelines</span>
+            <span class="pill">Evidence objects</span>
             <span class="pill">Bayesian inference</span>
-            <span class="pill">Calibration & CrI</span>
-            <span class="pill">Evidence traceability</span>
-            <span class="pill">Guardrailed LLM</span>
-          </div>
-
-          <div class="callout">
-            <strong>Reviewer-facing claim:</strong> The LLM does not determine confidence; it explains confidence computed by the Bayesian engine,
-            and every statement must be supported by traceable evidence links and/or citations.
+            <span class="pill">LLM interpretability only</span>
+            <span class="pill">Reviewer traceability</span>
           </div>
         </div>
 
         <div class="card">
-          <h3>Bayesian engine responsibility boundary</h3>
-          <p style="margin-bottom:8px;">
-            The team implements a clear responsibility split that maps to the system architecture:
-          </p>
+          <h3>Execution alignment to Phase I aims</h3>
           <ul>
-            <li><strong>Bayesian engine:</strong> computes posterior confidence and credible intervals from standardized evidence features.</li>
-            <li><strong>Evidence layer:</strong> generates effect sizes, uncertainty, and quality weights from public datasets.</li>
-            <li><strong>LLM layer:</strong> produces human-readable rationale constrained to evidence objects (no evidence → no claim).</li>
+            <li><strong>Aim 1 (Evidence layer):</strong> pipeline lead + PI define standardized evidence objects (effect size, uncertainty, context, reproducibility).</li>
+            <li><strong>Aim 2 (Decision engine):</strong> PI specifies prior construction + likelihood mapping; implements posterior confidence + CrI + coverage.</li>
+            <li><strong>Aim 3 (Reports & usability):</strong> UX/reporting + NLP engineer produce evidence-linked narratives; pilot KPI collection and feedback.</li>
           </ul>
-
-          <div class="equation" aria-label="Bayesian update equation (display as true math-like text)">
-            <pre>For each hypothesis H and evidence set E = {e1, e2, ..., en}:
-
-P(H | E)  ∝  P(H) · Π_i P(e_i | H)
-
-Posterior summary reported as:
-  - posterior mean/median confidence
-  - 95% credible interval (CrI)
-  - evidence coverage: supporting vs. conflicting vs. missing</pre>
-          </div>
-
           <div class="callout">
-            <strong>Why this matters:</strong> This separation improves auditability, reduces “black-box” risk, and aligns the team’s skills with a
-            transparent, evidence-weighted decision workflow suitable for SBIR review.
+            <strong>Reviewer-facing narrative:</strong> The “confidence” is not an LLM opinion—confidence is a posterior probability distribution produced by the Bayesian engine.
           </div>
         </div>
       </div>
 
-      <div class="kicker">Phase I operating model</div>
-      <h2>Fast iteration, strict traceability, measurable utility.</h2>
+      <div class="kicker">Responsibilities by work package</div>
+      <h2>Clear ownership for reproducibility, inference, and interpretation.</h2>
+
+      <table class="table" aria-label="Team responsibility matrix">
+        <thead>
+          <tr>
+            <th style="width:18%;">Work package</th>
+            <th style="width:52%;">Primary owner</th>
+            <th style="width:30%;">Accountability outputs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>WP1</strong><br/>Evidence layer</td>
+            <td>
+              Pipeline Engineering Lead (implementation) + PI (specification of evidence features)
+            </td>
+            <td>
+              Deterministic pipeline runs; standardized evidence objects; QC logs; version-pinned configs
+            </td>
+          </tr>
+          <tr>
+            <td><strong>WP2</strong><br/>Bayesian engine</td>
+            <td>
+              PI / Technical Lead
+            </td>
+            <td>
+              Prior construction rules; likelihood mapping; posterior confidence + 95% CrI; calibration tests; coverage metrics
+            </td>
+          </tr>
+          <tr>
+            <td><strong>WP3</strong><br/>Interpretability & reports</td>
+            <td>
+              ML/NLP Engineer (constraints) + Product/UX (report format) + PI (review/approval)
+            </td>
+            <td>
+              Evidence-linked narrative; citation enforcement; “no evidence → no claim” checks; HTML/PDF exports
+            </td>
+          </tr>
+          <tr>
+            <td><strong>WP4</strong><br/>Pilot evaluation</td>
+            <td>
+              PI (study design) + Advisory Support (domain review)
+            </td>
+            <td>
+              KPI definitions; pilot runs on public datasets; usability feedback; reviewer-ready summaries
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="kicker">Quality & governance</div>
+      <h2>Operational controls that protect scientific validity.</h2>
       <div class="grid-2">
         <div class="card">
-          <h3>Delivery cadence</h3>
+          <h3>Reproducibility & traceability</h3>
           <ul>
-            <li><strong>Weekly build cycles:</strong> evidence ingestion → posterior scoring → report generation → QA checks.</li>
-            <li><strong>Traceability checklist:</strong> every ranked hypothesis links to evidence objects + supporting/conflicting citations.</li>
-            <li><strong>Reproducibility gates:</strong> pinned versions, config snapshots, and checksums verified on reruns.</li>
+            <li><strong>Deterministic configs:</strong> pinned versions, run manifests, and reproducible parameter sets.</li>
+            <li><strong>Evidence IDs:</strong> each hypothesis links to evidence objects (effect sizes, uncertainty, context).</li>
+            <li><strong>Audit trail:</strong> run logs + checksums support reviewer trust and rerun verification.</li>
           </ul>
         </div>
+
         <div class="card">
-          <h3>Phase I success indicators</h3>
+          <h3>LLM constraints (interpretability only)</h3>
           <ul>
-            <li><strong>Deterministic reruns:</strong> consistent outputs for the same inputs/configs.</li>
-            <li><strong>Transparent uncertainty:</strong> posterior + CrI + coverage included in outputs.</li>
-            <li><strong>Usability:</strong> pilot feedback indicates the ranked hypotheses support at least one concrete next-step decision.</li>
+            <li><strong>Claim gating:</strong> narratives must reference evidence objects and/or citations.</li>
+            <li><strong>No confidence authoring:</strong> LLM cannot produce or modify posterior confidence outputs.</li>
+            <li><strong>Uncertainty first:</strong> reporting requires posterior + CrI + supporting/conflicting coverage.</li>
           </ul>
+          <div class="callout">
+            <strong>Bottom line:</strong> The Bayesian engine computes “confidence”; the LLM explains “why,” constrained to traceable evidence.
+          </div>
         </div>
       </div>
 
-      <div class="callout">
-        <strong>Commitment to responsible use:</strong> PromptGenix is designed to support—not replace—human scientific decision-making,
-        with explicit uncertainty labeling and evidence-first reasoning.
-      </div>
+      <div class="kicker">Phase II readiness</div>
+      <h2>Team skills map directly to scalable delivery.</h2>
+      <p style="margin-bottom:0;">
+        Phase I establishes technical feasibility and reviewer trust through deterministic pipelines,
+        evidence-weighted Bayesian inference, and strict interpretability controls. Phase II will expand dataset coverage,
+        strengthen calibration and benchmarking, and support secure deployments and subscription-based delivery while preserving
+        the same “LLM explains; Bayesian engine computes confidence” principle.
+      </p>
 
     </section>
   </main>
