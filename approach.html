@@ -1,11 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>PromptGenix – Research Strategy (Approach, Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix SBIR Phase I Approach: evidence-weighted hypothesis prioritization workflow, validation plan, milestones, KPIs, and risks & mitigation."/>
+  <meta name="description" content="PromptGenix SBIR Phase I Approach: evidence-weighted hypothesis prioritization workflow, Bayesian updating, validation plan, milestones, KPIs, and risks & mitigation."/>
 
   <style>
     * { box-sizing: border-box; }
@@ -156,6 +155,28 @@
     }
     .callout strong{ color:#22c55e; }
 
+    .math{
+      margin-top:10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: rgba(2,6,23,0.35);
+      overflow:auto;
+    }
+    .math pre{
+      margin:0;
+      white-space:pre;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13.4px;
+      color:#e5e7eb;
+      line-height:1.45;
+    }
+    .math .note{
+      margin-top:8px;
+      color:#cbd5e1;
+      font-size:.86rem;
+    }
+
     /* Table */
     .table{
       width:100%;
@@ -244,6 +265,11 @@
         background:#fff !important;
         border: 1px solid #111 !important;
       }
+      .math pre{ color:#111 !important; }
+      .math{ border:1px solid #111 !important; background:#fff !important; }
+      .callout{ border:1px dashed #111 !important; background:#fff !important; color:#111 !important; }
+      .callout strong{ color:#111 !important; }
+      .pill{ border:1px solid #111 !important; color:#111 !important; background:#fff !important; }
     }
   </style>
 </head>
@@ -260,7 +286,6 @@
         </div>
       </div>
       <nav class="nav-links">
-        <!-- NAV: full set, consistent across pages -->
         <a href="index.html">Portal</a>
         <a href="sbir.html">SBIR</a>
         <a href="aims.html">Aims</a>
@@ -276,7 +301,7 @@
   <main>
     <section class="section">
       <div class="topline">
-        <h1 class="doc-title">Research Strategy – Approach (Phase I Workflow &amp; Validation)</h1>
+        <h1 class="doc-title">Research Strategy – Approach (Phase I Workflow & Validation)</h1>
         <div class="meta">
           PromptGenix LLC &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
         </div>
@@ -293,18 +318,18 @@
       <p>
         In this project, analysis pipelines are treated as <strong>evidence generators</strong>—not the end product.
         The primary Phase I deliverable is a system that produces <strong>ranked hypotheses with probabilistic confidence</strong>,
-        explicit evidence links, and clear uncertainty labeling.
+        explicit evidence links, and clear uncertainty labeling. (LLMs are used for interpretability only—never to set confidence.)
       </p>
 
       <div class="grid-2">
         <div class="card">
           <h3>Workflow overview</h3>
           <ul>
-            <li><strong>Inputs:</strong> Disease-, protein-, pathway-, or cell-type–centric questions, optionally linked to public accession IDs.</li>
-            <li><strong>Evidence pool:</strong> automated retrieval of relevant public datasets + associated metadata + literature signals.</li>
+            <li><strong>Inputs:</strong> Disease-, protein-, pathway-, or cell-type–centric questions (optionally with accession IDs).</li>
+            <li><strong>Evidence pool:</strong> automated retrieval of relevant public datasets + metadata + literature signals.</li>
             <li><strong>Evidence generation:</strong> standardized feature extraction (effect sizes, uncertainty, reproducibility, context descriptors).</li>
             <li><strong>Decision engine:</strong> statistical scoring + Bayesian updating to compute confidence distributions for candidate hypotheses.</li>
-            <li><strong>Interpretability layer:</strong> LLM produces explanations constrained by evidence objects (no evidence → no claim).</li>
+            <li><strong>Interpretability layer:</strong> evidence-constrained LLM explanations (no evidence → no claim).</li>
             <li><strong>Outputs:</strong> ranked hypotheses + confidence bands + “why” rationale + recommended follow-up experiments.</li>
           </ul>
           <div class="pill-row">
@@ -322,24 +347,24 @@
             Large language models are used <strong>only</strong> to contextualize and explain rankings—not to determine them.
           </p>
           <ul>
-            <li><strong>Candidate hypothesis set:</strong> generated from structured entities (disease/protein/cell-type) and literature-derived relations.</li>
-            <li><strong>Evidence strength:</strong> effect size + uncertainty + directionality + reproducibility across datasets/contexts.</li>
-            <li><strong>Bayesian confidence:</strong> priors (known biology, pathways, cell specificity) updated by observed evidence to yield posteriors.</li>
+            <li><strong>Candidate hypothesis set:</strong> structured templates (e.g., “Gene X ↑ in Disease Y within Cell Type Z”).</li>
+            <li><strong>Evidence strength:</strong> effect size + uncertainty + directionality + cross-dataset consistency.</li>
+            <li><strong>Bayesian confidence:</strong> priors (pathways, cell specificity, literature support) updated by observed evidence.</li>
             <li><strong>Ranking outputs:</strong> posterior mean + credible interval + evidence coverage (supporting vs. conflicting).</li>
-            <li><strong>Actionability:</strong> each hypothesis includes suggested next-step experiments/analyses and required data.</li>
+            <li><strong>Actionability:</strong> suggested next-step experiments/analyses and required data per hypothesis.</li>
           </ul>
           <div class="callout">
-            <strong>Phase I emphasis:</strong> transparent ranking with uncertainty, not “black-box” generation.
+            <strong>Phase I emphasis:</strong> transparent ranking with uncertainty—avoiding black-box “confidence.”
           </div>
         </div>
       </div>
 
-      <!-- FULL-WIDTH FIGURE (DIAGRAM INCLUDED) -->
+      <!-- FULL-WIDTH FIGURE -->
       <div class="card" style="margin-top:18px;">
         <h3>Bayesian Evidence-to-Confidence Workflow (Figure X)</h3>
 
         <figure class="pgx-figure">
-          <figcaption><strong>Figure X.</strong> Stepwise workflow of the PromptGenix decision engine, from query intake to evidence extraction, Bayesian updating, confidence scoring, and evidence-constrained interpretation.</figcaption>
+          <figcaption><strong>Figure X.</strong> Stepwise workflow of the PromptGenix decision engine: query intake → retrieval/harmonization → hypothesis templates → evidence extraction → Bayesian updating → posterior confidence → evidence-constrained interpretation.</figcaption>
 
           <div class="pgx-figure-panel">
             <svg viewBox="0 0 1420 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bayesian Evidence-to-Confidence Flow (Two-row tidy)">
@@ -413,13 +438,70 @@
         </figure>
       </div>
 
-      <div class="kicker" style="margin-top:18px;">How confidence is computed</div>
-      <h2>Probabilistic confidence is derived from evidence features and Bayesian updating.</h2>
+      <div class="kicker" style="margin-top:18px;">How Bayesian confidence is computed</div>
+      <h2>We operationalize priors and likelihoods from structured biological signals and standardized evidence features.</h2>
+
       <div class="callout">
-        <strong>Conceptual model:</strong>
-        For each hypothesis <em>H</em>, we define a prior probability <em>P(H)</em> from structured biological knowledge (literature, pathways, cell specificity).
-        We then compute evidence likelihood <em>P(E|H)</em> from standardized evidence features (effect size, uncertainty, reproducibility, context).
-        The system produces a posterior confidence <em>P(H|E)</em>, reported with a credible interval and explicit evidence coverage.
+        <strong>Key design choice:</strong> LLMs do not set confidence. Confidence is computed by an evidence-weighted Bayesian decision engine; the LLM only explains rankings using linked evidence objects and citations (supporting or conflicting), with uncertainty explicitly stated.
+      </div>
+
+      <div class="card" style="margin-top:12px;">
+        <h3>Bayesian model (Phase I, reviewer-friendly)</h3>
+        <p style="margin-bottom:8px;">
+          For each hypothesis <strong>H</strong> (e.g., “Gene X upregulated in Disease Y in Cell Type Z”), we compute a posterior confidence <strong>P(H | E)</strong>
+          given evidence <strong>E</strong> aggregated across public datasets and literature-derived signals.
+        </p>
+
+        <div class="math" aria-label="Bayesian equations">
+<pre>
+(1) Bayes rule:
+    P(H | E) = [ P(E | H) * P(H) ] / P(E)
+
+(2) Odds form (useful for additive scoring):
+    Odds(H | E) = Odds(H) * LR(E)
+    logit(P(H | E)) = logit(P(H)) + log LR(E)
+
+    where Odds(H) = P(H)/(1-P(H)),
+          LR(E)   = P(E|H) / P(E|¬H)
+
+(3) Prior construction (bounded, interpretable):
+    Let s_path, s_cell, s_lit ∈ [0,1] be normalized signals:
+      s_path = pathway relevance score (KEGG/Reactome membership, enrichment)
+      s_cell = cell-type specificity index (marker/co-expression specificity)
+      s_lit  = literature support score (support vs conflict, recency-weighted)
+
+    Prior log-odds:
+      logit(P(H)) = b0 + b1*s_path + b2*s_cell + b3*s_lit
+
+(4) Evidence likelihood from standardized evidence objects:
+    For dataset i, evidence object includes:
+      effect size:  d_i   (e.g., log2FC, Δabundance, Δfreq)
+      uncertainty:  se_i  (or CI/p-value converted to precision)
+      quality:      q_i   (QC, batch robustness, sample size proxy)
+      consistency:  c_i   (directional agreement across datasets/contexts)
+
+    A simple Phase I log-likelihood ratio (LLR) proxy:
+      z_i = d_i / se_i
+      LLR(E_i) = w_i * z_i * sign(d_i)   where w_i = clamp(q_i, 0, 1)
+
+    Aggregate across datasets:
+      log LR(E) = Σ_i LLR(E_i)  +  λ * c_global
+
+(5) Posterior and reporting:
+    P(H | E) = sigmoid( logit(P(H)) + log LR(E) )
+    Report: posterior mean (or median), 95% credible interval (CrI),
+            and evidence coverage: supporting vs conflicting vs missing.
+</pre>
+          <div class="note">
+            <strong>Notes:</strong> Phase I uses bounded, auditable components (signals and evidence objects) so reviewers can see exactly
+            what drives confidence. More expressive hierarchical models (e.g., random effects across studies, robust priors) are Phase II extensions.
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top:12px;">
+          <strong>Traceability rule:</strong> Each term above is computed from (a) versioned pipeline outputs (e.g., effect size, SE, QC) or
+          (b) cited public literature signals. The narrative layer can only reference these linked artifacts.
+        </div>
       </div>
 
       <div class="kicker" style="margin-top:18px;">Phase I validation plan</div>
@@ -438,7 +520,7 @@
             <td><strong>WP1</strong><br/>Evidence layer</td>
             <td>
               Build a robust ingest + evidence feature extraction layer for selected public datasets.
-              Generate standardized evidence objects (effect sizes, uncertainty, reproducibility, and context descriptors)
+              Generate standardized evidence objects (effect sizes, uncertainty, reproducibility, context descriptors)
               suitable for deterministic re-runs and downstream inference.
             </td>
             <td>
@@ -458,9 +540,9 @@
             </td>
           </tr>
           <tr>
-            <td><strong>WP3</strong><br/>Interpretability &amp; reports</td>
+            <td><strong>WP3</strong><br/>Interpretability & reports</td>
             <td>
-              Generate reviewer-ready HTML/PDF artifacts that include: ranked hypotheses, confidence bands, evidence coverage,
+              Generate reviewer-ready HTML/PDF artifacts: ranked hypotheses, confidence bands, evidence coverage,
               citations, and recommended next steps. LLM narratives are constrained to evidence objects and must cite sources.
             </td>
             <td>
@@ -509,7 +591,7 @@
 
       <div class="callout">
         <strong>Phase I success criterion:</strong> Phase I does not require all prioritized hypotheses to be biologically correct,
-        but rather demonstrable traceability, calibrated uncertainty, transparent ranking rationale, and usefulness for guiding study design decisions.
+        but demonstrable traceability, calibrated uncertainty, transparent ranking rationale, and usefulness for guiding study design decisions.
       </div>
 
     </section>
@@ -522,4 +604,3 @@
 </div>
 </body>
 </html>
-```
