@@ -1,12 +1,14 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – Facilities & Environment</title>
+  <title>PromptGenix – Facilities & Other Resources (Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix facilities and environment supporting Phase I development and validation."/>
+  <meta name="description" content="Facilities & Other Resources: computing environment, software stack, public data sources, and reproducibility controls (version pinning, checksums, deterministic artifacts) for PromptGenix SBIR Phase I."/>
+
   <style>
-    *{ box-sizing:border-box; }
+    * { box-sizing: border-box; }
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -56,9 +58,9 @@
 
     main{ flex:1; }
     .section{
-      max-width:1120px;
-      margin:0 auto;
-      padding:28px 20px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 20px 34px;
     }
 
     .topline{
@@ -79,21 +81,21 @@
     }
 
     .kicker{
-      font-size:.78rem;
-      text-transform:uppercase;
-      letter-spacing:.18em;
-      color:#a5b4fc;
-      margin-bottom:6px;
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: #a5b4fc;
+      margin: 18px 0 6px;
     }
     h2{
-      font-size:1.12rem;
-      font-weight:760;
+      font-size: 1.12rem;
+      font-weight: 760;
       color:#f9fafb;
-      margin:14px 0 8px;
+      margin: 12px 0 8px;
     }
     p{
-      margin:0 0 10px;
-      font-size:.93rem;
+      margin: 0 0 10px;
+      font-size: .95rem;
       color:#d1d5db;
     }
 
@@ -101,81 +103,82 @@
       display:grid;
       grid-template-columns: minmax(0,1.05fr) minmax(0,1fr);
       gap:18px;
+      margin-top: 10px;
       align-items:start;
-      margin-top:10px;
     }
     .grid-3{
       display:grid;
       grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:14px;
-      margin-top:10px;
+      gap:18px;
+      margin-top: 10px;
+      align-items:start;
     }
-
     .card{
-      border-radius:16px;
-      padding:14px 16px;
+      border-radius: 16px;
+      padding: 14px 16px;
       background: rgba(15,23,42,0.84);
       border: 1px solid rgba(148,163,184,0.28);
       box-shadow: 0 18px 45px rgba(15,23,42,0.55);
     }
     .card h3{
-      margin:0 0 8px;
-      font-size:.95rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
+      margin: 0 0 8px;
+      font-size: .95rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
       color:#a5b4fc;
     }
 
     ul{
-      margin:6px 0 0;
-      padding-left:1.1rem;
+      margin: 6px 0 0;
+      padding-left: 1.1rem;
       color:#d1d5db;
-      font-size:.92rem;
+      font-size: .94rem;
     }
-    li{ margin-bottom:6px; }
+    li{ margin-bottom: 6px; }
     li strong{ color:#e5e7eb; }
 
     .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
     .pill{
-      font-size:.72rem;
-      padding:5px 9px;
-      border-radius:999px;
-      border:1px solid rgba(129,140,248,0.45);
+      font-size:.74rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(129,140,248,0.45);
       background: rgba(2,6,23,0.25);
       color:#c7d2fe;
     }
 
     .callout{
-      border-radius:14px;
-      padding:12px 14px;
-      border:1px dashed rgba(148,163,184,0.5);
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px dashed rgba(148,163,184,0.5);
       background: rgba(15,23,42,0.75);
-      font-size:.88rem;
+      font-size: .92rem;
       color:#e5e7eb;
-      margin-top:12px;
+      margin-top: 12px;
     }
     .callout strong{ color:#22c55e; }
 
+    /* Table */
     .table{
       width:100%;
       border-collapse: collapse;
-      margin-top:10px;
-      border-radius:14px;
+      margin-top: 10px;
       overflow:hidden;
-      border:1px solid rgba(148,163,184,0.28);
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.28);
       background: rgba(15,23,42,0.6);
     }
     .table th, .table td{
-      padding:10px 10px;
-      border-bottom:1px solid rgba(148,163,184,0.18);
-      vertical-align:top;
-      font-size:.88rem;
-      color:#d1d5db;
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(148,163,184,0.18);
+      vertical-align: top;
+      font-size: .95rem;
+      color:#e5e7eb;
     }
     .table th{
-      font-size:.78rem;
-      text-transform:uppercase;
-      letter-spacing:.14em;
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .14em;
       color:#a5b4fc;
       background: rgba(2,6,23,0.35);
     }
@@ -189,39 +192,22 @@
     }
 
     @media (max-width: 980px){
-      .grid-3{ grid-template-columns: minmax(0,1fr); }
-    }
-    @media (max-width: 920px){
-      .grid-2{ grid-template-columns: minmax(0,1fr); }
+      .grid-2, .grid-3{ grid-template-columns: minmax(0,1fr); }
     }
 
-    /* Print friendliness */
+    /* Print */
     @media print {
       header, footer { display: none !important; }
-      .page, main, body { min-height: auto !important; height: auto !important; }
-      main { flex: none !important; }
-
       body { background:#fff !important; color:#111 !important; }
-      p, li { color:#111 !important; }
-      h1, h2, h3 { color:#111 !important; }
-      a { color:#111 !important; text-decoration: none !important; }
+      p, li, td, th { color:#111 !important; }
+      h1, h2, h3, .kicker { color:#111 !important; }
       * { box-shadow: none !important; }
-
       @page { size: Letter; margin: 0.5in; }
-      body { font-size: 95%; line-height: 1.32; }
-
-      table, thead, tbody, tr, td, th,
-      .grid-2, .card, .callout {
-        break-inside: auto !important;
-        page-break-inside: auto !important;
-      }
-      h2, h3 { break-after: avoid-page; page-break-after: avoid; }
-      p, li { orphans: 2; widows: 2; }
-
-      .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
-      .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
-      .card { padding: 10px 12px !important; }
-      .table th, .table td { padding: 7px 8px !important; }
+      .section { max-width: 100% !important; padding: 0 !important; }
+      .card{ border: 1px solid #111 !important; background:#fff !important; }
+      .table{ border: 1px solid #111 !important; background:#fff !important; }
+      .table th{ background:#fff !important; }
+      .callout{ border: 1px dashed #111 !important; background:#fff !important; }
     }
   </style>
 </head>
@@ -237,7 +223,6 @@
           <div class="subbrand">SBIR Portal</div>
         </div>
       </div>
-
       <nav class="nav-links">
         <a href="index.html">Portal</a>
         <a href="sbir.html">SBIR</a>
@@ -254,122 +239,154 @@
   <main>
     <section class="section">
       <div class="topline">
-        <h1 class="doc-title">Facilities & Environment</h1>
+        <h1 class="doc-title">Facilities &amp; Other Resources (Phase I)</h1>
         <div class="meta">
           PromptGenix LLC &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
         </div>
       </div>
 
-      <div class="kicker">Overview</div>
-      <h2>Phase I execution is supported by a modern local compute environment and secure, cloud-ready workflows.</h2>
+      <div class="kicker">Summary</div>
       <p>
-        PromptGenix Phase I focuses on an <strong>evidence-weighted hypothesis intelligence engine</strong> that integrates public biomedical datasets
-        and literature. Development is supported by a dedicated local workstation for rapid iteration and deterministic reruns, with an optional
-        secure cloud path (e.g., AWS VPC) for scalability and collaboration testing as needed.
-      </p>
-      <p>
-        Phase I validation will use <strong>public datasets only</strong> to avoid IP and data-use constraints, while demonstrating feasibility,
-        reproducibility, and transparent evidence linking suitable for SBIR review.
+        Phase I development and validation will be performed using a modern workstation + optional cloud burst capacity,
+        an open-source bioinformatics/ML stack, and <strong>public</strong> biomedical repositories (datasets + literature).
+        The environment is designed to be <strong>auditable and deterministic</strong>: pinned versions, captured configs,
+        and checksummed artifacts enable reproducible evidence objects and stable hypothesis ranking outputs.
       </p>
 
+      <div class="callout">
+        <strong>Key design choice:</strong> Confidence is computed by an evidence-weighted Bayesian decision engine; LLMs are used only for
+        interpretability (evidence-linked rationale + citations) under “no evidence → no claim” constraints.
+      </div>
+
+      <div class="kicker">Computing environment</div>
       <div class="grid-2">
         <div class="card">
-          <h3>Local development environment</h3>
+          <h3>Primary development</h3>
           <ul>
-            <li><strong>Dedicated workstation:</strong> high-memory Mac Studio-class system for rapid prototyping and iterative development</li>
-            <li><strong>Core toolchain:</strong> Python/R for evidence feature extraction, inference, and report generation</li>
-            <li><strong>Reproducibility:</strong> versioned environments, pinned dependencies, config snapshots, and checksums</li>
-            <li><strong>Artifacts:</strong> exportable HTML/PDF reports, evidence objects, and audit-friendly logs</li>
+            <li><strong>Workstation:</strong> macOS and/or Linux development environment for pipeline engineering, testing, and report generation.</li>
+            <li><strong>Local execution:</strong> accession-driven runs, caching of intermediate artifacts, and deterministic re-runs for regression tests.</li>
+            <li><strong>Storage:</strong> structured project directories with immutable run outputs (configs + logs + evidence objects + reports).</li>
           </ul>
           <div class="pill-row">
-            <span class="pill">Local-first</span>
-            <span class="pill">Deterministic reruns</span>
-            <span class="pill">Evidence objects</span>
-            <span class="pill">HTML/PDF outputs</span>
+            <span class="pill">Deterministic runs</span>
+            <span class="pill">Immutable artifacts</span>
+            <span class="pill">Checksums</span>
+            <span class="pill">Audit logs</span>
           </div>
         </div>
 
         <div class="card">
-          <h3>Secure & scalable deployment option</h3>
+          <h3>Optional scalable compute</h3>
           <ul>
-            <li><strong>AWS-ready architecture:</strong> supports deployment in a secure VPC for scale testing and controlled collaboration</li>
-            <li><strong>Data separation:</strong> Phase I uses public data; sensitive datasets remain external to PromptGenix environments</li>
-            <li><strong>Controlled access:</strong> role-based access patterns and audit-friendly storage options (as applicable)</li>
-            <li><strong>Portability:</strong> reproducible configs enable consistent execution across local and cloud contexts</li>
+            <li><strong>Cloud burst (optional):</strong> containerized or VM-based execution for larger public datasets and parallel jobs.</li>
+            <li><strong>Batch execution:</strong> reproducible job definitions with pinned dependencies and resource-limited profiles.</li>
+            <li><strong>Security boundary:</strong> Phase I uses public datasets only; no sensitive/private data required for feasibility.</li>
           </ul>
-          <div class="callout">
-            <strong>Phase I policy alignment:</strong> evaluation uses GEO/SRA/FlowRepository and public literature sources to ensure clean SBIR review.
+          <div class="callout" style="margin-top:10px;">
+            <strong>Phase I boundary:</strong> all validation uses public sources (datasets + literature) to minimize IP/data-use conflicts.
           </div>
         </div>
       </div>
 
-      <div class="kicker" style="margin-top:18px;">Resources supporting Phase I</div>
-      <h2>Software, public datasets, and operational supports aligned to SBIR deliverables.</h2>
-
+      <div class="kicker">Software &amp; pipeline stack</div>
       <div class="grid-3">
         <div class="card">
-          <h3>Software stack</h3>
+          <h3>Omics pipelines</h3>
           <ul>
-            <li><strong>Evidence layer:</strong> standardized extraction of effect sizes, uncertainty, reproducibility, and context descriptors</li>
-            <li><strong>Inference:</strong> statistical scoring + Bayesian updating for posterior confidence estimates</li>
-            <li><strong>Interpretability:</strong> LLM used only for explanation constrained by evidence links (“no evidence → no claim”)</li>
+            <li><strong>RNA-Seq / scRNA-Seq:</strong> standard alignment/quantification + QC + differential analysis + pathway scoring.</li>
+            <li><strong>Flow cytometry:</strong> QC + harmonization + summary features + cell-type/marker-level evidence extraction.</li>
+            <li><strong>Evidence objects:</strong> effect size, uncertainty, quality, and context descriptors produced per dataset.</li>
           </ul>
         </div>
 
         <div class="card">
-          <h3>Validation sources</h3>
+          <h3>Inference &amp; ranking</h3>
           <ul>
-            <li><strong>Public datasets:</strong> GEO/SRA (omics) and FlowRepository (immune profiling)</li>
-            <li><strong>Public literature:</strong> PubMed/PMC for priors and traceable citations</li>
-            <li><strong>Evaluation focus:</strong> traceability, reproducibility, calibrated uncertainty, and utility</li>
+            <li><strong>Bayesian updating:</strong> priors from structured biology + literature signals updated by evidence likelihoods.</li>
+            <li><strong>Uncertainty:</strong> posterior confidence with credible intervals + explicit supporting vs. conflicting evidence coverage.</li>
+            <li><strong>Calibration tests:</strong> held-out checks to verify confidence behavior and robustness to heterogeneity.</li>
           </ul>
         </div>
 
         <div class="card">
-          <h3>Operational supports</h3>
+          <h3>Interpretability & outputs</h3>
           <ul>
-            <li><strong>Documentation:</strong> SBIR portal pages + reviewer-ready evidence-linked reports</li>
-            <li><strong>Pilot readiness:</strong> structured onboarding and feedback templates for partner labs</li>
-            <li><strong>Collaboration:</strong> mechanisms to support letters of support and Phase II pilot expansion</li>
+            <li><strong>LLM guardrails:</strong> narrative constrained to evidence objects + citations; no hallucinated claims.</li>
+            <li><strong>Reports:</strong> exportable HTML/PDF with ranked hypotheses, confidence bands, evidence links, and next-step experiments.</li>
+            <li><strong>Traceability:</strong> every claim points to evidence artifacts or cited literature sources.</li>
           </ul>
         </div>
       </div>
 
-      <div class="kicker" style="margin-top:18px;">Facilities fit to the work</div>
-      <h2>Environment supports rapid prototyping, reproducible validation, and SBIR-compliant evaluation.</h2>
-
-      <table class="table" aria-label="Facilities fit table">
+      <div class="kicker">Public data sources</div>
+      <table class="table" aria-label="Public data sources table">
         <thead>
           <tr>
-            <th style="width:34%;">Need</th>
-            <th style="width:33%;">Environment support</th>
-            <th style="width:33%;">Phase I output</th>
+            <th style="width:26%;">Source category</th>
+            <th style="width:44%;">Examples</th>
+            <th style="width:30%;">How used in Phase I</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Fast iteration</strong></td>
-            <td>Local compute enables rapid evidence-layer development, inference tuning, and report refinement</td>
-            <td>Stable end-to-end hypothesis ranking on multiple public datasets with deterministic reruns</td>
+            <td><strong>Public omics datasets</strong></td>
+            <td>GEO / SRA (bulk RNA-Seq, scRNA-Seq), curated public immunology studies</td>
+            <td>Accession-driven retrieval; evidence extraction (effect sizes, uncertainty, context) and re-run reproducibility tests</td>
           </tr>
           <tr>
-            <td><strong>Reproducibility</strong></td>
-            <td>Pinned versions, config snapshots, and checksums; exportable evidence objects and logs</td>
-            <td>Rerun-consistent outputs; reviewer-ready artifacts with traceability and uncertainty labeling</td>
+            <td><strong>Immune profiling</strong></td>
+            <td>FlowRepository and other public cytometry resources</td>
+            <td>Harmonization + summary evidence signals; cross-dataset consistency checks for hypothesis ranking</td>
           </tr>
           <tr>
-            <td><strong>Scalability testing</strong></td>
-            <td>Cloud-ready execution path (optional) for heavier workloads and multi-user patterns</td>
-            <td>Feasibility evidence for Phase II secure deployments and multi-site pilots</td>
+            <td><strong>Scientific literature</strong></td>
+            <td>PubMed / PMC (open abstracts/full text where available)</td>
+            <td>Literature-derived priors and citation grounding; support vs. conflict signal extraction for traceable explanations</td>
+          </tr>
+          <tr>
+            <td><strong>Knowledge resources</strong></td>
+            <td>Pathway and gene-set resources (e.g., KEGG/Reactome-like sets), marker panels, cell-type references</td>
+            <td>Prior construction features (pathway relevance, cell specificity); standardized hypothesis templates</td>
           </tr>
         </tbody>
       </table>
 
-      <div class="callout">
-        <strong>Bottom line:</strong> The current facilities and environment are sufficient to deliver Phase I milestones
-        (evidence ingest, hypothesis prioritization, traceable reporting, and measurable validation on public data),
-        while maintaining a clean path to secure scale-out in Phase II.
+      <div class="kicker">Reproducibility controls</div>
+      <h2>Version pinning + checksums + immutable artifacts.</h2>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>What is pinned and captured</h3>
+          <ul>
+            <li><strong>Code + configs:</strong> repository commit hash and per-run configuration snapshot.</li>
+            <li><strong>Dependencies:</strong> pinned package versions (Python/R), tool versions, and runtime metadata.</li>
+            <li><strong>Inputs:</strong> accessions, retrieval timestamps, and input-file manifests.</li>
+            <li><strong>Artifacts:</strong> evidence objects, intermediate outputs, and final reports stored immutably per run.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>How outputs are verified</h3>
+          <ul>
+            <li><strong>Checksums:</strong> per-file SHA-256 checksums for key artifacts (evidence objects, figures, reports).</li>
+            <li><strong>Determinism tests:</strong> same inputs/configs should reproduce the same artifacts (within defined tolerances).</li>
+            <li><strong>Run logs:</strong> structured logs capturing steps, warnings, and evidence coverage (supporting/conflicting/missing).</li>
+            <li><strong>Audit trail:</strong> ranked hypotheses link back to evidence objects and cited sources.</li>
+          </ul>
+        </div>
       </div>
+
+      <div class="callout">
+        <strong>Reviewer-facing deliverable:</strong> Each Phase I pilot run produces a compact, verifiable package:
+        (1) run manifest, (2) pinned versions + config, (3) evidence object bundle, (4) hypothesis ranking outputs with uncertainty,
+        and (5) HTML/PDF report with traceable links.
+      </div>
+
+      <div class="kicker">Availability</div>
+      <p style="margin-bottom:0;">
+        All resources required for Phase I feasibility (compute, software stack, and public data access) are available to execute the proposed work.
+        The system is designed to support scalable Phase II deployments (secure VPC/on-prem) without changing the core reproducibility guarantees.
+      </p>
     </section>
   </main>
 
@@ -380,3 +397,4 @@
 </div>
 </body>
 </html>
+```
