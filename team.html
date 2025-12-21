@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PromptGenix – Company & Team</title>
+  <title>PromptGenix – Team (Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="PromptGenix SBIR Phase I Company & Team: women- and minority-owned structure, roles, capabilities, and execution capacity."/>
+  <meta name="description" content="PromptGenix SBIR Phase I Team: roles, responsibilities, and technical capability for evidence-weighted Bayesian hypothesis prioritization with evidence-constrained LLM interpretability."/>
+
   <style>
-    *{ box-sizing:border-box; }
+    * { box-sizing: border-box; }
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -26,14 +27,12 @@
     .nav{
       max-width:1120px; margin:0 auto; padding:14px 20px;
       display:flex; align-items:center; justify-content:space-between; gap:18px;
-      flex-wrap:wrap;
     }
     .nav-left{ display:flex; align-items:center; gap:12px; }
     .logo-dot{
       width:28px; height:28px; border-radius:999px;
       background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
       box-shadow:0 0 18px rgba(56,189,248,.7);
-      flex:0 0 auto;
     }
     .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
     .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
@@ -58,9 +57,9 @@
 
     main{ flex:1; }
     .section{
-      max-width:1120px;
-      margin:0 auto;
-      padding:28px 20px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 20px;
     }
 
     .topline{
@@ -81,121 +80,120 @@
     }
 
     .kicker{
-      font-size:.78rem;
-      text-transform:uppercase;
-      letter-spacing:.18em;
-      color:#a5b4fc;
-      margin-bottom:6px;
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: #a5b4fc;
+      margin: 16px 0 6px;
     }
+
     h2{
-      font-size:1.12rem;
-      font-weight:760;
+      font-size: 1.15rem;
+      font-weight: 760;
       color:#f9fafb;
-      margin:14px 0 8px;
+      margin: 12px 0 8px;
     }
+
     p{
-      margin:0 0 10px;
-      font-size:.93rem;
+      margin: 0 0 10px;
+      font-size: .95rem;
       color:#d1d5db;
     }
 
     .grid-2{
       display:grid;
-      grid-template-columns: minmax(0,1.05fr) minmax(0,1fr);
+      grid-template-columns: minmax(0,1.15fr) minmax(0,0.85fr);
       gap:18px;
+      margin-top: 10px;
       align-items:start;
-      margin-top:10px;
-    }
-    .grid-3{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:14px;
-      margin-top:10px;
     }
 
     .card{
-      border-radius:16px;
-      padding:14px 16px;
+      border-radius: 16px;
+      padding: 14px 16px;
       background: rgba(15,23,42,0.84);
       border: 1px solid rgba(148,163,184,0.28);
       box-shadow: 0 18px 45px rgba(15,23,42,0.55);
     }
+
     .card h3{
-      margin:0 0 8px;
-      font-size:.95rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
+      margin: 0 0 8px;
+      font-size: .95rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
       color:#a5b4fc;
     }
 
-    .profile{
-      border-radius:14px;
-      padding:12px 14px;
-      background: rgba(2,6,23,0.22);
-      border:1px solid rgba(148,163,184,0.22);
-      margin-top:10px;
-    }
-    .name{
-      display:flex; flex-wrap:wrap;
-      gap:10px; align-items:baseline;
-      margin-bottom:6px;
-    }
-    .name strong{ font-size:1.02rem; color:#f9fafb; }
-    .role{ font-size:.85rem; color:#c7d2fe; }
-
     ul{
-      margin:6px 0 0;
-      padding-left:1.1rem;
+      margin: 6px 0 0;
+      padding-left: 1.1rem;
       color:#d1d5db;
-      font-size:.92rem;
+      font-size: .94rem;
     }
-    li{ margin-bottom:6px; }
+    li{ margin-bottom: 6px; }
     li strong{ color:#e5e7eb; }
 
-    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .pill{
-      font-size:.72rem;
-      padding:5px 9px;
-      border-radius:999px;
-      border:1px solid rgba(129,140,248,0.45);
-      background: rgba(2,6,23,0.25);
-      color:#c7d2fe;
-      white-space:nowrap;
-    }
-
     .callout{
-      border-radius:14px;
-      padding:12px 14px;
-      border:1px dashed rgba(148,163,184,0.5);
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px dashed rgba(148,163,184,0.5);
       background: rgba(15,23,42,0.75);
-      font-size:.88rem;
+      font-size: .92rem;
       color:#e5e7eb;
-      margin-top:12px;
+      margin-top: 12px;
     }
     .callout strong{ color:#22c55e; }
 
-    .table{
+    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill{
+      font-size:.74rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(129,140,248,0.45);
+      background: rgba(2,6,23,0.25);
+      color:#c7d2fe;
+    }
+
+    .mini-table{
       width:100%;
       border-collapse: collapse;
-      margin-top:10px;
-      border-radius:14px;
+      margin-top: 10px;
       overflow:hidden;
-      border:1px solid rgba(148,163,184,0.28);
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.28);
       background: rgba(15,23,42,0.6);
     }
-    .table th, .table td{
-      padding:10px 10px;
-      border-bottom:1px solid rgba(148,163,184,0.18);
-      vertical-align:top;
-      font-size:.88rem;
-      color:#d1d5db;
+    .mini-table th, .mini-table td{
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(148,163,184,0.18);
+      vertical-align: top;
+      font-size: .92rem;
+      color:#e5e7eb;
     }
-    .table th{
-      font-size:.78rem;
-      text-transform:uppercase;
-      letter-spacing:.14em;
+    .mini-table th{
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .14em;
       color:#a5b4fc;
       background: rgba(2,6,23,0.35);
+      width: 28%;
+    }
+
+    .equation{
+      margin-top: 8px;
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: rgba(2,6,23,0.45);
+      overflow-x:auto;
+    }
+    .equation pre{
+      margin:0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: .90rem;
+      color:#e5e7eb;
+      line-height: 1.45;
+      white-space: pre;
     }
 
     footer{
@@ -206,40 +204,21 @@
       text-align:center;
     }
 
-    @media (max-width: 980px){
-      .grid-3{ grid-template-columns: minmax(0,1fr); }
-    }
     @media (max-width: 920px){
       .grid-2{ grid-template-columns: minmax(0,1fr); }
     }
 
-    /* Print friendliness */
     @media print {
       header, footer { display: none !important; }
-      .page, main, body { min-height: auto !important; height: auto !important; }
-      main { flex: none !important; }
-
       body { background:#fff !important; color:#111 !important; }
-      p, li { color:#111 !important; }
+      p, li, td, th { color:#111 !important; }
       h1, h2, h3 { color:#111 !important; }
-      a { color:#111 !important; text-decoration: none !important; }
-      * { box-shadow: none !important; }
-
+      .card, .callout, .equation, .mini-table { background:#fff !important; border:1px solid #111 !important; box-shadow:none !important; }
+      .kicker { color:#111 !important; }
+      .pill{ border:1px solid #111 !important; color:#111 !important; background:#fff !important; }
+      pre { color:#111 !important; }
       @page { size: Letter; margin: 0.5in; }
-      body { font-size: 95%; line-height: 1.32; }
-
-      table, thead, tbody, tr, td, th,
-      .grid-2, .card, .callout {
-        break-inside: auto !important;
-        page-break-inside: auto !important;
-      }
-      h2, h3 { break-after: avoid-page; page-break-after: avoid; }
-      p, li { orphans: 2; widows: 2; }
-
-      .section { max-width: 100% !important; padding: 0 !important; margin: 0 0 0.18in 0 !important; }
-      .topline { padding-top: 0 !important; margin-bottom: 0.12in !important; }
-      .card { padding: 10px 12px !important; }
-      .table th, .table td { padding: 7px 8px !important; }
+      .section { max-width: 100% !important; padding: 0 !important; }
     }
   </style>
 </head>
@@ -255,7 +234,6 @@
           <div class="subbrand">SBIR Portal</div>
         </div>
       </div>
-
       <nav class="nav-links">
         <a href="index.html">Portal</a>
         <a href="sbir.html">SBIR</a>
@@ -272,164 +250,129 @@
   <main>
     <section class="section">
       <div class="topline">
-        <h1 class="doc-title">Company / Team (Phase I)</h1>
+        <h1 class="doc-title">Team (Phase I): Roles, Responsibilities, and Execution Readiness</h1>
         <div class="meta">
-          PromptGenix LLC (Women &amp; Minority-Owned) &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
+          PromptGenix LLC &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
         </div>
       </div>
 
-      <div class="kicker">Company structure</div>
-      <h2>Women-led operations with founder-led scientific and technical execution.</h2>
+      <div class="kicker">Team strategy</div>
+      <h2>Separate “confidence” from “explanation” by design.</h2>
       <p>
-        PromptGenix is structured to qualify for women-owned and minority-owned small business programs while maintaining
-        PI-level execution capacity for SBIR Phase I. The CEO leads operations, compliance, and commercialization readiness.
-        The founder/CTO leads product architecture and the Phase I technical work, centered on an
-        <strong>evidence-weighted hypothesis intelligence engine</strong> (ranked hypotheses + uncertainty + traceability).
+        PromptGenix is engineered to maintain reviewer trust by clearly separating (i) <strong>quantitative confidence</strong> from
+        (ii) <strong>narrative interpretation</strong>. Confidence is computed by a deterministic, evidence-weighted
+        <strong>Bayesian decision engine</strong>, while the LLM is constrained to explain rankings and cite supporting or conflicting sources.
       </p>
 
       <div class="grid-2">
         <div class="card">
-          <h3>Core differentiation</h3>
-          <ul>
-            <li><strong>Decision product:</strong> confidence-ranked, testable hypotheses with explicit evidence links</li>
-            <li><strong>Domain depth:</strong> immunology and infectious disease study workflows</li>
-            <li><strong>Quantitative rigor:</strong> statistical scoring + Bayesian inference to compute uncertainty</li>
-            <li><strong>Interpretability guardrails:</strong> LLM used for explanation only (“no evidence → no claim”)</li>
-            <li><strong>Deployment realism:</strong> local-first + optional secure cloud/on-prem paths</li>
-          </ul>
-          <div class="pill-row">
-            <span class="pill">Evidence objects</span>
-            <span class="pill">Bayesian confidence</span>
-            <span class="pill">Traceability</span>
-            <span class="pill">Actionability</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Phase I execution capacity</h3>
-          <ul>
-            <li><strong>Lean team:</strong> fast decisions and rapid iteration</li>
-            <li><strong>Public-data validation:</strong> Phase I does not depend on restricted or proprietary datasets</li>
-            <li><strong>Reviewer-friendly outputs:</strong> evidence-linked HTML/PDF reports with uncertainty labels</li>
-            <li><strong>Pilot readiness:</strong> structured onboarding and feedback rubrics for 2–3 pilot users</li>
-          </ul>
-          <div class="callout">
-            <strong>Phase I posture:</strong> demonstrate measurable utility (time-to-hypothesis, reproducibility, traceability)
-            using public datasets to minimize IP/data-use concerns.
-          </div>
-        </div>
-      </div>
-
-      <div class="kicker" style="margin-top:18px;">Key personnel</div>
-      <h2>Defined roles aligned with Phase I milestones and deliverables.</h2>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Leadership</h3>
-
-          <div class="profile">
-            <div class="name">
-              <strong>Yon Ji</strong>
-              <span class="role">CEO</span>
-            </div>
-            <ul>
-              <li><strong>Operations & compliance:</strong> SBIR documentation, execution tracking, and milestone reporting</li>
-              <li><strong>Pilot logistics:</strong> onboarding coordination, feedback collection, and partner communication</li>
-              <li><strong>Commercial readiness:</strong> customer discovery, positioning, and go-to-market planning</li>
-              <li><strong>Program alignment:</strong> women-owned/minority-owned small business positioning</li>
-            </ul>
-          </div>
-
-          <div class="profile">
-            <div class="name">
-              <strong>Dohoon Kim, MS</strong>
-              <span class="role">Founder &amp; CTO (Technical Lead)</span>
-            </div>
-            <ul>
-              <li><strong>Technical execution:</strong> evidence ingest, feature extraction, inference engine, and automation integration</li>
-              <li><strong>Decision engine:</strong> statistical scoring + Bayesian updating for posterior confidence ranking</li>
-              <li><strong>Traceability:</strong> evidence objects, citations, and “supporting vs. conflicting” coverage summaries</li>
-              <li><strong>Validation:</strong> public-data benchmarking, calibration checks, and KPI measurement</li>
-              <li><strong>Reporting:</strong> reviewer-ready HTML/PDF outputs with version stamping and audit-friendly logs</li>
-            </ul>
-          </div>
-
-          <div class="callout" style="margin-top:12px;">
-            <strong>Advisory plan:</strong> engage 2–3 external domain advisors and/or pilot collaborators (as available) for structured feedback
-            on usefulness, interpretability, and experimental actionability.
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Capabilities mapped to deliverables</h3>
-          <table class="table" aria-label="Capabilities mapped to deliverables table">
+          <h3>Phase I leadership & execution roles</h3>
+          <table class="mini-table" aria-label="Team roles and responsibilities">
             <thead>
               <tr>
-                <th style="width:30%;">Deliverable</th>
-                <th style="width:40%;">Owner</th>
-                <th style="width:30%;">Outcome</th>
+                <th>Role</th>
+                <th>Primary responsibilities (Phase I)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>D1</strong><br/>Evidence layer</td>
-                <td>CTO leads implementation/testing; CEO supports documentation and KPI tracking</td>
-                <td>Standardized evidence objects across multiple public datasets</td>
+                <td><strong>PI / Technical Lead</strong><br/>Computational Biology & Biostatistics</td>
+                <td>
+                  Overall architecture and delivery; evidence-layer design; Bayesian scoring and calibration; reproducibility controls
+                  (version pinning, configs, checksums); pilot evaluations and KPI reporting; integration of RNA-Seq and flow cytometry workflows.
+                </td>
               </tr>
               <tr>
-                <td><strong>D2</strong><br/>Decision engine</td>
-                <td>CTO implements Bayesian confidence ranking; CEO supports pilot rubric and review readiness</td>
-                <td>Ranked hypotheses with posterior confidence + uncertainty + evidence coverage</td>
+                <td><strong>Scientific Product</strong><br/>Workflow & reporting</td>
+                <td>
+                  Define hypothesis templates and actionability criteria; ensure outputs are reviewer-ready (HTML/PDF),
+                  with traceable evidence links, uncertainty labeling, and recommended validation experiments.
+                </td>
               </tr>
               <tr>
-                <td><strong>D3</strong><br/>Reviewer-ready reports</td>
-                <td>CTO builds export/templates; CEO reviews clarity, consistency, and messaging</td>
-                <td>HTML/PDF reports with traceability and “no evidence → no claim” constraints</td>
+                <td><strong>LLM Interpretability</strong><br/>Evidence-constrained narrative</td>
+                <td>
+                  Implement guardrails so the LLM can only reference approved evidence objects and cited literature;
+                  generate consistent “why” rationales, supporting vs. conflicting evidence summaries, and next-step recommendations.
+                </td>
               </tr>
               <tr>
-                <td><strong>D4</strong><br/>Pilot evaluation</td>
-                <td>CEO coordinates pilot logistics; CTO supports instrumentation and analysis of feedback</td>
-                <td>Measured KPIs (time-to-hypothesis, reproducibility, usefulness) supporting Phase II</td>
+                <td><strong>QA / Validation</strong><br/>Testing & KPIs</td>
+                <td>
+                  Build test harnesses for deterministic reruns; evaluate posterior calibration behavior and evidence coverage;
+                  document usability feedback, turnaround time, and traceability completeness in pilot public-data studies.
+                </td>
               </tr>
             </tbody>
           </table>
 
+          <div class="pill-row">
+            <span class="pill">Deterministic pipelines</span>
+            <span class="pill">Bayesian inference</span>
+            <span class="pill">Calibration & CrI</span>
+            <span class="pill">Evidence traceability</span>
+            <span class="pill">Guardrailed LLM</span>
+          </div>
+
           <div class="callout">
-            <strong>Success metrics (examples):</strong>
-            ≥70% reduction in time-to-hypothesis vs baseline · ≥90% reproducibility across reruns ·
-            ≥80% pilot “useful/very useful” ratings for ranked hypotheses and next-step recommendations.
+            <strong>Reviewer-facing claim:</strong> The LLM does not determine confidence; it explains confidence computed by the Bayesian engine,
+            and every statement must be supported by traceable evidence links and/or citations.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Bayesian engine responsibility boundary</h3>
+          <p style="margin-bottom:8px;">
+            The team implements a clear responsibility split that maps to the system architecture:
+          </p>
+          <ul>
+            <li><strong>Bayesian engine:</strong> computes posterior confidence and credible intervals from standardized evidence features.</li>
+            <li><strong>Evidence layer:</strong> generates effect sizes, uncertainty, and quality weights from public datasets.</li>
+            <li><strong>LLM layer:</strong> produces human-readable rationale constrained to evidence objects (no evidence → no claim).</li>
+          </ul>
+
+          <div class="equation" aria-label="Bayesian update equation (display as true math-like text)">
+            <pre>For each hypothesis H and evidence set E = {e1, e2, ..., en}:
+
+P(H | E)  ∝  P(H) · Π_i P(e_i | H)
+
+Posterior summary reported as:
+  - posterior mean/median confidence
+  - 95% credible interval (CrI)
+  - evidence coverage: supporting vs. conflicting vs. missing</pre>
+          </div>
+
+          <div class="callout">
+            <strong>Why this matters:</strong> This separation improves auditability, reduces “black-box” risk, and aligns the team’s skills with a
+            transparent, evidence-weighted decision workflow suitable for SBIR review.
           </div>
         </div>
       </div>
 
-      <div class="kicker" style="margin-top:18px;">Expanded capability areas (Phase II-ready)</div>
-      <h2>Scalable roadmap anchored by Phase I validation.</h2>
+      <div class="kicker">Phase I operating model</div>
+      <h2>Fast iteration, strict traceability, measurable utility.</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Delivery cadence</h3>
+          <ul>
+            <li><strong>Weekly build cycles:</strong> evidence ingestion → posterior scoring → report generation → QA checks.</li>
+            <li><strong>Traceability checklist:</strong> every ranked hypothesis links to evidence objects + supporting/conflicting citations.</li>
+            <li><strong>Reproducibility gates:</strong> pinned versions, config snapshots, and checksums verified on reruns.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Phase I success indicators</h3>
+          <ul>
+            <li><strong>Deterministic reruns:</strong> consistent outputs for the same inputs/configs.</li>
+            <li><strong>Transparent uncertainty:</strong> posterior + CrI + coverage included in outputs.</li>
+            <li><strong>Usability:</strong> pilot feedback indicates the ranked hypotheses support at least one concrete next-step decision.</li>
+          </ul>
+        </div>
+      </div>
 
-      <div class="grid-3">
-        <div class="card">
-          <h3>Product expansion</h3>
-          <ul>
-            <li>Broader repository ingestion and richer metadata normalization</li>
-            <li>Additional disease areas and hypothesis classes (targets, biomarkers, mechanisms)</li>
-            <li>Improved calibration and benchmarking across diverse contexts</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Deployment & governance</h3>
-          <ul>
-            <li>Secure deployments (VPC/on-prem) with audit logging and role-based access</li>
-            <li>Governance controls and reproducibility instrumentation</li>
-            <li>Partner-friendly data handling and compliance workflows</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Commercial scale</h3>
-          <ul>
-            <li>UI workflows for non-expert users and core facilities</li>
-            <li>Repeatable onboarding, documentation, and support</li>
-            <li>Subscription + secure tier + enterprise pricing packages</li>
-          </ul>
-        </div>
+      <div class="callout">
+        <strong>Commitment to responsible use:</strong> PromptGenix is designed to support—not replace—human scientific decision-making,
+        with explicit uncertainty labeling and evidence-first reasoning.
       </div>
 
     </section>
