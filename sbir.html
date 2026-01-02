@@ -200,7 +200,7 @@
       <p>
         NIH-funded programs generate large volumes of multi-modal biomedical data and publications, yet a core bottleneck remains:
         converting heterogeneous evidence into <strong>ranked hypotheses</strong>, <strong>clear uncertainty</strong>, and <strong>concrete next-step decisions</strong>.
-        Teams often rely on fragmented tools, ad hoc scripts, and scarce expert time, leading to slow turnaround and inconsistent reproducibility.
+        Teams often rely on fragmented tools and scarce expert time, leading to inconsistent reproducibility. This is further complicated by generic AI tools that lack formal uncertainty quantification and risk introducing stochastic hallucinations.
       </p>
 
       <div class="kicker">The innovation</div>
@@ -208,8 +208,7 @@
       <p>
         PromptGenix integrates public biomedical datasets and literature into a traceable decision workflow that produces
         <strong>testable hypotheses</strong> with <strong>confidence ranking</strong> and <strong>explicit evidence links</strong>.
-        The system uses statistical and Bayesian methods to quantify uncertainty, while LLMs are constrained to
-        explanation and synthesis under strict traceability guardrails.
+        Unlike black-box models, PromptGenix computes posterior confidence deterministically via a Bayesian engine. LLMs are strictly constrained to explanation and synthesis under "no evidence → no claim" guardrails.
       </p>
 
       <div class="grid-2">
