@@ -5,82 +5,613 @@
   <title>PromptGenix – Research Strategy (Approach, Phase I)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="PromptGenix SBIR Phase I Approach: evidence-weighted hypothesis prioritization workflow, validation plan, milestones, KPIs, and risks & mitigation." />
+
   <style>
     * { box-sizing: border-box; }
-    body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:#020617; color:#e5e7eb; line-height:1.5; }
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#020617;
+      color:#e5e7eb;
+      line-height:1.5;
+    }
     a{ color:inherit; text-decoration:none; }
     .page{ min-height:100vh; display:flex; flex-direction:column; }
-    header{ position:sticky; top:0; z-index:30; backdrop-filter: blur(14px); background: rgba(15, 23, 42, 0.92); border-bottom: 1px solid rgba(148, 163, 184, 0.3); }
-    .nav{ max-width:1120px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
-    main{ flex:1; max-width:1120px; margin:0 auto; padding:40px 20px; width:100%; }
-    .kicker{ color:#38bdf8; font-size:0.875rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px; }
-    h1{ font-size:2.5rem; font-weight:800; color:#fff; margin:0 0 24px 0; letter-spacing:-0.03em; }
-    h2{ font-size:1.75rem; font-weight:700; color:#fff; margin:48px 0 24px 0; }
-    h3{ font-size:1.25rem; font-weight:600; color:#fff; margin:0 0 12px 0; }
-    p{ font-size:1.1rem; color:#94a3b8; margin:0 0 24px 0; max-width:800px; }
-    .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:24px; margin-top:32px; }
-    .card{ background:rgba(30,41,59,0.5); border:1px solid rgba(148,163,184,0.1); padding:24px; border-radius:12px; }
-    .callout{ margin-top:24px; padding:16px; background:rgba(56,189,248,0.1); border-left:4px solid #38bdf8; border-radius:4px; font-size:0.95rem; color:#bae6fd; }
-    footer{ margin-top:80px; padding:40px 0; border-top:1px solid rgba(148,163,184,0.1); color:#64748b; font-size:0.875rem; text-align:center; }
-    strong{ color:#fff; }
-    ul{ margin:16px 0 0 20px; padding:0; color:#94a3b8; }
-    li{ margin-bottom:8px; }
+
+    /* Header/nav */
+    header{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(14px);
+      background: rgba(15, 23, 42, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+    .nav{
+      max-width:1120px; margin:0 auto; padding:14px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+    }
+    .nav-left{ display:flex; align-items:center; gap:12px; }
+    .logo-dot{
+      width:28px; height:28px; border-radius:999px;
+      background: radial-gradient(circle at 0 0,#38bdf8,#8b5cf6);
+      box-shadow:0 0 18px rgba(56,189,248,.7);
+    }
+    .brand{ font-size:1.1rem; font-weight:650; letter-spacing:.04em; }
+    .subbrand{ font-size:.72rem; color:#9ca3af; margin-top:2px; }
+
+    .nav-links{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .nav-links a{
+      font-size:.88rem; color:#9ca3af;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(148,163,184,0.18);
+      background: rgba(2,6,23,0.25);
+    }
+    .nav-links a:hover{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.35);
+    }
+    .nav-links a.active{
+      color:#e5e7eb;
+      background: rgba(148,163,184,0.18);
+      border-color: rgba(148,163,184,0.55);
+    }
+
+    main{ flex:1; }
+
+    .section{
+      max-width:1120px;
+      margin:0 auto;
+      padding: 28px 20px;
+    }
+
+    .topline{
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:flex-end; justify-content:space-between;
+      padding-top: 16px;
+      margin-bottom: 14px;
+    }
+    .doc-title{
+      font-size: 1.35rem;
+      font-weight: 820;
+      color:#f9fafb;
+      margin: 0;
+    }
+    .meta{
+      font-size:.78rem;
+      color:#9ca3af;
+    }
+
+    .kicker{
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: #a5b4fc;
+      margin: 16px 0 6px;
+    }
+
+    h2{
+      font-size: 1.15rem;
+      font-weight: 760;
+      color:#f9fafb;
+      margin: 12px 0 8px;
+    }
+
+    p{
+      margin: 0 0 10px;
+      font-size: .95rem;
+      color:#d1d5db;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+      gap:18px;
+      margin-top: 10px;
+      align-items:start;
+    }
+
+    .card{
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(15,23,42,0.84);
+      border: 1px solid rgba(148,163,184,0.28);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.55);
+    }
+
+    .card h3{
+      margin: 0 0 8px;
+      font-size: .95rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color:#a5b4fc;
+    }
+
+    ul{
+      margin: 6px 0 0;
+      padding-left: 1.1rem;
+      color:#d1d5db;
+      font-size: .94rem;
+    }
+    li{ margin-bottom: 6px; }
+    li strong{ color:#e5e7eb; }
+
+    .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill{
+      font-size:.74rem;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(129,140,248,0.45);
+      background: rgba(2,6,23,0.25);
+      color:#c7d2fe;
+    }
+
+    .callout{
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px dashed rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.75);
+      font-size: .92rem;
+      color:#e5e7eb;
+      margin-top: 12px;
+    }
+    .callout strong{ color:#22c55e; }
+
+    /* Table */
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow:hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: rgba(15,23,42,0.6);
+    }
+    .table th, .table td{
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(148,163,184,0.18);
+      vertical-align: top;
+      font-size: .95rem;
+      color:#e5e7eb;
+    }
+    .table th{
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color:#a5b4fc;
+      background: rgba(2,6,23,0.35);
+    }
+
+    /* Figure styles */
+    .pgx-figure{ margin: 0; }
+    .pgx-figure figcaption{
+      margin: 10px 0 10px;
+      font-size: 13.5px;
+      color: #e5e7eb;
+    }
+    .pgx-figure-panel{
+      background: #f1f5f9;
+      border-radius: 14px;
+      padding: 14px 14px;
+      border: 1px solid rgba(15,23,42,0.25);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      overflow:hidden;
+    }
+    .pgx-figure-panel svg{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .pgx-figure-panel svg .box{
+      fill:#f8fafc;
+      stroke:#0f172a;
+      stroke-width:2;
+    }
+    .pgx-figure-panel svg .box-soft{
+      fill:#e2e8f0;
+      stroke:#0f172a;
+      stroke-width:2;
+    }
+    .pgx-figure-panel svg .arrow{
+      stroke:#0f172a;
+      stroke-width:2.2;
+    }
+    .pgx-figure-panel svg marker path{ fill:#0f172a; }
+    .pgx-figure-panel svg text{ fill:#0b1220; }
+
+    /* Math block (MathJax render) */
+    .math-card{
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(15,23,42,0.84);
+      border: 1px solid rgba(148,163,184,0.28);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.55);
+      margin-top: 12px;
+    }
+    .math-card h3{
+      margin: 0 0 8px;
+      font-size: .95rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color:#a5b4fc;
+    }
+    .math-sub{
+      margin: 0 0 10px;
+      font-size: .92rem;
+      color:#d1d5db;
+    }
+    .math-box{
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: rgba(2,6,23,0.35);
+      overflow-x:auto;
+    }
+    /* Make MathJax look crisp on dark background */
+    .math-box mjx-container[jax="CHTML"]{
+      color:#e5e7eb;
+      font-size: 102%;
+    }
+    .math-note{
+      margin-top: 10px;
+      font-size: .84rem;
+      color:#9ca3af;
+    }
+
+    footer{
+      border-top:1px solid rgba(31,41,55,0.9);
+      padding:16px;
+      font-size:.78rem;
+      color:#6b7280;
+      text-align:center;
+    }
+
+    @media (max-width: 920px){
+      .grid-2{ grid-template-columns: minmax(0,1fr); }
+    }
+
+    /* Print */
+    @media print {
+      header, footer { display: none !important; }
+      body { background:#fff !important; color:#111 !important; }
+      p, li, .meta { color:#111 !important; }
+      h1, h2, h3 { color:#111 !important; }
+      * { box-shadow: none !important; }
+      @page { size: Letter; margin: 0.5in; }
+      .section { max-width: 100% !important; padding: 0 !important; }
+      .callout, .card, .math-card { background:#fff !important; border: 1px solid #111 !important; }
+      .table { background:#fff !important; border: 1px solid #111 !important; }
+      .table th { background:#f3f4f6 !important; color:#111 !important; }
+      .table td, .table th { color:#111 !important; }
+      .pgx-figure figcaption { color:#111 !important; }
+      .pgx-figure-panel{ background:#fff !important; border: 1px solid #111 !important; }
+      .math-box { background:#fff !important; border: 1px solid #111 !important; }
+      .math-box mjx-container[jax="CHTML"]{ color:#111 !important; }
+    }
   </style>
+
+  <!-- MathJax (renders the Bayesian math as real equations) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      options: { renderActions: { addMenu: [] } } /* keeps it clean */
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
+
 <body>
 <div class="page">
   <header>
-    <nav class="nav">
-      <div class="nav-left" style="display:flex; gap:24px; align-items:center;">
-        <a href="index.html" style="font-weight:700; color:#fff;">PromptGenix</a>
-        <a href="sbir.html">Overview</a>
-        <a href="aims.html">Aims</a>
-        <a href="approach.html" style="color:#38bdf8;">Approach</a>
+    <div class="nav">
+      <div class="nav-left">
+        <div class="logo-dot"></div>
+        <div>
+          <div class="brand">PromptGenix</div>
+          <div class="subbrand">SBIR Portal</div>
+        </div>
       </div>
-    </nav>
+      <nav class="nav-links">
+        <a href="index.html">Portal</a>
+        <a href="sbir.html">SBIR</a>
+        <a href="aims.html">Aims</a>
+        <a href="approach.html" class="active">Approach</a>
+        <a href="commercialization.html">Commercialization</a>
+        <a href="facilities.html">Facilities</a>
+        <a href="team.html">Team</a>
+        <a href="use-cases.html">Use Cases</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <section>
-      <div class="kicker">Research Strategy</div>
-      <h1>Technical Approach</h1>
+    <section class="section">
+      <div class="topline">
+        <h1 class="doc-title">Research Strategy – Approach (Phase I Workflow &amp; Validation)</h1>
+        <div class="meta">
+          PromptGenix LLC &middot; Contact: dohoon.kim1@icloud.com &middot; promptgenix.org
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:0;">
+        <strong>Key design choice:</strong> LLMs do not set confidence. Confidence is computed by an evidence-weighted Bayesian decision engine;
+        the LLM only explains rankings using linked evidence objects and citations (supporting or conflicting), with uncertainty explicitly stated.
+      </div>
+
+      <div class="kicker">Phase I goal</div>
+      <h2>Build a validated prototype that prioritizes testable biological hypotheses using evidence-weighted inference over public data and literature.</h2>
       <p>
-        Phase I focuses on building a deterministic foundation. We move beyond "prompting" by treating LLMs as constrained 
-        narrative layers sitting atop a rigorous Bayesian decision engine.
+        Phase I focuses on engineering robustness, reproducibility, and measurable scientific utility for a
+        <strong>hypothesis intelligence engine</strong>. Validation will rely exclusively on public sources (e.g., GEO/SRA, FlowRepository,
+        and PubMed/PMC), minimizing IP or data-use conflicts while enabling transparent evaluation.
+      </p>
+      <p>
+        In this project, analysis pipelines are treated as <strong>evidence generators</strong>—not the end product.
+        The primary Phase I deliverable is a system that produces <strong>ranked hypotheses with probabilistic confidence</strong>,
+        explicit evidence links, and clear uncertainty labeling.
       </p>
 
-      <div class="grid">
+      <div class="grid-2">
         <div class="card">
-          <h3>Innovation & Rigor</h3>
+          <h3>Workflow overview</h3>
           <ul>
-            <li><strong>Evidence-weighted QC:</strong> Standardized QC gates automatically discount low-quality or high-noise datasets.</li>
-            <li><strong>Strict Claim Gating:</strong> Our "No evidence → No claim" architecture ensures the LLM cannot author confidence; it only interprets deterministic engine outputs.</li>
-            <li><strong>Conflict Detection:</strong> Explicitly flags "conflicting evidence" to prevent confirmation bias in hypothesis ranking.</li>
-            <li><strong>Deterministic Runs:</strong> Pinned software versions and checksums ensure results are 100% reproducible.</li>
+            <li><strong>Inputs:</strong> Disease-, protein-, pathway-, or cell-type–centric questions, optionally linked to public accession IDs.</li>
+            <li><strong>Evidence pool:</strong> automated retrieval of relevant public datasets + associated metadata + literature signals.</li>
+            <li><strong>Evidence generation:</strong> standardized feature extraction (effect sizes, uncertainty, reproducibility, cohort/context descriptors).</li>
+            <li><strong>Decision engine:</strong> statistical scoring + Bayesian updating to compute confidence distributions for candidate hypotheses.</li>
+            <li><strong>Interpretability layer:</strong> LLM produces explanations constrained by evidence objects (no evidence → no claim).</li>
+            <li><strong>Outputs:</strong> ranked hypotheses + confidence bands + “why” rationale + recommended follow-up experiments.</li>
+          </ul>
+          <div class="pill-row">
+            <span class="pill">Evidence objects</span>
+            <span class="pill">Bayesian updating</span>
+            <span class="pill">Uncertainty labels</span>
+            <span class="pill">Traceable outputs</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Hypothesis Prioritization Engine (traceable)</h3>
+          <p>
+            PromptGenix prioritizes <strong>testable hypotheses</strong> by combining quantitative evidence with structured biological priors.
+            Large language models are used <strong>only</strong> to contextualize and explain rankings—not to determine them.
+          </p>
+          <ul>
+            <li><strong>Candidate hypothesis set:</strong> generated from structured entities (disease/protein/cell-type) and literature-derived relations.</li>
+            <li><strong>Evidence strength:</strong> effect size + uncertainty + directionality + reproducibility across datasets/contexts.</li>
+            <li><strong>Bayesian confidence:</strong> priors (known biology, pathways, cell specificity) updated by observed evidence to yield posteriors.</li>
+            <li><strong>Ranking outputs:</strong> posterior mean + credible interval + evidence coverage (supporting vs. conflicting).</li>
+            <li><strong>Actionability:</strong> each hypothesis includes suggested next-step experiments/analyses and required data.</li>
+          </ul>
+          <div class="callout">
+            <strong>Phase I emphasis:</strong> transparent ranking with uncertainty, not “black-box” generation.
+          </div>
+        </div>
+      </div>
+
+      <!-- FULL-WIDTH FIGURE -->
+      <div class="card" style="margin-top:18px;">
+        <h3>Bayesian Evidence-to-Confidence Workflow (Figure X)</h3>
+
+        <figure class="pgx-figure">
+          <figcaption><strong>Figure X.</strong> Stepwise workflow of the PromptGenix decision engine, from query intake to evidence extraction, Bayesian updating, confidence scoring, and evidence-constrained interpretation.</figcaption>
+
+          <div class="pgx-figure-panel">
+            <svg viewBox="0 0 1420 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bayesian Evidence-to-Confidence Flow (Two-row tidy)">
+              <defs>
+                <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                  <path d="M0,0 L12,6 L0,12 Z"></path>
+                </marker>
+              </defs>
+
+              <!-- TOP ROW -->
+              <g font-family="Arial, sans-serif" font-size="18">
+                <rect class="box" x="70" y="50" width="240" height="92" rx="12"></rect>
+                <text x="190" y="82" text-anchor="middle" font-weight="800">User Query</text>
+                <text x="190" y="108" text-anchor="middle" font-size="15">(disease / protein</text>
+                <text x="190" y="128" text-anchor="middle" font-size="15">/ cell-type)</text>
+
+                <line class="arrow" x1="310" y1="96" x2="360" y2="96" marker-end="url(#arrow)"></line>
+
+                <rect class="box" x="360" y="50" width="260" height="92" rx="12"></rect>
+                <text x="490" y="82" text-anchor="middle" font-weight="800">(1) Retrieval</text>
+                <text x="490" y="108" text-anchor="middle" font-size="15">Public datasets + literature</text>
+
+                <line class="arrow" x1="620" y1="96" x2="670" y2="96" marker-end="url(#arrow)"></line>
+
+                <rect class="box" x="670" y="50" width="290" height="92" rx="12"></rect>
+                <text x="815" y="82" text-anchor="middle" font-weight="800">(2) Harmonization</text>
+                <text x="815" y="108" text-anchor="middle" font-size="15">Metadata normalization</text>
+                <text x="815" y="128" text-anchor="middle" font-size="15">QC + batch/study modeling</text>
+
+                <line class="arrow" x1="960" y1="96" x2="1010" y2="96" marker-end="url(#arrow)"></line>
+
+                <rect class="box" x="1010" y="50" width="320" height="92" rx="12"></rect>
+                <text x="1170" y="82" text-anchor="middle" font-weight="800">(3) Hypotheses</text>
+                <text x="1170" y="108" text-anchor="middle" font-size="15">Structured templates</text>
+                <text x="1170" y="128" text-anchor="middle" font-size="15">(testable statements)</text>
+              </g>
+
+              <!-- Connector: 3 -> 4 -->
+              <path class="arrow" d="M1170 142 V190 H250 V225" fill="none" marker-end="url(#arrow)"></path>
+
+              <!-- BOTTOM ROW -->
+              <g font-family="Arial, sans-serif" font-size="18">
+                <rect class="box" x="70" y="225" width="360" height="92" rx="12"></rect>
+                <text x="250" y="257" text-anchor="middle" font-weight="800">(4) Evidence Extraction</text>
+                <text x="250" y="283" text-anchor="middle" font-size="15">Effect sizes + uncertainty</text>
+                <text x="250" y="303" text-anchor="middle" font-size="15">quality weights + directionality</text>
+
+                <line class="arrow" x1="430" y1="271" x2="480" y2="271" marker-end="url(#arrow)"></line>
+
+                <rect class="box-soft" x="480" y="225" width="340" height="92" rx="12"></rect>
+                <text x="650" y="257" text-anchor="middle" font-weight="900">(5) Bayesian Update</text>
+                <text x="650" y="283" text-anchor="middle" font-size="15">Prior P(H) × Likelihood P(E|H)</text>
+                <text x="650" y="303" text-anchor="middle" font-size="15">→ Posterior P(H|E)</text>
+
+                <line class="arrow" x1="820" y1="271" x2="870" y2="271" marker-end="url(#arrow)"></line>
+
+                <rect class="box" x="870" y="225" width="250" height="92" rx="12"></rect>
+                <text x="995" y="257" text-anchor="middle" font-weight="800">(6) Confidence</text>
+                <text x="995" y="283" text-anchor="middle" font-size="15">Posterior mean/median</text>
+                <text x="995" y="303" text-anchor="middle" font-size="15">+ 95% CrI + robustness</text>
+
+                <line class="arrow" x1="1120" y1="271" x2="1160" y2="271" marker-end="url(#arrow)"></line>
+
+                <rect class="box" x="1150" y="225" width="260" height="92" rx="12"></rect>
+                <text x="1280" y="257" text-anchor="middle" font-weight="800">(7) Interpretability</text>
+                <text x="1280" y="283" text-anchor="middle" font-size="15">LLM rationale constrained</text>
+                <text x="1280" y="303" text-anchor="middle" font-size="15">to evidence + next steps</text>
+              </g>
+            </svg>
+          </div>
+        </figure>
+      </div>
+
+      <!-- BAYESIAN MODEL SECTION (rendered as real math) -->
+      <div class="math-card">
+        <h3>Bayesian Model (Phase I, reviewer-friendly)</h3>
+        <p class="math-sub">
+          For each hypothesis \(H\) (e.g., “Gene X upregulated in Disease Y in Cell Type Z”), we compute posterior confidence \(P(H\mid E)\)
+          given evidence \(E\) aggregated across public datasets and literature-derived signals.
+        </p>
+
+        <div class="math-box" aria-label="Bayesian equations rendered with MathJax">
+\[
+\begin{aligned}
+\text{(1) Bayes rule:}\quad
+&P(H\mid E)=\frac{P(E\mid H)\,P(H)}{P(E)}.\\[8pt]
+\text{(2) Odds form (useful for additive scoring):}\quad
+&\mathrm{Odds}(H\mid E)=\mathrm{Odds}(H)\cdot \mathrm{LR}(E),\\
+&\mathrm{logit}\!\big(P(H\mid E)\big)=\mathrm{logit}\!\big(P(H)\big)+\log \mathrm{LR}(E),\\
+&\text{where }\mathrm{Odds}(H)=\frac{P(H)}{1-P(H)},\quad \mathrm{LR}(E)=\frac{P(E\mid H)}{P(E\mid \neg H)}.\\[10pt]
+\text{(3) Prior construction (bounded, interpretable):}\quad
+&\text{Let } s_{\text{path}},\,s_{\text{cell}},\,s_{\text{lit}}\in[0,1]\text{ be normalized signals:}\\
+&s_{\text{path}}=\text{pathway relevance score (KEGG/Reactome membership, enrichment)},\\
+&s_{\text{cell}}=\text{cell-type specificity index (marker/co-expression specificity)},\\
+&s_{\text{lit}}=\text{literature support score (support vs conflict, recency-weighted)}.\\
+&\text{Prior log-odds:}\quad \mathrm{logit}\!\big(P(H)\big)=b_0+b_1s_{\text{path}}+b_2s_{\text{cell}}+b_3s_{\text{lit}}.\\[10pt]
+\text{(4) Evidence likelihood from standardized evidence objects:}\quad
+&\text{For dataset } i,\ \text{evidence object includes: }\\
+&\quad d_i=\text{effect size (e.g., log2FC, Abundance, }\Delta\text{freq)},\\
+&\quad se_i=\text{uncertainty (or CI/p-value converted to precision)},\\
+&\quad q_i=\text{quality (QC, batch robustness, sample size proxy)},\\
+&\quad c_i=\text{consistency (directional agreement across datasets/contexts)}.\\[4pt]
+&\text{A simple Phase I log-likelihood ratio (LLR) proxy:}\\
+&\quad z_i=\frac{d_i}{se_i},\qquad \mathrm{LLR}(E_i)=w_i\,z_i\,\mathrm{sign}(d_i),\ \text{where } w_i=\mathrm{clamp}(q_i,0,1).\\
+&\text{Aggregate across datasets:}\quad \log \mathrm{LR}(E)=\sum_i \mathrm{LLR}(E_i)+\lambda\cdot c_{\text{global}}.\\[10pt]
+\text{(5) Posterior and reporting:}\quad
+&P(H\mid E)=\sigma\!\Big(\mathrm{logit}(P(H))+\log \mathrm{LR}(E)\Big),\\
+&\text{Report: posterior mean (or median), 95\% credible interval (CrI),}\\
+&\text{and evidence coverage: supporting vs conflicting vs missing.}
+\end{aligned}
+\]
+        </div>
+
+        <div class="math-note">
+          Notes: Phase I uses bounded, auditable components (signals and evidence objects) so reviewers can see exactly what drives confidence.
+          More expressive hierarchical models (e.g., random effects across studies, robust priors) are Phase II extensions.
+        </div>
+      </div>
+
+      <div class="kicker">Phase I validation plan</div>
+      <h2>Public-data evaluation with measurable KPIs.</h2>
+
+      <table class="table" aria-label="Phase I validation plan table">
+        <thead>
+          <tr>
+            <th style="width:18%;">Work package</th>
+            <th style="width:52%;">What we will do</th>
+            <th style="width:30%;">Success metrics (examples)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>WP1</strong><br/>Evidence layer</td>
+            <td>
+              Build a robust ingest + evidence feature extraction layer for selected public datasets.
+              Generate standardized evidence objects (effect sizes, uncertainty, reproducibility, and context descriptors)
+              suitable for deterministic re-runs and downstream inference.
+            </td>
+            <td>
+              ≥90% reproducibility across reruns (same inputs/configs).<br/>
+              Evidence objects produced for ≥80% of targeted datasets despite heterogeneity.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>WP2</strong><br/>Decision engine</td>
+            <td>
+              Implement statistical scoring and Bayesian updating to compute posterior confidence distributions for candidate hypotheses.
+              Produce ranked outputs with uncertainty annotations and explicit supporting vs. conflicting evidence summaries.
+            </td>
+            <td>
+              Calibrated confidence outputs (posterior intervals behave as expected in held-out tests).<br/>
+              Clear traceability: each ranked hypothesis links to evidence objects + citations.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>WP3</strong><br/>Interpretability &amp; reports</td>
+            <td>
+              Generate reviewer-ready HTML/PDF artifacts that include: ranked hypotheses, confidence bands, evidence coverage,
+              citations, and recommended next steps. LLM narratives are constrained to evidence objects and must cite sources.
+            </td>
+            <td>
+              End-to-end run completes within &lt;24 hours from accession-driven inputs (dataset-dependent).<br/>
+              ≥80% “useful” rating by pilot users (guides at least one concrete experimental/analysis decision).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Data-use boundary:</strong> Phase I evaluation uses public datasets only (GEO/SRA/FlowRepository) and public literature sources,
+        enabling clean SBIR review and minimizing IP concerns.
+      </div>
+
+      <div class="kicker">Risks &amp; Mitigation</div>
+      <h2>Practical risks addressed with explicit fallback strategies.</h2>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Technical risks</h3>
+          <ul>
+            <li><strong>Dataset heterogeneity:</strong> inconsistent metadata, formats, and cohort contexts across repositories.</li>
+            <li><strong>Evidence sparsity:</strong> some hypotheses may lack sufficient supporting data or have conflicting signals.</li>
+            <li><strong>Compute variability:</strong> differences between local and cloud environments affecting deterministic reruns.</li>
+            <li><strong>LLM overreach:</strong> narrative may overstate conclusions without strict constraints.</li>
           </ul>
         </div>
+
         <div class="card">
-          <h3>Risks & Mitigation</h3>
-          <p><strong>Risk:</strong> LLM attempts to hallucinate connections not present in the data.</p>
-          <p><strong>Mitigation:</strong> Implementation of a <em>Reference-Integrity Layer</em> that cross-checks LLM citations against a deterministic database of evidence objects before final assembly.</p>
-          <p><strong>Risk:</strong> Insufficient public data for certain hypotheses.</p>
-          <p><strong>Mitigation:</strong> Fallback mode that outputs "Candidate hypotheses" with low-confidence tags and specific data-needed guidance.</p>
+          <h3>Mitigation strategies</h3>
+          <ul>
+            <li><strong>Robust ingest:</strong> schema detection + validation + standardized evidence templates and QC gates.</li>
+            <li><strong>Evidence coverage labeling:</strong> explicit “supporting vs. conflicting vs. missing” flags per hypothesis.</li>
+            <li><strong>Deterministic runs:</strong> pinned versions, config snapshots, and checksums for reproducibility.</li>
+            <li><strong>Traceability guardrails:</strong> LLM can only reference approved evidence objects; no evidence → no claim.</li>
+            <li><strong>Fallback mode:</strong> if evidence is weak, output “candidate hypotheses” with low-confidence tags and data-needed guidance.</li>
+          </ul>
         </div>
       </div>
 
-      <h2>Phase I Success Criteria</h2>
       <div class="callout">
-        <strong>Reviewer-friendly principle:</strong> Every claim must be traceable to (1) evidence objects derived from public data or (2) cited literature, with uncertainty explicitly stated via credible intervals.
+        <strong>Reviewer-friendly principle:</strong> Every claim must be traceable to (1) evidence objects derived from public data or (2) cited literature,
+        with uncertainty explicitly stated.
       </div>
-      <p>
-        Success in Phase I is defined by demonstrable traceability, calibrated uncertainty, and usefulness for guiding study design decisions, ensuring a solid de-risking path for Phase II enterprise scaling.
-      </p>
+
+      <div class="callout">
+        <strong>Phase I success criterion:</strong> Phase I does not require all prioritized hypotheses to be biologically correct,
+        but rather demonstrable traceability, calibrated uncertainty, transparent ranking rationale, and usefulness for guiding study design decisions.
+      </div>
 
     </section>
   </main>
 
   <footer>
-    PromptGenix &middot; SBIR Portal &middot; dohoon.kim1@icloud.com
+    PromptGenix &middot; SBIR Portal &middot;
+    <a href="mailto:dohoon.kim1@icloud.com">dohoon.kim1@icloud.com</a>
   </footer>
 </div>
 </body>
