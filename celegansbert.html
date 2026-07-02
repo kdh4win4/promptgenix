@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CelegansBERT · Bayesian literature triangulation — PromptGenix</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230A0E2A'/><path d='M5 20 Q10 10 16 16 T27 12' stroke='%2322D3EE' stroke-width='3' fill='none' stroke-linecap='round'/><circle cx='27' cy='12' r='2.5' fill='%23F472B6'/></svg>"/>
+<meta name="description" content="CelegansBERT: multi-entity Bayesian literature triangulation over Gene × Phenotype × Molecule for C. elegans. Interactive demo by PromptGenix."/>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+<style>html,body,#root{margin:0;padding:0;min-height:100%;background:#E9ECF1}*{box-sizing:border-box}</style>
+<style>
+.cb-topbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  padding:8px 16px;background:rgba(233,236,241,.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(15,23,42,.08);font-family:'IBM Plex Mono',monospace;font-size:12px}
+.cb-topbar a{color:#4338CA;text-decoration:none;font-weight:600}
+.cb-topbar a:hover{text-decoration:underline}
+.cb-demo-note{color:#64748B}
+.cb-demo-note b{color:#0F172A}
+.root{padding-top:12px}
+</style>
+<script>window.__CB_DATA__={"N_CORPUS": 42000, "KB": {"gene": [{"name": "daf-2", "id": "WBGene00000898", "freq": 1850, "desc": "insulin/IGF-1 receptor"}, {"name": "daf-16", "id": "WBGene00000912", "freq": 1620, "desc": "FOXO transcription factor"}, {"name": "age-1", "id": "WBGene00000090", "freq": 640, "desc": "PI3K catalytic subunit"}, {"name": "daf-18", "id": "WBGene00000913", "freq": 410, "desc": "PTEN phosphatase"}, {"name": "akt-1", "id": "WBGene00000102", "freq": 300, "desc": "AKT/PKB kinase"}, {"name": "pdk-1", "id": "WBGene00003965", "freq": 180, "desc": "PDK1 kinase"}, {"name": "sgk-1", "id": "WBGene00004789", "freq": 160, "desc": "serum/glucocorticoid kinase"}, {"name": "daf-7", "id": "WBGene00000903", "freq": 380, "desc": "TGF-beta ligand"}, {"name": "daf-12", "id": "WBGene00000908", "freq": 420, "desc": "nuclear hormone receptor"}, {"name": "daf-9", "id": "WBGene00000905", "freq": 240, "desc": "cytochrome P450 (dafachronic acid)"}, {"name": "ins-7", "id": "WBGene00002090", "freq": 130, "desc": "insulin-like peptide"}, {"name": "let-363", "id": "WBGene00002583", "freq": 210, "desc": "TOR kinase"}, {"name": "daf-15", "id": "WBGene00000911", "freq": 95, "desc": "raptor"}, {"name": "rsks-1", "id": "WBGene00009912", "freq": 170, "desc": "S6 kinase"}, {"name": "aak-2", "id": "WBGene00009784", "freq": 260, "desc": "AMPK alpha subunit"}, {"name": "eat-2", "id": "WBGene00001135", "freq": 290, "desc": "dietary restriction model"}, {"name": "pha-4", "id": "WBGene00004013", "freq": 320, "desc": "FOXA transcription factor"}, {"name": "sir-2.1", "id": "WBGene00004807", "freq": 420, "desc": "sirtuin / SIRT1"}, {"name": "skn-1", "id": "WBGene00004804", "freq": 740, "desc": "Nrf2 ortholog"}, {"name": "hsf-1", "id": "WBGene00002004", "freq": 480, "desc": "heat shock factor"}, {"name": "hif-1", "id": "WBGene00001851", "freq": 350, "desc": "hypoxia-inducible factor"}, {"name": "gst-4", "id": "WBGene00001751", "freq": 220, "desc": "glutathione S-transferase (SKN-1 target)"}, {"name": "sod-3", "id": "WBGene00004932", "freq": 280, "desc": "Mn superoxide dismutase (DAF-16 target)"}, {"name": "pmk-1", "id": "WBGene00004055", "freq": 410, "desc": "p38 MAPK"}, {"name": "clk-1", "id": "WBGene00000536", "freq": 390, "desc": "ubiquinone biosynthesis"}, {"name": "isp-1", "id": "WBGene00002150", "freq": 180, "desc": "Rieske iron-sulfur protein"}, {"name": "nuo-6", "id": "WBGene00003836", "freq": 110, "desc": "complex I subunit"}, {"name": "mev-1", "id": "WBGene00003225", "freq": 150, "desc": "complex II subunit (oxidative stress)"}, {"name": "bec-1", "id": "WBGene00000247", "freq": 160, "desc": "beclin-1 (autophagy)"}, {"name": "lgg-1", "id": "WBGene00002980", "freq": 190, "desc": "LC3/Atg8 (autophagy)"}, {"name": "hsp-16.2", "id": "WBGene00002016", "freq": 210, "desc": "small heat shock protein"}, {"name": "egl-1", "id": "WBGene00001170", "freq": 680, "desc": "BH3-only apoptosis"}, {"name": "ced-3", "id": "WBGene00000417", "freq": 1100, "desc": "caspase"}, {"name": "ced-9", "id": "WBGene00000423", "freq": 820, "desc": "Bcl-2 ortholog"}, {"name": "ced-4", "id": "WBGene00000418", "freq": 540, "desc": "Apaf-1 ortholog"}, {"name": "let-60", "id": "WBGene00002335", "freq": 980, "desc": "RAS ortholog"}, {"name": "mpk-1", "id": "WBGene00003401", "freq": 360, "desc": "ERK MAP kinase"}, {"name": "lin-12", "id": "WBGene00003001", "freq": 560, "desc": "Notch receptor"}, {"name": "glp-1", "id": "WBGene00001609", "freq": 720, "desc": "Notch receptor (germline)"}, {"name": "unc-13", "id": "WBGene00006752", "freq": 520, "desc": "synaptic vesicle priming"}, {"name": "mec-4", "id": "WBGene00003166", "freq": 310, "desc": "DEG/ENaC mechanosensory"}], "phenotype": [{"name": "Lifespan extension", "id": "WBPhenotype:0000039", "freq": 2200}, {"name": "Shortened lifespan", "id": "WBPhenotype:0000638", "freq": 1500}, {"name": "Dauer constitutive", "id": "WBPhenotype:0000224", "freq": 1200}, {"name": "Dauer defective", "id": "WBPhenotype:0000232", "freq": 900}, {"name": "Oxidative stress response", "id": "WBPhenotype:0001489", "freq": 620}, {"name": "Heat stress response", "id": "WBPhenotype:0001488", "freq": 540}, {"name": "Thermotolerance", "id": "WBPhenotype:0000044", "freq": 560}, {"name": "Hypoxia response", "id": "WBPhenotype:0001490", "freq": 220}, {"name": "ER stress response", "id": "WBPhenotype:0040074", "freq": 180}, {"name": "Autophagy variant", "id": "WBPhenotype:0002663", "freq": 240}, {"name": "Reduced fat content", "id": "WBPhenotype:0001152", "freq": 520}, {"name": "Increased fat content", "id": "WBPhenotype:0001151", "freq": 480}, {"name": "Slow growth", "id": "WBPhenotype:0000813", "freq": 1400}, {"name": "Reduced brood size", "id": "WBPhenotype:0000272", "freq": 1700}, {"name": "Sterile", "id": "WBPhenotype:0000119", "freq": 2600}, {"name": "Germline proliferation defect", "id": "WBPhenotype:0001950", "freq": 680}, {"name": "Apoptosis variant", "id": "WBPhenotype:0000106", "freq": 1400}, {"name": "Vulval induction defect", "id": "WBPhenotype:0000667", "freq": 1800}, {"name": "Multivulva", "id": "WBPhenotype:0000675", "freq": 1100}, {"name": "Larval arrest", "id": "WBPhenotype:0000045", "freq": 2100}, {"name": "Lethal", "id": "WBPhenotype:0000062", "freq": 5800}, {"name": "Uncoordinated", "id": "WBPhenotype:0000643", "freq": 3200}, {"name": "Locomotion variant", "id": "WBPhenotype:0000642", "freq": 2400}, {"name": "Egg laying defect", "id": "WBPhenotype:0000640", "freq": 1600}, {"name": "Aldicarb resistance", "id": "WBPhenotype:0002015", "freq": 320}, {"name": "Touch insensitive", "id": "WBPhenotype:0001044", "freq": 440}, {"name": "Chemotaxis defect", "id": "WBPhenotype:0000810", "freq": 600}, {"name": "Neurodegeneration", "id": "WBPhenotype:0000665", "freq": 480}, {"name": "Reduced pharyngeal pumping", "id": "WBPhenotype:0000647", "freq": 380}, {"name": "Parkinson disease model", "id": "DOID:14330", "freq": 380}, {"name": "Alzheimer disease model", "id": "DOID:10652", "freq": 320}, {"name": "Huntington disease model", "id": "DOID:12858", "freq": 260}, {"name": "Diabetes model", "id": "DOID:9351", "freq": 210}], "molecule": [{"name": "Metformin", "id": "WBMol:00004795", "freq": 180}, {"name": "Rapamycin", "id": "WBMol:00004963", "freq": 260}, {"name": "Resveratrol", "id": "WBMol:00005086", "freq": 210}, {"name": "Spermidine", "id": "WBMol:00005200", "freq": 95}, {"name": "Curcumin", "id": "WBMol:00004205", "freq": 130}, {"name": "Quercetin", "id": "WBMol:00004960", "freq": 110}, {"name": "EGCG", "id": "WBMol:00004280", "freq": 85}, {"name": "Urolithin A", "id": "WBMol:00005340", "freq": 55}, {"name": "Alpha-ketoglutarate", "id": "WBMol:00003970", "freq": 60}, {"name": "NAD", "id": "WBMol:00004806", "freq": 140}, {"name": "Nicotinamide", "id": "WBMol:00004820", "freq": 120}, {"name": "Trehalose", "id": "WBMol:00005310", "freq": 90}, {"name": "Lithium chloride", "id": "WBMol:00004560", "freq": 100}, {"name": "NAC", "id": "WBMol:00004807", "freq": 140}, {"name": "Trolox", "id": "WBMol:00005320", "freq": 70}, {"name": "Vitamin C", "id": "WBMol:00005370", "freq": 160}, {"name": "Juglone", "id": "WBMol:00004412", "freq": 120}, {"name": "Paraquat", "id": "WBMol:00004887", "freq": 380}, {"name": "Rotenone", "id": "WBMol:00005098", "freq": 160}, {"name": "Antimycin A", "id": "WBMol:00003975", "freq": 90}, {"name": "Sodium azide", "id": "WBMol:00005150", "freq": 240}, {"name": "Tunicamycin", "id": "WBMol:00005330", "freq": 110}, {"name": "Aldicarb", "id": "WBMol:00003961", "freq": 290}, {"name": "Levamisole", "id": "WBMol:00004545", "freq": 350}, {"name": "Serotonin", "id": "WBMol:00005120", "freq": 420}, {"name": "Fluoxetine", "id": "WBMol:00004310", "freq": 180}, {"name": "FUDR", "id": "WBMol:00004313", "freq": 340}, {"name": "Thioflavin T", "id": "WBMol:00005284", "freq": 75}, {"name": "Glucose", "id": "WBMol:00004380", "freq": 520}, {"name": "Wortmannin", "id": "WBMol:00005387", "freq": 80}]}, "REL": {"daf-2|Lifespan extension": 0.97, "daf-16|Lifespan extension": 0.96, "age-1|Lifespan extension": 0.88, "daf-18|Lifespan extension": 0.7, "akt-1|Lifespan extension": 0.55, "daf-2|Dauer constitutive": 0.95, "age-1|Dauer constitutive": 0.9, "daf-16|Dauer constitutive": 0.85, "daf-7|Dauer constitutive": 0.8, "daf-12|Dauer constitutive": 0.78, "daf-2|Shortened lifespan": 0.5, "daf-16|Shortened lifespan": 0.6, "daf-16|Oxidative stress response": 0.82, "sod-3|Oxidative stress response": 0.85, "daf-16|Reduced fat content": 0.55, "daf-2|Increased fat content": 0.58, "ins-7|Lifespan extension": 0.5, "sgk-1|Lifespan extension": 0.45, "daf-9|Dauer constitutive": 0.6, "pdk-1|Dauer constitutive": 0.55, "let-363|Lifespan extension": 0.8, "rsks-1|Lifespan extension": 0.78, "daf-15|Lifespan extension": 0.6, "aak-2|Lifespan extension": 0.82, "eat-2|Lifespan extension": 0.88, "pha-4|Lifespan extension": 0.7, "let-363|Autophagy variant": 0.72, "aak-2|Autophagy variant": 0.55, "aak-2|Metformin": 0.8, "let-363|Rapamycin": 0.85, "daf-15|Rapamycin": 0.7, "rsks-1|Rapamycin": 0.68, "eat-2|Reduced fat content": 0.5, "sir-2.1|Lifespan extension": 0.72, "sir-2.1|Resveratrol": 0.8, "sir-2.1|Nicotinamide": 0.55, "sir-2.1|NAD": 0.6, "skn-1|Oxidative stress response": 0.93, "skn-1|Lifespan extension": 0.68, "gst-4|Oxidative stress response": 0.88, "skn-1|gst-4": 0.8, "hsf-1|Thermotolerance": 0.9, "hsf-1|Heat stress response": 0.88, "hsf-1|Lifespan extension": 0.7, "hsp-16.2|Thermotolerance": 0.75, "hsp-16.2|Heat stress response": 0.8, "hif-1|Hypoxia response": 0.92, "hif-1|Lifespan extension": 0.55, "pmk-1|Oxidative stress response": 0.6, "skn-1|Juglone": 0.78, "skn-1|Paraquat": 0.72, "gst-4|Paraquat": 0.7, "gst-4|Juglone": 0.72, "sod-3|Paraquat": 0.65, "clk-1|Lifespan extension": 0.75, "isp-1|Lifespan extension": 0.72, "nuo-6|Lifespan extension": 0.68, "mev-1|Oxidative stress response": 0.8, "mev-1|Shortened lifespan": 0.55, "isp-1|Oxidative stress response": 0.5, "clk-1|Reduced pharyngeal pumping": 0.45, "bec-1|Autophagy variant": 0.85, "lgg-1|Autophagy variant": 0.88, "bec-1|Lifespan extension": 0.55, "lgg-1|Lifespan extension": 0.5, "Spermidine|Autophagy variant": 0.78, "Spermidine|Lifespan extension": 0.65, "lgg-1|Huntington disease model": 0.5, "hsf-1|Huntington disease model": 0.55, "hsp-16.2|Alzheimer disease model": 0.5, "egl-1|Apoptosis variant": 0.95, "ced-3|Apoptosis variant": 0.97, "ced-9|Apoptosis variant": 0.93, "ced-4|Apoptosis variant": 0.9, "egl-1|ced-3": 0.88, "ced-3|ced-4": 0.85, "ced-3|Lethal": 0.45, "let-60|Vulval induction defect": 0.96, "mpk-1|Vulval induction defect": 0.85, "let-60|Multivulva": 0.8, "lin-12|Vulval induction defect": 0.78, "glp-1|Germline proliferation defect": 0.92, "glp-1|Sterile": 0.6, "let-60|Lethal": 0.4, "unc-13|Uncoordinated": 0.95, "unc-13|Aldicarb resistance": 0.88, "unc-13|Locomotion variant": 0.8, "mec-4|Touch insensitive": 0.96, "mec-4|Neurodegeneration": 0.7, "Aldicarb|Aldicarb resistance": 0.95, "Aldicarb|Uncoordinated": 0.7, "Levamisole|Uncoordinated": 0.72, "Serotonin|Egg laying defect": 0.7, "Fluoxetine|Egg laying defect": 0.55, "Metformin|Lifespan extension": 0.78, "Rapamycin|Lifespan extension": 0.82, "Resveratrol|Lifespan extension": 0.65, "Curcumin|Lifespan extension": 0.55, "Quercetin|Lifespan extension": 0.52, "EGCG|Lifespan extension": 0.5, "Urolithin A|Lifespan extension": 0.55, "Alpha-ketoglutarate|Lifespan extension": 0.58, "Metformin|Diabetes model": 0.65, "Metformin|Reduced fat content": 0.5, "Trehalose|Thermotolerance": 0.55, "Lithium chloride|Lifespan extension": 0.5, "NAC|Oxidative stress response": 0.62, "Trolox|Oxidative stress response": 0.58, "Vitamin C|Oxidative stress response": 0.55, "Paraquat|Oxidative stress response": 0.85, "Juglone|Oxidative stress response": 0.8, "Rotenone|Parkinson disease model": 0.72, "Rotenone|Neurodegeneration": 0.68, "Rotenone|Oxidative stress response": 0.6, "Antimycin A|Oxidative stress response": 0.55, "Tunicamycin|ER stress response": 0.82, "Thioflavin T|Alzheimer disease model": 0.62, "Glucose|Shortened lifespan": 0.6, "Glucose|Increased fat content": 0.55, "FUDR|Germline proliferation defect": 0.8, "FUDR|Lifespan extension": 0.45, "Sodium azide|Lethal": 0.4, "Wortmannin|Dauer constitutive": 0.5, "Serotonin|Locomotion variant": 0.5}};</script>
+<script>/* CelegansBERT — client-side demo engine.
+   Faithful JS port of backend/app/bayes.py + demo_data.py (demo mode).
+   Runs the real Beta-Binomial / PMI→posterior math in the browser, no backend. */
+(function(global){
+  "use strict";
+  const DATA = global.__CB_DATA__ || (typeof require!=="undefined" ? require("./kb_dump.json") : {});
+  const KB = DATA.KB, REL = DATA.REL, N_CORPUS = DATA.N_CORPUS;
+
+  /* ---- demo_data.py port ---- */
+  function _hash(s){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h/0xFFFFFFFF;}
+  function rel_of(a,b){const k1=a+"|"+b,k2=b+"|"+a;if(k1 in REL)return REL[k1];if(k2 in REL)return REL[k2];return 0.02+_hash(a+"|"+b)*0.13;}
+  function freq_of(label){const L=(label||"").toLowerCase();for(const t in KB){for(const e of KB[t]){if(e.name.toLowerCase()===L)return e.freq;}}return Math.floor(30+_hash(label)*400);}
+  function demo_cocount(a,b){const fa=freq_of(a),fb=freq_of(b),s=rel_of(a,b);const expected=(fa*fb)/N_CORPUS;return Math.floor(expected*(1+s*12)+s*3);}
+
+  /* ---- bayes.py port ---- */
+  const _CLAMP=40.0,_CEIL=0.98,_FLOOR=0.02,_SIM_PRIOR_BOOST=2.0,_KAPPA=0.30,_PRIOR_P0=0.5;
+  function _sigmoid(x){x=Math.max(-_CLAMP,Math.min(_CLAMP,x));return 1/(1+Math.exp(-x));}
+  function log2(x){return Math.log(x)/Math.LN2;}
+  function bayes_update(nA,nB,nAB,N,sim,prior_p,kappa){
+    sim=sim||0; prior_p=(prior_p==null?_PRIOR_P0:prior_p); kappa=(kappa==null?_KAPPA:kappa);
+    nA=Math.max(Math.trunc(nA),0); nB=Math.max(Math.trunc(nB),0); nAB=Math.max(Math.min(Math.trunc(nAB),nA,nB),0);
+    prior_p=Math.min(Math.max(prior_p,1e-6),1-1e-6);
+    const logit_prior=Math.log(prior_p/(1-prior_p))+Math.max(0,sim)*_SIM_PRIOR_BOOST;
+    const prior_eff=_sigmoid(logit_prior);
+    if(nA===0||nB===0||N<=0)return{nA,nB,nAB,N,expected:0,lift:0,pmi:0,npmi:0,log_lr:0,lr:1,prior:prior_eff,posterior:prior_eff,sim};
+    const expected=nA*nB/N;
+    const lift=expected>0?nAB/expected:0;
+    const p_ab=nAB/N;
+    let pmi=lift>0?log2(lift):-20.0;
+    let npmi;
+    if(nAB===0)npmi=-1.0; else if(p_ab<1)npmi=Math.max(-1,Math.min(1,pmi/(-log2(p_ab)))); else npmi=1.0;
+    let log_lr= nAB>0 ? nAB*Math.log(nAB/expected)-(nAB-expected) : -expected;
+    const evidence=kappa*log_lr;
+    const posterior=_FLOOR+(_CEIL-_FLOOR)*_sigmoid(logit_prior+evidence);
+    const lr=Math.exp(Math.max(-_CLAMP,Math.min(_CLAMP,evidence)));
+    return{nA,nB,nAB,N,expected,lift,pmi,npmi,log_lr,lr,prior:prior_eff,posterior,sim};
+  }
+  const _PRIOR_CONCENTRATION=2.0,_SIM_BOOST=6.0,_PRIOR_MEAN_CAP=0.5;
+  function gammaln(x){const g=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];let y=x,tmp=x+5.5;tmp-=(x+0.5)*Math.log(tmp);let ser=1.000000000190015;for(let j=0;j<6;j++){y+=1;ser+=g[j]/y;}return -tmp+Math.log(2.5066282746310005*ser/x);}
+  function betacf(a,b,x){const MAXIT=200,EPS=3e-12,FPMIN=1e-300;let qab=a+b,qap=a+1,qam=a-1;let c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;let h=d;for(let m=1;m<=MAXIT;m++){let m2=2*m;let aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;let del=d*c;h*=del;if(Math.abs(del-1)<EPS)break;}return h;}
+  function betai(a,b,x){if(x<=0)return 0;if(x>=1)return 1;const bt=Math.exp(gammaln(a+b)-gammaln(a)-gammaln(b)+a*Math.log(x)+b*Math.log(1-x));if(x<(a+1)/(a+b+2))return bt*betacf(a,b,x)/a;return 1-bt*betacf(b,a,1-x)/b;}
+  function betaPPF(p,a,b){if(p<=0)return 0;if(p>=1)return 1;let lo=0,hi=1;for(let i=0;i<80;i++){const mid=(lo+hi)/2;if(betai(a,b,mid)<p)lo=mid;else hi=mid;}return(lo+hi)/2;}
+  function bayes_assoc(nA,nB,nAB,N,sim){
+    sim=sim||0; nA=Math.max(Math.trunc(nA),0);nB=Math.max(Math.trunc(nB),0);nAB=Math.max(Math.min(Math.trunc(nAB),nA,nB),0);
+    if(nA===0||nB===0||N<=0)return{assoc:0,mean:0,lo:0,hi:0,lift:0,expected:0,nA,nB,nAB,pB:0,sim};
+    const pB=nB/N; sim=Math.min(Math.max(sim,0),1);
+    const mu0=Math.min(pB*(1+sim*_SIM_BOOST),_PRIOR_MEAN_CAP);const c0=_PRIOR_CONCENTRATION;
+    const a0=Math.max(mu0*c0,0.5),b0=Math.max((1-mu0)*c0,0.5);
+    const aP=a0+nAB,bP=b0+(nA-nAB);
+    const mean=aP/(aP+bP);const assoc=1-betai(aP,bP,pB);
+    const lo=betaPPF(0.025,aP,bP),hi=betaPPF(0.975,aP,bP);
+    const expected=nA*pB;const lift=expected>0?nAB/expected:0;
+    return{assoc,mean,lo,hi,lift,expected,nA,nB,nAB,pB,sim};
+  }
+  function coherence(vals){if(!vals.length)return 0;let prod=1;for(const v of vals)prod*=Math.max(v,1e-9);return Math.pow(prod,1/vals.length);}
+  function combined_rank_score(aa,ab,la,lb,support,support_scale,lift_cap){
+    support_scale=support_scale||15;lift_cap=lift_cap||50;const cap=Math.log1p(lift_cap);
+    const mag=l=>Math.min(Math.log1p(Math.max(l,0)),cap)/cap;
+    const confidence=Math.sqrt(Math.max(aa,0)*Math.max(ab,0));
+    const magnitude=Math.sqrt(mag(la)*mag(lb));
+    const support_w=1-Math.exp(-support/support_scale);
+    return magnitude*confidence*support_w;
+  }
+
+  /* ---- orchestration (service.py demo path) ---- */
+  const AX=["gene","phenotype","molecule"];
+  function scorePair(a,b){const nA=freq_of(a),nB=freq_of(b),nAB=demo_cocount(a,b),N=N_CORPUS;return{grd:bayes_update(nA,nB,nAB,N,0),res:bayes_assoc(nA,nB,nAB,N,0)};}
+  function cell(a,b){const{grd,res}=scorePair(a,b);return{assoc:grd.posterior,posterior:grd.posterior,prior:grd.prior,lift:grd.lift,pmi:grd.pmi,npmi:grd.npmi,lr:grd.lr,lo:res.lo,hi:res.hi,expected:grd.expected,nA:grd.nA,nB:grd.nB,nAB:grd.nAB,sim:grd.sim};}
+  function matrix(payload){
+    const axes={gene:(payload.gene||[]).slice(0,6),phenotype:(payload.phenotype||[]).slice(0,6),molecule:(payload.molecule||[]).slice(0,6)};
+    const filled=AX.filter(a=>axes[a].length);const pairAxes=[];
+    for(let i=0;i<filled.length;i++)for(let j=i+1;j<filled.length;j++)pairAxes.push([filled[i],filled[j]]);
+    const heatmaps=[],perMapMean=[];
+    for(const[xa,ya]of pairAxes){const xs=axes[xa],ys=axes[ya];const cells=[],flat=[];
+      for(const y of ys){const row=[];for(const x of xs){const c=cell(x.label,y.label);row.push(c);flat.push(c.assoc);}cells.push(row);}
+      const meanA=flat.length?flat.reduce((s,v)=>s+v,0)/flat.length:0;const maxA=flat.length?Math.max.apply(null,flat):0;
+      perMapMean.push(meanA);heatmaps.push({x_axis:xa,y_axis:ya,cols:xs.map(e=>e.label),rows:ys.map(e=>e.label),cells,mean_assoc:meanA,max_assoc:maxA});}
+    return{heatmaps,coherence:perMapMean.length?coherence(perMapMean):0,source:"demo",grounding:"europepmc"};
+  }
+  function rankMulti(payload){
+    const target=payload.target;const given={};
+    for(const ax of AX){if(ax!==target&&(payload[ax]||[]).length)given[ax]=payload[ax].slice(0,6);}
+    const keys=Object.keys(given);if(keys.length!==2)throw new Error("rank requires exactly two filled axes besides the target");
+    const axA=keys[0],axB=keys[1],entsA=given[axA],entsB=given[axB];
+    const pool={};for(const e of(KB[target]||[]))pool[e.name.toLowerCase()]={id:e.id,label:e.name};
+    const cands=Object.values(pool).slice(0,40);const rows=[];
+    for(const cand of cands){let armA=[],armB=[],supp=0,armAlift=0,armBlift=0;
+      for(const e of entsA){const{grd}=scorePair(e.label,cand.label);armA.push(grd.posterior);supp+=grd.nAB;armAlift=grd.lift;}
+      for(const e of entsB){const{grd}=scorePair(e.label,cand.label);armB.push(grd.posterior);supp+=grd.nAB;armBlift=grd.lift;}
+      const assoc_a=armA.length?armA.reduce((s,v)=>s+v,0)/armA.length:0;
+      const assoc_b=armB.length?armB.reduce((s,v)=>s+v,0)/armB.length:0;
+      const combined=combined_rank_score(assoc_a,assoc_b,armAlift,armBlift,supp);
+      let badge="indirect";if(assoc_a>0.8&&assoc_b>0.8)badge=supp>30?"established":"hypothesis";
+      rows.push({id:cand.id,label:cand.label,assoc_a,assoc_b,combined,support:supp,badge,arm_a_axis:axA,arm_b_axis:axB,direction:null});}
+    rows.sort((a,b)=>b.combined-a.combined);
+    return{target,rows,source:"demo",grounding:"europepmc"};
+  }
+  function health(){return{demo_mode:true,kb:{gene:KB.gene.length,phenotype:KB.phenotype.length,molecule:KB.molecule.length},grounding:"europepmc",embeddings:false,embeddings_configured:false,source:"demo"};}
+  function autocomplete(type,q){q=(q||"").toLowerCase();return(KB[type]||[]).filter(e=>e.name.toLowerCase().includes(q)||(e.desc||"").toLowerCase().includes(q)).slice(0,10).map(e=>({id:e.id,label:e.name,desc:e.desc||""}));}
+  function expand(id,limit){id=id||"";let seed=(KB.gene||[]).find(g=>g.id===id);const seedName=seed?seed.name:id.replace(/^@[a-z]+_/i,"");return(KB.gene||[]).filter(g=>g.name!==seedName).map(g=>({g,s:rel_of(seedName,g.name)})).sort((a,b)=>b.s-a.s).slice(0,limit||8).map(x=>({id:x.g.id,label:x.g.name}));}
+  function evidence(a,b,limit){const term=encodeURIComponent("("+a+") AND ("+b+") AND Caenorhabditis elegans");return{a,b,papers:[{pmid:"",title:"PubMed \u00b7 Europe PMC \u2192 "+a+" \u00d7 "+b,journal:"live literature search",year:"",cites:null,url:"https://pubmed.ncbi.nlm.nih.gov/?term="+term}],source:"demo",note:"demo"};}
+
+  const api={_hash,rel_of,freq_of,demo_cocount,bayes_update,bayes_assoc,betai,betaPPF,coherence,combined_rank_score,matrix,rankMulti,health,autocomplete,expand,evidence,scorePair};
+  if(typeof module!=="undefined"&&module.exports)module.exports=api; else global.CB=api;
+})(typeof window!=="undefined"?window:globalThis);
+</script>
+</head>
+<body>
+<div class="cb-topbar">
+  <a href="https://promptgenix.org">← PromptGenix</a>
+  <span class="cb-demo-note"><b>Interactive demo</b> · real Bayesian math on a bundled <i>C. elegans</i> corpus · the full engine grounds live in Europe PMC / PubMed</span>
+  <a href="https://promptgenix.org/#consulting">Consulting →</a>
+</div>
+
+<div id="root"></div>
+<script type="text/babel">
+const{useState,useEffect,useRef,useLayoutEffect}=React;
+
+/* ───────── client-side demo engine (no backend, ported from bayes.py + demo_data.py) ───────── */
+const CBx=window.CB;
+const _delay=ms=>new Promise(r=>setTimeout(r,ms));
+async function apiGet(path){
+  if(path.indexOf("/api/health")===0){return CBx.health();}
+  const qs=path.indexOf("?")>=0?new URLSearchParams(path.slice(path.indexOf("?")+1)):new URLSearchParams();
+  if(path.indexOf("/api/autocomplete")===0){return CBx.autocomplete(qs.get("type"),qs.get("q"));}
+  if(path.indexOf("/api/expand")===0){return CBx.expand(qs.get("id"),parseInt(qs.get("limit"))||8);}
+  if(path.indexOf("/api/evidence")===0){await _delay(160);return CBx.evidence(qs.get("a"),qs.get("b"),parseInt(qs.get("limit"))||5);}
+  return {};
+}
+async function apiPost(path,body){
+  if(path.indexOf("/api/matrix")===0){await _delay(430);return CBx.matrix(body);}
+  if(path.indexOf("/api/rank_multi")===0){await _delay(360);return CBx.rankMulti(body);}
+  return {};
+}
+async function apiAutocomplete(q,type){return CBx.autocomplete(type,q);}
+async function apiExpand(id,limit){return CBx.expand(id,limit);}
+async function apiEvidence(a,b,limit){await _delay(150);return CBx.evidence(a,b,limit);}
+function apiWarmup(payload){}
+
+/* ───────── constants ───────── */
+const TYPES=["gene","phenotype","molecule"];
+const TLABEL={gene:"Gene",phenotype:"Phenotype / Disease",molecule:"Molecule / Drug"};
+const TSUB={gene:"C. elegans loci",phenotype:"traits & disease models",molecule:"compounds & drugs"};
+const COLOR={gene:"var(--gene)",phenotype:"var(--pheno)",molecule:"var(--mol)"};
+const MAX_PER=6;
+const pct=x=>`${(x*100).toFixed(1)}%`;
+const pctI=x=>`${Math.round(x*100)}%`;
+const fmt=n=>n>=1000?n.toLocaleString():`${n}`;
+const cap=s=>({gene:"Gene",phenotype:"Phenotype",molecule:"Molecule"})[s]||s;
+const lrFmt=lr=>{if(!isFinite(lr))return"∞";if(lr>=1000)return`10^${Math.round(Math.log10(lr))}`;if(lr>=10)return`${Math.round(lr)}×`;return`${lr.toFixed(1)}×`;};
+
+/* ───────── i18n (English default; 中文 / Español / 한국어) ───────── */
+const LANGS=[["en","EN"],["zh","中文"],["es","ES"],["ko","한국어"]];
+const T={
+  en:{tagline1:"Real-time literature grounding + ",tagline2:"Bayesian update",tagline3:" over ",tagline4:" for ",taglineTail:". Co-mention → PMI → posterior.",
+    genes:"genes",phenotypes:"phenotypes",molecules:"molecules",loadingKB:"loading KB…",demoData:"bundled demo data",
+    compose:"// compose query",abstracts:"Abstracts",fulltext:"Full text",
+    idle1:"Populate ",idle_two:"two",idle2:" columns to rank the third, or ",idle_three:"three",idle3:" for the full matrix.",
+    bridge1:"Matrix of your two axes + ranked ",bridge2:" candidates.",matrix1:"Full ",matrix2:" matrix across all three axes.",
+    clear:"Clear",run:"Run",runMatrix:"Run matrix",computing:"Computing…",
+    grounding1:"Grounding ",grounding2:" entities in ",grounding3:" — live counts take a few seconds.",
+    coherence:"coherence",cohDesc1:"mean posterior across sub-matrices · grounded in ",cohDesc2:" · ",
+    avg:"avg",max:"max",clickPapers:"click a cell for papers",
+    scaleLo:"low",scaleHi:"high",scaleCap:"cell = association · blue = weak / centre = chance (50%) / red = strong · click for papers",
+    presets:"// presets",spotlight:"// spotlight — most-cited paper per axis",spotEmpty:"add entities to see the top paper",
+    prior:"prior",assoc:"association",comention:"co-mentions obs/exp",pmiLift:"PMI · lift",semantic:"semantic prior",clickRead:"click → key papers →",
+    evAssoc:"association",fetching:"fetching key papers from Europe PMC…",
+    noPapers:"No direct co-mention papers found — the link may be indirect (Swanson ABC) rather than directly reported.",
+    cites:"cites",methodToggle:"method & data sources",
+    tiers:["very strong","strong","clear","weak / chance","weak","anti / none"],
+    sumCo:"co-mentioned in ",sumPapers:" papers",sumExp:" × the chance expectation (",sumExpEnd:")",sumPmi:"PMI ",sumBits:" bits",
+    sumIndirect:"almost no direct co-mention — possible indirect (latent) link"},
+  zh:{tagline1:"实时文献支撑 + ",tagline2:"贝叶斯更新",tagline3:"，覆盖 ",tagline4:" · 物种 ",taglineTail:"。共现 → PMI → 后验。",
+    genes:"基因",phenotypes:"表型",molecules:"分子",loadingKB:"加载知识库…",demoData:"内置演示数据",
+    compose:"// 构建查询",abstracts:"摘要",fulltext:"全文",
+    idle1:"至少填入 ",idle_two:"两",idle2:" 列以对第三列排序，或填 ",idle_three:"三",idle3:" 列生成完整矩阵。",
+    bridge1:"两轴矩阵 + 排序的 ",bridge2:" 候选。",matrix1:"完整 ",matrix2:" 三轴矩阵。",
+    clear:"清除",run:"运行",runMatrix:"运行矩阵",computing:"计算中…",
+    grounding1:"正在 ",grounding2:" 中支撑 ",grounding3:" 个实体 — 实时计数需数秒。",
+    coherence:"一致性",cohDesc1:"子矩阵后验的几何均值 · 来源 ",cohDesc2:" · ",
+    avg:"均值",max:"最高",clickPapers:"点击单元查看论文",
+    scaleLo:"低",scaleHi:"高",scaleCap:"单元 = 关联度 · 蓝=弱 / 中=偶然(50%) / 红=强 · 点击看论文",
+    presets:"// 预设",spotlight:"// 焦点 — 各轴被引最高论文",spotEmpty:"添加实体后显示代表论文",
+    prior:"先验",assoc:"关联度",comention:"共现 观测/期望",pmiLift:"PMI · 提升",semantic:"语义先验",clickRead:"点击 → 关键论文 →",
+    evAssoc:"关联度",fetching:"正在从 Europe PMC 获取关键论文…",
+    noPapers:"未找到直接共现论文 — 可能是间接(Swanson ABC)关联而非直接报道。",
+    cites:"次被引",methodToggle:"方法与数据来源",
+    tiers:["极强关联","强关联","明显关联","弱/偶然","关联弱","反向/无关"],
+    sumCo:"文献中共现于 ",sumPapers:" 篇",sumExp:" 倍于偶然期望(",sumExpEnd:")",sumPmi:"PMI ",sumBits:" bits",
+    sumIndirect:"几乎无直接共现 — 可能为间接(潜在)关联"},
+  es:{tagline1:"Base bibliográfica en tiempo real + ",tagline2:"actualización bayesiana",tagline3:" sobre ",tagline4:" para ",taglineTail:". Co-mención → PMI → posterior.",
+    genes:"genes",phenotypes:"fenotipos",molecules:"moléculas",loadingKB:"cargando KB…",demoData:"datos de demo",
+    compose:"// componer consulta",abstracts:"Resúmenes",fulltext:"Texto completo",
+    idle1:"Rellena ",idle_two:"dos",idle2:" columnas para clasificar la tercera, o ",idle_three:"tres",idle3:" para la matriz completa.",
+    bridge1:"Matriz de tus dos ejes + candidatos ",bridge2:" clasificados.",matrix1:"Matriz completa ",matrix2:" en los tres ejes.",
+    clear:"Limpiar",run:"Ejecutar",runMatrix:"Ejecutar matriz",computing:"Calculando…",
+    grounding1:"Fundamentando ",grounding2:" entidades en ",grounding3:" — el conteo tarda unos segundos.",
+    coherence:"coherencia",cohDesc1:"media geométrica de posteriors · fuente ",cohDesc2:" · ",
+    avg:"prom",max:"máx",clickPapers:"clic en una celda para ver artículos",
+    scaleLo:"bajo",scaleHi:"alto",scaleCap:"celda = asociación · azul = débil / centro = azar (50%) / rojo = fuerte · clic para artículos",
+    presets:"// ejemplos",spotlight:"// destacado — artículo más citado por eje",spotEmpty:"añade entidades para ver el artículo principal",
+    prior:"previa",assoc:"asociación",comention:"co-menciones obs/esp",pmiLift:"PMI · lift",semantic:"previa semántica",clickRead:"clic → artículos clave →",
+    evAssoc:"asociación",fetching:"obteniendo artículos clave de Europe PMC…",
+    noPapers:"No hay artículos de co-mención directa — el vínculo puede ser indirecto (Swanson ABC).",
+    cites:"citas",methodToggle:"método y fuentes de datos",
+    tiers:["muy fuerte","fuerte","clara","débil / azar","débil","inversa / nula"],
+    sumCo:"co-mencionado en ",sumPapers:" artículos",sumExp:" × la expectativa por azar (",sumExpEnd:")",sumPmi:"PMI ",sumBits:" bits",
+    sumIndirect:"casi sin co-mención directa — posible vínculo indirecto (latente)"},
+  ko:{tagline1:"실시간 문헌 grounding + ",tagline2:"베이지안 업데이트",tagline3:" · ",tagline4:" 대상 ",taglineTail:". 공동언급 → PMI → posterior.",
+    genes:"유전자",phenotypes:"표현형",molecules:"분자",loadingKB:"KB 로딩…",demoData:"데모 데이터",
+    compose:"// 쿼리 구성",abstracts:"초록",fulltext:"전문",
+    idle1:"",idle_two:"두",idle2:" 축을 채우면 세 번째를 랭킹, ",idle_three:"세",idle3:" 축이면 전체 매트릭스.",
+    bridge1:"두 축 매트릭스 + 랭킹된 ",bridge2:" 후보.",matrix1:"전체 ",matrix2:" 3축 매트릭스.",
+    clear:"지우기",run:"실행",runMatrix:"매트릭스 실행",computing:"계산 중…",
+    grounding1:"",grounding2:" 엔티티를 ",grounding3:"에서 grounding — 실시간 조회는 몇 초 걸립니다.",
+    coherence:"coherence",cohDesc1:"서브매트릭스 posterior 기하평균 · 출처 ",cohDesc2:" · ",
+    avg:"평균",max:"최고",clickPapers:"셀 클릭 시 논문",
+    scaleLo:"낮음",scaleHi:"높음",scaleCap:"셀 = 연관도 · 파랑=약함 / 중앙=우연(50%) / 빨강=강함 · 클릭 시 논문",
+    presets:"// 프리셋",spotlight:"// 주목 논문 — 각 축별 최다 피인용 1편",spotEmpty:"엔티티를 추가하면 대표 논문 표시",
+    prior:"prior",assoc:"연관도",comention:"공동언급 obs/exp",pmiLift:"PMI · lift",semantic:"semantic prior",clickRead:"클릭 → 핵심 논문 →",
+    evAssoc:"연관도",fetching:"Europe PMC에서 핵심 논문을 가져오는 중…",
+    noPapers:"직접 공동언급 논문을 찾지 못했습니다 — 직접 보고보다 간접(Swanson ABC) 연관일 수 있습니다.",
+    cites:"회 인용",methodToggle:"방법 & 데이터 출처",
+    tiers:["매우 강한 연관","강한 연관","뚜렷한 연관","약함/우연","연관 약함","역/비연관"],
+    sumCo:"문헌에서 ",sumPapers:"편에 함께 등장",sumExp:" · 우연 기대치의 ",sumExpEnd:"배",sumPmi:"PMI ",sumBits:" bits",
+    sumIndirect:"직접 공동언급 거의 없음 — 간접(잠재) 연관 가능성"},
+};
+let LANG="en";                       // set by App each render; read by tooltip/panel
+const tr=k=>(T[LANG]||T.en)[k];      // quick label lookup
+
+const FALLBACK={gene:(window.__CB_DATA__.KB.gene||[]).map(e=>e.name),phenotype:(window.__CB_DATA__.KB.phenotype||[]).map(e=>e.name),molecule:(window.__CB_DATA__.KB.molecule||[]).map(e=>e.name)};
+
+/* 11 curated example queries, grounded in the lab's aging-drug work */
+const EXAMPLES=[
+  {t:"IIS longevity 3×2×3",g:["daf-2","daf-16","age-1"],p:["Lifespan extension","Dauer constitutive"],m:["Metformin","Rapamycin","Resveratrol"]},
+  {t:"rank drugs · longevity genes",g:["daf-2","daf-16","aak-2","sir-2.1"],p:["Lifespan extension"],m:[]},
+  {t:"oxidative-stress module",g:["skn-1","gst-4","sod-3"],p:["Oxidative stress response"],m:["Paraquat","Juglone"]},
+  {t:"TOR / dietary restriction",g:["let-363","rsks-1","aak-2"],p:["Lifespan extension"],m:["Rapamycin","Metformin"]},
+  {t:"mitochondrial ROS",g:["isp-1","clk-1","nuo-6"],p:["Lifespan extension"],m:["Paraquat"]},
+  {t:"lipid metabolism · RES",g:["sbp-1","fat-7","acs-2"],p:["Fat content"],m:["Resveratrol"]},
+  {t:"autophagy · spermidine",g:["bec-1","lgg-1","atg-7"],p:["Lifespan extension"],m:["Spermidine"]},
+  {t:"proteostasis / heat shock",g:["hsf-1","hsp-16.2"],p:["Thermotolerance"],m:["Metformin"]},
+  {t:"sirtuin axis",g:["sir-2.1"],p:["Lifespan extension"],m:["Resveratrol"]},
+  {t:"DAF-16 targets",g:["sod-3","mtl-1","dod-3"],p:["Oxidative stress response"],m:["Metformin"]},
+  {t:"apoptosis → rank molecules",g:["egl-1","ced-3","ced-9"],p:["Apoptosis"],m:[]},
+  {t:"weak · muscle gene vs aging",g:["unc-22","unc-54"],p:["Lifespan extension"],m:[],weak:true},
+  {t:"weak · cuticle vs oxidative",g:["dpy-10","dpy-5"],p:["Oxidative stress response"],m:[],weak:true},
+  {t:"weak · chemotaxis vs drug",g:["che-2","che-3"],p:["Neurodegeneration"],m:["Resveratrol"],weak:true},
+];
+
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  HEATMAP PALETTE — edit STOPS to recolor the matrix.               ║
+   ║  Each stop is [position 0..1, [R,G,B]]. The scale runs             ║
+   ║  blue (low / weak) → yellow (middle ~50%) → red (high / strong).   ║
+   ║  Extra stops in the 0.0-0.3 and 0.9-1.0 bands give visible         ║
+   ║  gradient WITHIN the blue and red families (so 97/98/99 differ).   ║
+   ║  Keep the .scalegrad CSS gradient in sync if you change these.     ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+const HEAT={
+  // Publication-grade diverging scale (ColorBrewer RdYlBu, reversed): clean,
+  // bright journal tones. blue (low) → pale yellow (chance) → red (high).
+  STOPS:[
+    [0.00,[ 49, 54,149]],  // deep blue        — strongest anti / ~0%
+    [0.10,[ 69,117,180]],  // blue
+    [0.22,[116,173,209]],  // medium blue
+    [0.32,[171,217,233]],  // light blue        (~30%)
+    [0.42,[224,243,248]],  // very light blue
+    [0.50,[255,255,191]],  // pale yellow       (chance / 50%)
+    [0.58,[254,224,144]],  // light amber       (~60%)
+    [0.68,[253,174, 97]],  // orange
+    [0.78,[244,109, 67]],  // orange-red        (~80%)
+    [0.88,[239, 59, 44]],  // bright red        (~90%)
+    [0.94,[215, 48, 39]],  // journal red       (~95%)
+    [1.00,[176, 26, 31]],  // rich red          — strongest (99%)
+  ],
+  GLOW_HI:"215,48,39",     // red glow rgb (high)
+  GLOW_LO:"69,117,180"     // blue glow rgb (low)
+};
+function heat(v){
+  const s=HEAT.STOPS;v=Math.max(0,Math.min(1,v));
+  let i=0;while(i<s.length-1&&v>s[i+1][0])i++;
+  const [p0,c0]=s[i],[p1,c1]=s[Math.min(i+1,s.length-1)];
+  const t=p1>p0?(v-p0)/(p1-p0):0;
+  const r=c0[0]+(c1[0]-c0[0])*t,g=c0[1]+(c1[1]-c0[1])*t,b=c0[2]+(c1[2]-c0[2])*t;
+  return `rgb(${r|0},${g|0},${b|0})`;
+}
+// subtle depth glow (octagon-shaped via CSS filter drop-shadow), tinted at extremes
+const heatGlowF=v=>{const d=Math.abs(v-.5)*2;const col=v>=.5?HEAT.GLOW_HI:HEAT.GLOW_LO;
+  return d>.45?`drop-shadow(0 1px 3px rgba(0,0,0,.10)) drop-shadow(0 0 ${(4+d*9)|0}px rgba(${col},${(0.14+d*0.22).toFixed(2)}))`:"drop-shadow(0 1px 3px rgba(0,0,0,.10))";};
+const heatText=v=>(v>.955||v<.085)?"#FFFFFF":"#0B1020";   // white ink only on the darkest ends
+
+/* Display value: de-saturate the top so strong pairs read as a MEANINGFUL
+   95–99% spread (driven by nPMI) instead of all pinning at the 98% ceiling.
+   Mid/low values pass through unchanged. Edit HI_LOW / HI_HIGH to retune. */
+const DISP={HI_LOW:0.95, HI_HIGH:0.99, STRONG_AT:0.90, NPMI_FULL:0.65};
+function dispVal(cell){
+  const p=cval(cell);
+  if(p<DISP.STRONG_AT) return p;                 // mid/low untouched
+  const n=cell.npmi!=null?cell.npmi:0;
+  const t=Math.max(0,Math.min(1,n/DISP.NPMI_FULL));
+  return DISP.HI_LOW+(DISP.HI_HIGH-DISP.HI_LOW)*t;
+}
+const cval=c=>c.posterior!=null?c.posterior:c.assoc;
+
+/* One-line correlation summary from the cell's own stats, localised by lang. */
+const DOT={en:["🔴","🟠","🟡","⚪","🔵","🔵"],zh:["🔴","🟠","🟡","⚪","🔵","🔵"],
+  es:["🔴","🟠","🟡","⚪","🔵","🔵"],ko:["🔴","🟠","🟡","⚪","🔵","🔵"]};
+function summaryText(cell,lang){
+  const L=T[lang]||T.en, p=dispVal(cell), nAB=cell.nAB||0, lift=cell.lift, pmi=cell.pmi, exp=cell.expected;
+  let k;
+  if(p>=.97)k=0;else if(p>=.90)k=1;else if(p>=.65)k=2;else if(p>=.45)k=3;else if(p>=.25)k=4;else k=5;
+  const parts=[`${DOT[lang][k]} ${L.tiers[k]}`];
+  if(nAB>0){
+    if(lang==="ko"){
+      parts.push(`${L.sumCo}${fmt(nAB)}${L.sumPapers}`);
+      if(exp!=null&&lift>0) parts.push(`${L.sumExp}${lift.toFixed(1)}${L.sumExpEnd} (exp ${exp.toFixed(1)})`);
+    }else{
+      parts.push(`${L.sumCo}${fmt(nAB)}${L.sumPapers}`);
+      if(exp!=null&&lift>0) parts.push(`${lift.toFixed(1)}${L.sumExp}${exp.toFixed(1)}${L.sumExpEnd}`);
+    }
+    if(pmi!=null) parts.push(`${L.sumPmi}${pmi.toFixed(2)}${L.sumBits}`);
+  }else{
+    parts.push(L.sumIndirect);
+  }
+  return parts.join(" · ");
+}
+
+const WORM_D="M0,54 C60,14 120,14 180,54 S300,94 360,54 S480,14 540,54 S660,94 720,54 S840,14 900,54 S1020,94 1080,54 S1200,14 1260,54";
+
+/* ───────── EntityField ───────── */
+function EntityField({type,live,items,onAdd,onRemove,onExpand}){
+  const[q,setQ]=useState("");
+  const[open,setOpen]=useState(false);
+  const[opts,setOpts]=useState([]);
+  const[expBusy,setExpBusy]=useState(false);
+  const tRef=useRef();
+  const full=items.length>=MAX_PER;
+  useEffect(()=>{
+    if(!q||q.length<2){setOpts([]);return}
+    clearTimeout(tRef.current);
+    tRef.current=setTimeout(async()=>{
+      if(live){try{const r=await apiAutocomplete(q,type);if(r.length){setOpts(r);setOpen(true);return}}catch(e){}}
+      const local=FALLBACK[type].filter(n=>n.toLowerCase().includes(q.toLowerCase())).map(n=>({id:`@${type}_${n}`,label:n}));
+      if(!local.length)local.push({id:`custom_${q}`,label:q});
+      setOpts(local);setOpen(true);
+    },200);
+  },[q,type,live]);
+  const add=o=>{if(full)return;if(items.some(i=>i.label.toLowerCase()===o.label.toLowerCase()))return;onAdd(o);setQ("");setOpts([]);setOpen(false);};
+  const canExpand=type==="gene"&&items.length>0&&!full&&live;
+  const doExpand=async()=>{setExpBusy(true);try{await onExpand()}finally{setExpBusy(false)}};
+  return(
+    <div className="field" data-cursor={type} style={{"--c":COLOR[type]}}>
+      <div className="fhead">
+        <span className="fdot"/>
+        <div className="ftitles"><span className="flabel">{TLABEL[type]}</span><span className="fsub">{TSUB[type]}</span></div>
+        <span className="fcount">{items.length}/{MAX_PER}</span>
+      </div>
+      <div className="chips">
+        {items.map((it,i)=>(
+          <span className="chip" key={i} title={it.id}>
+            <span className="cname">{it.label}</span>
+            <button className="cx" onClick={()=>onRemove(i)} aria-label="remove">×</button>
+          </span>
+        ))}
+        {items.length===0&&<span className="empty">— empty —</span>}
+      </div>
+      {canExpand&&<button className="expand" onClick={doExpand} disabled={expBusy}><NetIcon/>{expBusy?"expanding…":"expand module · STRING"}</button>}
+      {!full&&(
+        <div className="inpwrap" onBlur={()=>setTimeout(()=>setOpen(false),150)}>
+          <input className="inp" value={q} placeholder={items.length?"add another…":`search ${TSUB[type]}…`}
+            onChange={e=>setQ(e.target.value)} onFocus={()=>opts.length&&setOpen(true)}
+            onKeyDown={e=>{if(e.key==="Enter"&&opts.length)add(opts[0])}}/>
+          {open&&opts.length>0&&(
+            <ul className="ac">
+              {opts.map((o,i)=>(
+                <li key={i} onMouseDown={()=>add(o)}>
+                  <span className="acname">{o.label}</span>
+                  {o.desc?<span className="acdesc">{o.desc}</span>:null}
+                  <span className="acid">{o.id}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+function NetIcon(){return(<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="5" cy="6" r="2.4" fill="currentColor"/><circle cx="19" cy="7" r="2.4" fill="currentColor"/><circle cx="12" cy="18" r="2.4" fill="currentColor"/><path d="M6.5 7.5 10.5 16M17.5 8.5 13.5 16M7 6.2 17 7" stroke="currentColor" strokeWidth="1.3"/></svg>)}
+
+/* ───────── Heatmap (Bayesian posterior + grounding + key papers) ───────── */
+function Heatmap({hm}){
+  const[tip,setTip]=useState(null);
+  const[sel,setSel]=useState(null);      // {r,c,cell}
+  const[papers,setPapers]=useState(null);
+  const[pbusy,setPbusy]=useState(false);
+  const cellW=Math.max(51,Math.min(96,448/Math.max(hm.cols.length,1)));
+  const _flat=hm.cells.flat().map(dispVal);
+  const hmAvg=_flat.length?_flat.reduce((a,b)=>a+b,0)/_flat.length:0;
+  const hmMax=_flat.length?Math.max(..._flat):0;
+
+  const openCell=(cell,rLabel,cLabel)=>{
+    setSel({cell,r:rLabel,c:cLabel});setPapers(null);setPbusy(true);
+    apiEvidence(rLabel,cLabel,5).then(d=>setPapers(d.papers||[])).catch(()=>setPapers([])).finally(()=>setPbusy(false));
+  };
+  const hoverCell=(e,cell,rLabel,cLabel)=>{
+    const b=e.currentTarget.getBoundingClientRect();
+    setTip({cell,r:rLabel,c:cLabel,rect:{left:b.left,right:b.right,top:b.top,bottom:b.bottom,cx:(b.left+b.right)/2}});
+  };
+  return(
+    <div className="hmwrap" data-cursor="heat">
+      <div className="hmhead">
+        <span className="hmtitle">
+          <b style={{color:COLOR[hm.y_axis]}}>{cap(hm.y_axis)}</b>
+          <span className="hmx">×</span>
+          <b style={{color:COLOR[hm.x_axis]}}>{cap(hm.x_axis)}</b>
+        </span>
+        <span className="hmmean">{tr("avg")} {pct(hmAvg)} · {tr("max")} {pct(hmMax)} · <i>{tr("clickPapers")}</i></span>
+      </div>
+      <div className="hmgrid">
+        <table className="hm">
+          <thead><tr><th className="corner"></th>
+            {hm.cols.map((c,j)=><th key={j} className="colh" style={{color:COLOR[hm.x_axis]}}><span>{c}</span></th>)}
+          </tr></thead>
+          <tbody>
+            {hm.cells.map((row,i)=>(
+              <tr key={i}>
+                <th className="rowh" style={{color:COLOR[hm.y_axis]}}>{hm.rows[i]}</th>
+                {row.map((cell,j)=>{
+                  const v=dispVal(cell),active=sel&&sel.r===hm.rows[i]&&sel.c===hm.cols[j];
+                  return(
+                    <td key={j} className={"cell"+(active?" active":"")} style={{width:cellW,background:heat(v),color:heatText(v),"--gl":heatGlowF(v)}}
+                      onMouseEnter={e=>hoverCell(e,cell,hm.rows[i],hm.cols[j])}
+                      onMouseLeave={()=>setTip(null)}
+                      onClick={()=>openCell(cell,hm.rows[i],hm.cols[j])}>
+                      <span className="cnum">{Math.round(v*100)}</span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {tip&&<GroundTip {...tip}/>}
+      {sel&&<Evidence sel={sel} papers={papers} busy={pbusy} onClose={()=>setSel(null)} xcol={hm.x_axis} yrow={hm.y_axis}/>}
+    </div>
+  );
+}
+function GroundTip({cell,r,c,rect}){
+  const ref=useRef();
+  const [pos,setPos]=useState({top:rect.bottom+10,left:rect.left,ready:false});
+  useLayoutEffect(()=>{
+    const el=ref.current;if(!el)return;
+    const w=el.offsetWidth,h=el.offsetHeight,vw=window.innerWidth,vh=window.innerHeight,gap=10;
+    let top=rect.top-h-gap;                 // prefer just above the cell
+    if(top<8) top=rect.bottom+gap;          // otherwise just below
+    if(top+h>vh-8) top=Math.max(8,vh-8-h);
+    let left=rect.cx-w/2;                    // horizontally centred on the cell
+    left=Math.min(Math.max(left,8),vw-w-8);
+    setPos({top,left,ready:true});
+  },[rect.left,rect.top,rect.right,rect.bottom,rect.cx]);
+  const prior=cell.prior!=null?cell.prior:0.5, post=cval(cell), shown=dispVal(cell);
+  return(
+    <div ref={ref} className="tip" style={{position:"fixed",top:pos.top,left:pos.left,visibility:pos.ready?"visible":"hidden"}}>
+      <div className="tiphead">{r} <span>×</span> {c}</div>
+      <div className="tipko">{summaryText(cell,LANG)}</div>
+      <div className="tipchain">
+        <div className="tpp"><span>{tr("prior")}</span><b>{pctI(prior)}</b></div>
+        <div className="tarrow">⊗ LR {lrFmt(cell.lr)}</div>
+        <div className="tpp"><span>{tr("assoc")}</span><b className="tpost">{pct(shown)}</b></div>
+      </div>
+      <div className="tipbar"><span className="tp-prior" style={{left:`${prior*100}%`}}/><span className="tp-post" style={{left:`${shown*100}%`}}/></div>
+      <div className="tiprow"><span>{tr("comention")}</span><b>{fmt(cell.nAB)} / {cell.expected!=null?cell.expected.toFixed(1):"—"}</b></div>
+      <div className="tiprow"><span>{tr("pmiLift")}</span><b>{cell.pmi!=null?cell.pmi.toFixed(2):"—"} bits · {cell.lift!=null?cell.lift.toFixed(1):"—"}×</b></div>
+      {cell.sim>0&&<div className="tiprow"><span>{tr("semantic")}</span><b>{pct(cell.sim)}</b></div>}
+      <div className="tiphint">{tr("clickRead")}</div>
+    </div>
+  );
+}
+function Evidence({sel,papers,busy,onClose,xcol,yrow}){
+  const shown=dispVal(sel.cell);
+  return(
+    <div className="evbox">
+      <div className="evhead">
+        <div className="evtitle">
+          <span style={{color:COLOR[yrow]}}>{sel.r}</span><span className="evx">×</span><span style={{color:COLOR[xcol]}}>{sel.c}</span>
+          <span className="evpost">{tr("evAssoc")} {pct(shown)}</span>
+          <span className="evmeta">{fmt(sel.cell.nAB)} co-mentions · PMI {sel.cell.pmi!=null?sel.cell.pmi.toFixed(2):"—"} · lift {sel.cell.lift!=null?sel.cell.lift.toFixed(1):"—"}×</span>
+        </div>
+        <button className="evclose" onClick={onClose}>×</button>
+      </div>
+      <div className="evko">{summaryText(sel.cell,LANG)}</div>
+      {busy&&<div className="evload"><span className="spin"/>{tr("fetching")}</div>}
+      {!busy&&papers&&papers.length===0&&<div className="evempty">{tr("noPapers")}</div>}
+      {!busy&&papers&&papers.length>0&&(
+        <ol className="evlist">
+          {papers.map((p,i)=>(
+            <li key={i} className="evitem">
+              <div className="evi-top">
+                <a className="evi-title" href={p.url||"#"} target="_blank" rel="noopener noreferrer">{p.title||"(untitled)"}</a>
+                {p.cited>0&&<span className="evi-cite">{fmt(p.cited)} {tr("cites")}</span>}
+              </div>
+              <div className="evi-meta">{[p.authors,p.journal,p.year].filter(Boolean).join(" · ")}</div>
+              {p.abstract&&<div className="evi-abs">{p.abstract}</div>}
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  );
+}
+
+/* ───────── Rank list ───────── */
+function Mini({label,v}){return(<div className="arm"><div className="armbar"><span style={{width:`${v*100}%`}}/></div><div className="armlab">{label} · {Math.round(v*100)}%</div></div>)}
+function RankView({res}){
+  const max=res.rows.length?res.rows[0].combined:1;
+  return(
+    <div className="rankbox">
+      <div className="rankhead">Top <b style={{color:COLOR[res.target]}}>{cap(res.target)}</b> candidates bridging your inputs</div>
+      <div className="ranklist">
+        {res.rows.slice(0,12).map((r,i)=>(
+          <div className="rrow" key={i}>
+            <div className="rnum">{String(i+1).padStart(2,"0")}</div>
+            <div className="rmain">
+              <div className="rname">{r.label}
+                <span className={`tag ${r.badge}`}>{r.badge}</span>
+                {r.direction?<span className={`dir ${r.direction}`}>{r.direction==="up"?"▲ activates":r.direction==="down"?"▼ suppresses":"◆ mixed"}</span>:null}
+              </div>
+              <div className="rbar"><span style={{width:`${(r.combined/max)*100}%`,background:COLOR[res.target]}}/></div>
+            </div>
+            <div className="rmini">
+              <Mini label={cap(r.arm_a_axis)} v={r.assoc_a}/>
+              <Mini label={cap(r.arm_b_axis)} v={r.assoc_b}/>
+            </div>
+            <div className="rscore">{pct(r.combined)}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ───────── Methods ───────── */
+function Methods(){
+  const[o,setO]=useState(false);
+  return(
+    <div className="methods">
+      <button className="mtoggle" onClick={()=>setO(!o)}>{o?"– ":"+ "}method &amp; data sources</button>
+      {o&&<div className="mbody">
+        <p><b>Grounding.</b> Counts are pulled live at query time from <b>Europe PMC</b> (PubMed + PMC + preprints + patents) or <b>PubMed</b>, organism-scoped to <i>C. elegans</i>. For a pair (A,B) we read n<sub>A</sub>, n<sub>B</sub> and the co-mention count n<sub>AB</sub> out of the corpus N.</p>
+        <p><b>PMI → likelihood ratio → posterior.</b> Expected co-mentions by chance are E = n<sub>A</sub>n<sub>B</sub>/N; the <b>lift</b> n<sub>AB</sub>/E equals 2<sup>PMI</sup>. The observed count is turned into a Poisson log-likelihood ratio of an association model vs independence, tempered by a co-mention reliability weight, and used to Bayes-update a prior into the <b>posterior P(associated)</b> shown in every cell. The PubMedBERT semantic prior, when on, raises the prior for related-but-under-cited pairs (Swanson ABC). Hover any cell for the full chain.</p>
+        <p><b>Reading results.</b> Two axes → ranked candidates for the third; three axes → the full matrix. A <span className="tag hypothesis" style={{fontSize:9}}>hypothesis</span> badge = both arms strong yet rarely co-mentioned. Curated CTD evidence adds a direction tag: <span className="dir up" style={{fontSize:9}}>▲ activates</span> / <span className="dir down" style={{fontSize:9}}>▼ suppresses</span>. Networks: WormBase · CTD · STRING · Reactome.</p>
+      </div>}
+    </div>
+  );
+}
+
+/* ───────── App ───────── */
+function App(){
+  const[live,setLive]=useState(null);
+  const[health,setHealth]=useState(null);
+  const[fulltext,setFt]=useState(false);
+  const[source,setSource]=useState("europepmc");
+  const[ent,setEnt]=useState({gene:[],phenotype:[],molecule:[]});
+  const[result,setResult]=useState(null);
+  const[busy,setBusy]=useState(false);
+  const[err,setErr]=useState("");
+  const[lang,setLang]=useState("en");
+  const[spot,setSpot]=useState({});     // {gene:paper, phenotype:paper, molecule:paper}
+  LANG=lang;                            // expose to tooltip/panel helpers
+
+  useEffect(()=>{(async()=>{
+    try{const h=await apiGet("/api/health");setHealth(h);setLive(!h.demo_mode);if(h.grounding)setSource(h.grounding);}
+    catch(e){setLive(false);setHealth(null);}
+  })()},[]);
+
+  const filled=TYPES.filter(t=>ent[t].length>0);
+  const missing=TYPES.filter(t=>ent[t].length===0);
+  const nf=filled.length;
+  const mode=nf>=3?"matrix":nf===2?"bridge":"idle";
+
+  useEffect(()=>{
+    if(!live||nf<2)return;
+    const id=setTimeout(()=>{apiWarmup({gene:ent.gene,phenotype:ent.phenotype,molecule:ent.molecule,fulltext,source});},700);
+    return()=>clearTimeout(id);
+  },[ent,fulltext,live,nf,source]);
+
+  // Spotlight — the single most-cited paper for the first entity on each axis
+  useEffect(()=>{
+    if(!live){setSpot({});return}
+    let cancelled=false;
+    const pick={};TYPES.forEach(t=>{if(ent[t][0])pick[t]=ent[t][0].label;});
+    const keys=Object.keys(pick);
+    if(!keys.length){setSpot({});return}
+    const id=setTimeout(async()=>{
+      const next={};
+      await Promise.all(keys.map(async t=>{
+        try{const d=await apiEvidence(pick[t],pick[t],1);next[t]=(d.papers&&d.papers[0])||null;}
+        catch(e){next[t]=null;}
+      }));
+      if(!cancelled)setSpot(next);
+    },500);
+    return()=>{cancelled=true;clearTimeout(id);};
+  },[ent.gene[0]&&ent.gene[0].label,ent.phenotype[0]&&ent.phenotype[0].label,ent.molecule[0]&&ent.molecule[0].label,live]);
+
+  const addTo=(t,o)=>setEnt(p=>({...p,[t]:[...p[t],{id:o.id,label:o.label}]}));
+  const rmFrom=(t,i)=>setEnt(p=>({...p,[t]:p[t].filter((_,j)=>j!==i)}));
+  const expandModule=async(t)=>{
+    if(t!=="gene")return;const seed=ent.gene[ent.gene.length-1];if(!seed)return;
+    try{const nb=await apiExpand(seed.id,MAX_PER);
+      setEnt(p=>{const have=new Set(p.gene.map(g=>g.label.toLowerCase()));const add=[];
+        for(const n of nb){if(p.gene.length+add.length>=MAX_PER)break;if(!have.has(n.label.toLowerCase())){add.push({id:n.id,label:n.label});have.add(n.label.toLowerCase());}}
+        return{...p,gene:[...p.gene,...add]};});
+    }catch(e){}
+  };
+  const clearAll=()=>{setEnt({gene:[],phenotype:[],molecule:[]});setResult(null);setErr("")};
+
+  async function analyze(){
+    if(mode==="idle")return;setBusy(true);setErr("");setResult(null);
+    const payload={gene:ent.gene,phenotype:ent.phenotype,molecule:ent.molecule,fulltext,source};
+    try{
+      const matrix=await apiPost("/api/matrix",payload);
+      let rank=null;
+      if(mode==="bridge"){try{rank=await apiPost("/api/rank_multi",{...payload,target:missing[0]});}catch(e){}}
+      setResult({matrix,rank,target:missing[0]});
+    }catch(e){setErr("Can't reach the backend. Start the FastAPI server on :8000, then try again.");}
+    finally{setBusy(false)}
+  }
+  const preset=ex=>{setEnt({
+    gene:ex.g.map(x=>({id:"@g_"+x,label:x})),
+    phenotype:ex.p.map(x=>({id:"@p_"+x,label:x})),
+    molecule:ex.m.map(x=>({id:"@m_"+x,label:x}))});setResult(null);setErr("");};
+
+  const kb=health&&health.kb, semantic=health&&health.embeddings, semanticCfg=health&&health.embeddings_configured;
+
+  return(<>
+    <style>{CSS}</style>
+    <WormCursor/>
+    <div className="grid-bg"/>
+    <div className="glow glow-a"/><div className="glow glow-b"/>
+
+    <div className="langbar">
+      {LANGS.map(([code,label])=>(
+        <button key={code} className={"langbtn"+(lang===code?" on":"")} onClick={()=>setLang(code)}>{label}</button>
+      ))}
+    </div>
+
+    <div className="root">
+
+      <header className="hero" data-cursor="hero">
+        <Hero3D/>
+        <svg className="worm" viewBox="0 0 1260 108" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="wg" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stopColor="var(--gene)"/><stop offset="0.5" stopColor="var(--pheno)"/><stop offset="1" stopColor="var(--mol)"/>
+          </linearGradient></defs>
+          <path d={WORM_D} className="wtrack"/>
+          <path d={WORM_D} className="wlead"/>
+        </svg>
+        <div className="herotop">
+          <div className="wordmark"><span className="wm-c">Celegans</span><span className="wm-b">BERT</span><span className="wm-tag">v3</span></div>
+          <div className="status">
+            <span className={`pill ${live?"on":live===false?"off":"wait"}`}><span className="pdot"/>{live==null?"link…":live?"live":"demo"}</span>
+            <span className={`pill ${semantic?"semantic":"muted"}`} title={semanticCfg?"PubMedBERT prior active":"set EMBED_MODEL=1 to enable"}>PubMedBERT · {semantic?"on":"off"}</span>
+          </div>
+        </div>
+        <p className="tagline">{tr("tagline1")}<b>{tr("tagline2")}</b>{tr("tagline3")}<b>gene × phenotype × molecule</b>{tr("tagline4")}<i>C. elegans</i>{tr("taglineTail")}</p>
+        <div className="kbstrip">
+          {kb?<><Stat n={kb.gene} l={tr("genes")}/><Stat n={kb.phenotype} l={tr("phenotypes")}/><Stat n={kb.molecule} l={tr("molecules")}/></>:<span className="kbnote">{live===false?tr("demoData"):tr("loadingKB")}</span>}
+          <div className="srcs">{["WormBase","CTD","STRING","Reactome","EuropePMC"].map(s=><span key={s} className="src">{s}</span>)}</div>
+        </div>
+      </header>
+
+      <div className="controls">
+        <div className="ctitle">{tr("compose")}</div>
+        <div className="ctlset">
+          <div className="seg" title="literature grounding source">
+            <button className={source==="europepmc"?"on":""} onClick={()=>setSource("europepmc")}>Europe PMC</button>
+            <button className={source==="pubmed"?"on":""} onClick={()=>setSource("pubmed")}>PubMed</button>
+          </div>
+          <div className="seg">
+            <button className={!fulltext?"on":""} onClick={()=>setFt(false)}>{tr("abstracts")}</button>
+            <button className={fulltext?"on":""} onClick={()=>setFt(true)}>{tr("fulltext")}</button>
+          </div>
+        </div>
+      </div>
+
+      <section className="inputs">
+        {TYPES.map(t=><EntityField key={t} type={t} live={live} items={ent[t]} onAdd={o=>addTo(t,o)} onRemove={i=>rmFrom(t,i)} onExpand={()=>expandModule(t)}/>)}
+      </section>
+
+      <div className="modebar">
+        <div className="modetext">
+          {mode==="idle"&&<span>{tr("idle1")}<b>{tr("idle_two")}</b>{tr("idle2")}<b>{tr("idle_three")}</b>{tr("idle3")}</span>}
+          {mode==="bridge"&&<span>{tr("bridge1")}<b style={{color:COLOR[missing[0]]}}>{cap(missing[0])}</b>{tr("bridge2")}</span>}
+          {mode==="matrix"&&<span>{tr("matrix1")}<b>{ent.gene.length}×{ent.phenotype.length}×{ent.molecule.length}</b>{tr("matrix2")}</span>}
+        </div>
+        <div className="modebtns">
+          {(nf>0)&&<button className="ghost" onClick={clearAll}>{tr("clear")}</button>}
+          <button className="run" data-cursor="run" disabled={mode==="idle"||busy} onClick={analyze}>{busy?tr("computing"):mode==="matrix"?tr("runMatrix"):tr("run")}<span className="arrow">▸</span></button>
+        </div>
+      </div>
+
+      <Spotlight spot={spot} ent={ent}/>
+
+      {busy&&<div className="loading"><span className="spin"/>{tr("grounding1")}{ent.gene.length+ent.phenotype.length+ent.molecule.length}{tr("grounding2")}{source==="europepmc"?"Europe PMC":"PubMed"}{tr("grounding3")}</div>}
+      {err&&<div className="errbox">{err}</div>}
+
+      {result&&result.matrix&&(
+        <section className="result">
+          <div className="cohrow">
+            <Dial v={result.matrix.coherence}/>
+            <div className="cohlab"><span className="cohk">{tr("coherence")}</span><span className="cohd">{tr("cohDesc1")}{result.matrix.grounding==="pubmed"?"PubMed":"Europe PMC"}{tr("cohDesc2")}{result.matrix.source==="live"?"live":"demo"}</span></div>
+          </div>
+          <div className="hmlist">{result.matrix.heatmaps.map((hm,i)=><Heatmap key={i} hm={hm}/>)}</div>
+          <div className="scalebar">
+            <span>{tr("scaleLo")}</span><div className="scalegrad"/><span>{tr("scaleHi")}</span>
+            <span className="scalecap">{tr("scaleCap")}</span>
+          </div>
+          {result.rank&&result.rank.rows&&result.rank.rows.length>0&&<RankView res={result.rank}/>}
+        </section>
+      )}
+
+      <div className="examples">
+        <span className="exlabel">{tr("presets")}</span>
+        <div className="exrow" data-cursor="preset">{EXAMPLES.map((ex,i)=><button key={i} className={ex.weak?"exweak":""} onClick={()=>preset(ex)}>{ex.t}</button>)}</div>
+      </div>
+
+      <Methods/>
+      <footer className="foot">CelegansBERT · Dohoon Kim · Bayesian enrichment grounded live in Europe PMC / PubMed · WormBase · CTD · STRING · Reactome</footer>
+    </div>
+  </>);
+}
+function Stat({n,l}){return(<div className="stat"><span className="statn">{fmt(n)}</span><span className="statl">{l}</span></div>)}
+function Dial({v}){
+  // 3D glossy orb gauge: conic progress ring + spherical shaded core + gloss highlight
+  const deg=Math.round(v*360);
+  const hi=v>.66?"#06B6D4":v>.4?"#7C3AED":"#DB2777";
+  const hi2=v>.66?"#22D3EE":v>.4?"#A78BFA":"#F472B6";
+  return(
+    <div className="orb" style={{"--deg":deg+"deg","--c1":hi,"--c2":hi2}}>
+      <div className="orb-ring"/>
+      <div className="orb-core">
+        <span className="orb-num">{pctI(v)}</span>
+      </div>
+      <div className="orb-gloss"/>
+    </div>
+  );
+}
+
+/* ───────── Spotlight: one most-cited paper per axis (below Run) ───────── */
+function Spotlight({spot,ent}){
+  const any=TYPES.some(t=>ent[t] && ent[t][0]);
+  if(!any) return null;
+  return(
+    <div className="spotwrap" data-cursor="paper">
+      <div className="spotlabel">{tr("spotlight")}</div>
+      <div className="spotrow">
+        {TYPES.map(t=>{
+          const e=ent[t]&&ent[t][0]; if(!e) return null;
+          const p=spot[t];
+          return(
+            <div key={t} className="spotcard" style={{"--c":COLOR[t]}}>
+              <div className="spothead"><span className="spotdot"/><span className="spotaxis">{cap(t)}</span><span className="spotent">{e.label}</span></div>
+              {p===undefined&&<div className="spotload"><span className="spin"/></div>}
+              {p===null&&<div className="spotempty">—</div>}
+              {p&&<a className="spotpaper" href={p.url||"#"} target="_blank" rel="noopener noreferrer">
+                <div className="spottitle">{p.title||"(untitled)"}</div>
+                <div className="spotmeta">{[p.journal,p.year].filter(Boolean).join(" · ")}{p.cited>0?` · ${fmt(p.cited)} ${tr("cites")}`:""}</div>
+              </a>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ───────── Hero3D: animated C. elegans worm + AI/ML shapes behind title ───────── */
+function Hero3D(){
+  const ref=useRef();
+  useEffect(()=>{
+    const host=ref.current;
+    if(!host||typeof THREE==="undefined") return;               // graceful if CDN blocked
+    if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let W=host.clientWidth||900, H=host.clientHeight||150, raf=0, disposed=false;
+    const scene=new THREE.Scene();
+    const cam=new THREE.PerspectiveCamera(45,W/H,0.1,100); cam.position.set(0,0,26);
+    const rndr=new THREE.WebGLRenderer({alpha:true,antialias:true});
+    rndr.setSize(W,H); rndr.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    host.appendChild(rndr.domElement);
+    scene.add(new THREE.AmbientLight(0xffffff,0.85));
+    const key=new THREE.PointLight(0x22d3ee,1.1,120); key.position.set(-14,10,20); scene.add(key);
+    const fill=new THREE.PointLight(0xdb2777,0.9,120); fill.position.set(16,-8,18); scene.add(fill);
+
+    // ── realistic C. elegans: tapered fusiform body + travelling undulatory wave ──
+    const L=46, SEG=180, RADIAL=16;
+    // body radius profile (0 = head, 1 = tail): blunt head, full mid-belly, long fine tail
+    function wormR(u){
+      const R=0.92;
+      const head=Math.pow(Math.min(1,u/0.05),0.5);        // quick rounded head
+      const tail=Math.pow(Math.min(1,(1-u)/0.42),1.15);   // long tapering tail to a point
+      const belly=0.70+0.30*Math.sin(Math.PI*Math.min(1,Math.max(0,u)));
+      return R*head*tail*belly;
+    }
+    // centreline of the animal: a sine wave that TRAVELS head→tail (undulatory swimming)
+    function centreline(t){
+      const pts=[],waves=1.85,amp=3.2;
+      for(let i=0;i<SEG;i++){
+        const s=i/(SEG-1);                                 // 0 head .. 1 tail
+        const x=(s-0.5)*L;
+        const env=Math.sin(Math.PI*Math.min(1,s*1.04));    // amplitude tapers at both ends
+        const phase=2*Math.PI*waves*s - t*3.1;             // travelling wave
+        const y=amp*env*Math.sin(phase) + 1.1*Math.sin(s*1.6+t*0.5);  // + slow body bend
+        const z=1.0*env*Math.sin(phase+1.1)*0.55;
+        pts.push(new THREE.Vector3(x,y,z));
+      }
+      return new THREE.CatmullRomCurve3(pts);
+    }
+    // build a tapered tube (variable radius) around a curve — TubeGeometry can't taper
+    function wormGeom(curve){
+      const fr=curve.computeFrenetFrames(SEG-1,false);
+      const pos=[],nor=[],idx=[],P=new THREE.Vector3();
+      for(let i=0;i<SEG;i++){
+        const u=i/(SEG-1); curve.getPointAt(u,P);
+        const Nn=fr.normals[i],Bn=fr.binormals[i],r=wormR(u);
+        for(let j=0;j<=RADIAL;j++){
+          const a=j/RADIAL*Math.PI*2, cx=Math.cos(a), sx=Math.sin(a);
+          const nx=cx*Nn.x+sx*Bn.x, ny=cx*Nn.y+sx*Bn.y, nz=cx*Nn.z+sx*Bn.z;
+          pos.push(P.x+r*nx,P.y+r*ny,P.z+r*nz); nor.push(nx,ny,nz);
+        }
+      }
+      for(let i=1;i<SEG;i++)for(let j=1;j<=RADIAL;j++){
+        const a=(RADIAL+1)*(i-1)+(j-1),b=(RADIAL+1)*i+(j-1),c=(RADIAL+1)*i+j,d=(RADIAL+1)*(i-1)+j;
+        idx.push(a,b,d,b,c,d);
+      }
+      const g=new THREE.BufferGeometry();
+      g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+      g.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3));
+      g.setIndex(idx); return g;
+    }
+    const wormMat=new THREE.MeshStandardMaterial({color:0x7fe3f2,emissive:0x0e7490,emissiveIntensity:0.28,
+      roughness:0.32,metalness:0.12,transparent:true,opacity:0.93,side:THREE.DoubleSide});
+    let worm=new THREE.Mesh(wormGeom(centreline(0)),wormMat); scene.add(worm);
+    // faint pharynx/gut line hint via a thin darker inner strand
+    const gutMat=new THREE.MeshBasicMaterial({color:0x0891b2,transparent:true,opacity:0.28});
+    let gut=new THREE.Mesh(new THREE.TubeGeometry(centreline(0),120,0.14,8,false),gutMat); scene.add(gut);
+
+    // subtle AI / ML motifs drifting behind the worm
+    function chip(text,color){
+      const c=document.createElement("canvas");c.width=c.height=128;const g=c.getContext("2d");
+      g.font="bold 60px 'Chakra Petch',sans-serif";g.textAlign="center";g.textBaseline="middle";
+      g.fillStyle=color;g.fillText(text,64,68);
+      const m=new THREE.Mesh(new THREE.PlaneGeometry(3.6,3.6),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,opacity:0.75}));
+      return m;
+    }
+    const ai=chip("AI","#7c3aed"), ml=chip("ML","#db2777");
+    ai.position.set(-15,5,-3); ml.position.set(15,-4,-3); scene.add(ai); scene.add(ml);
+    const shapes=[];
+    const mk=(geo,color,pos,s)=>{const mm=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color,wireframe:true,transparent:true,opacity:0.32}));mm.position.set(...pos);mm.scale.setScalar(s);scene.add(mm);shapes.push(mm);return mm;};
+    mk(new THREE.IcosahedronGeometry(2,0),0x22d3ee,[-11,-5,-4],0.9);
+    mk(new THREE.OctahedronGeometry(2,0),0xdb2777,[10,6,-5],0.8);
+
+    const clock=new THREE.Clock();
+    function tick(){
+      if(disposed)return;
+      const el=clock.getElapsedTime();
+      const cl=centreline(el);
+      worm.geometry.dispose(); worm.geometry=wormGeom(cl);
+      gut.geometry.dispose(); gut.geometry=new THREE.TubeGeometry(cl,120,0.13,8,false);
+      // whole animal glides gently and yaws like it is exploring the plate
+      worm.position.x=Math.sin(el*0.25)*3.2; gut.position.copy(worm.position);
+      worm.rotation.z=Math.sin(el*0.3)*0.10; gut.rotation.z=worm.rotation.z;
+      ai.rotation.z=Math.sin(el*0.6)*0.12; ai.position.y=5+Math.sin(el*0.8)*0.7;
+      ml.rotation.z=Math.cos(el*0.5)*0.12; ml.position.y=-4+Math.cos(el*0.7)*0.7;
+      shapes.forEach((s,i)=>{s.rotation.x+=0.003+i*0.001;s.rotation.y+=0.005+i*0.001;});
+      scene.rotation.y=Math.sin(el*0.12)*0.08;
+      rndr.render(scene,cam); raf=requestAnimationFrame(tick);
+    }
+    tick();
+    const onResize=()=>{if(disposed||!host)return;W=host.clientWidth;H=host.clientHeight;cam.aspect=W/H;cam.updateProjectionMatrix();rndr.setSize(W,H);};
+    window.addEventListener("resize",onResize);
+    return()=>{disposed=true;cancelAnimationFrame(raf);window.removeEventListener("resize",onResize);try{rndr.dispose();host.removeChild(rndr.domElement);}catch(e){}};
+  },[]);
+  return <div ref={ref} className="hero3d" aria-hidden="true"/>;
+}
+
+/* ───────── WormCursor: a living C. elegans cursor with zone-reactive FX ───────── */
+function WormCursor(){
+  const cref=useRef();
+  useEffect(()=>{
+    if(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches) return; // skip touch
+    const cv=cref.current,ctx=cv.getContext("2d");
+    let W=innerWidth,H=innerHeight,dpr=Math.min(devicePixelRatio||1,2);
+    const resize=()=>{W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+"px";cv.style.height=H+"px";ctx.setTransform(dpr,0,0,dpr,0,0);};
+    resize();
+    const ZONE={gene:["#06B6D4","#22D3EE"],phenotype:["#DB2777","#F472B6"],molecule:["#7C3AED","#A78BFA"],
+      heat:["#EF3B2C","#FDAE61"],preset:["#10B981","#6EE7B7"],run:["#F59E0B","#FCD34D"],
+      paper:["#2563EB","#60A5FA"],hero:["#06B6D4","#7C3AED"],default:["#0891B2","#22D3EE"]};
+    const MODE={gene:{w:7,head:4.6,spk:.6},phenotype:{w:7.6,head:5.2,spk:.75},molecule:{w:7,head:4.6,spk:.6},
+      heat:{w:8.6,head:5.6,spk:.95},preset:{w:5.6,head:4,spk:.5},run:{w:9.2,head:6.2,spk:1},
+      paper:{w:6.6,head:4.4,spk:.6},hero:{w:8,head:5,spk:.85},default:{w:7,head:4.6,spk:.6}};
+    const hexRGB=h=>{h=h.replace("#","");return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
+    const N=26, pts=Array.from({length:N},()=>({x:W/2,y:H/2}));
+    let tx=W/2,ty=H/2,px=tx,py=ty;
+    let col=[8,145,178],colT=[8,145,178],col2=[34,211,238],col2T=[34,211,238];
+    let mode="default", mfac={w:7,head:4.6,spk:.6}, mfacT={w:7,head:4.6,spk:.6};
+    const sparks=[];
+    const onMove=e=>{tx=e.clientX;ty=e.clientY;
+      const el=document.elementFromPoint(tx,ty), z=el&&el.closest&&el.closest("[data-cursor]");
+      const key=z?z.getAttribute("data-cursor"):"default";
+      if(ZONE[key]){mode=key;colT=hexRGB(ZONE[key][0]);col2T=hexRGB(ZONE[key][1]);mfacT=MODE[key]||MODE.default;}
+    };
+    const onDown=e=>{for(let i=0;i<20;i++){const a=Math.PI*2*i/20,s=2+Math.random()*3.5;
+      sparks.push({x:e.clientX,y:e.clientY,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,r:2+Math.random()*2.4,c:[...col2T]});}};
+    addEventListener("mousemove",onMove);addEventListener("mousedown",onDown);addEventListener("resize",resize);
+    let raf=0;
+    const frame=t=>{
+      const hx=pts[0].x+(tx-pts[0].x)*0.35, hy=pts[0].y+(ty-pts[0].y)*0.35;
+      const dx=hx-px,dy=hy-py,speed=Math.hypot(dx,dy);px=hx;py=hy;
+      pts[0].x=hx;pts[0].y=hy;
+      const ang=Math.atan2(dy,dx);
+      for(let i=1;i<N;i++){const p=pts[i],pr=pts[i-1];
+        p.x+=(pr.x-p.x)*0.55;p.y+=(pr.y-p.y)*0.55;
+        const wob=Math.sin(t*0.008 - i*0.5)*1.7*Math.min(1,speed*0.14+0.22);
+        p.x+=Math.cos(ang+Math.PI/2)*wob;p.y+=Math.sin(ang+Math.PI/2)*wob;}
+      for(let k=0;k<3;k++){col[k]+=(colT[k]-col[k])*0.12;col2[k]+=(col2T[k]-col2[k])*0.12;}
+      mfac.w+=(mfacT.w-mfac.w)*0.15;mfac.head+=(mfacT.head-mfac.head)*0.15;mfac.spk+=(mfacT.spk-mfac.spk)*0.15;
+      ctx.clearRect(0,0,W,H);ctx.lineCap="round";ctx.lineJoin="round";
+      ctx.save();ctx.shadowBlur=10;ctx.shadowColor=`rgba(${col2[0]|0},${col2[1]|0},${col2[2]|0},.6)`;
+      for(let i=N-1;i>0;i--){const p=pts[i],pr=pts[i-1],tt=i/N;
+        ctx.strokeStyle=`rgba(${col[0]|0},${col[1]|0},${col[2]|0},${(0.92-tt*0.55).toFixed(2)})`;
+        ctx.lineWidth=(1-tt)*mfac.w+1.1;
+        ctx.beginPath();ctx.moveTo(pr.x,pr.y);ctx.lineTo(p.x,p.y);ctx.stroke();}
+      ctx.restore();
+      ctx.save();ctx.shadowBlur=18;ctx.shadowColor=`rgb(${col2[0]|0},${col2[1]|0},${col2[2]|0})`;
+      ctx.fillStyle=`rgb(${col2[0]|0},${col2[1]|0},${col2[2]|0})`;
+      ctx.beginPath();ctx.arc(pts[0].x,pts[0].y,mfac.head,0,7);ctx.fill();
+      ctx.fillStyle="rgba(255,255,255,.85)";ctx.beginPath();ctx.arc(pts[0].x-mfac.head*0.3,pts[0].y-mfac.head*0.3,mfac.head*0.32,0,7);ctx.fill();
+      ctx.restore();
+      if(speed>6&&Math.random()<mfac.spk){const tail=pts[N-1];
+        sparks.push({x:tail.x,y:tail.y,vx:(Math.random()-.5)*1.6,vy:(Math.random()-.5)*1.6,life:1,r:1+Math.random()*1.7,c:[...col2]});}
+      for(let i=sparks.length-1;i>=0;i--){const s=sparks[i];s.x+=s.vx;s.y+=s.vy;s.vy+=0.02;s.life-=0.028;
+        if(s.life<=0){sparks.splice(i,1);continue;}
+        ctx.globalAlpha=Math.max(0,s.life);ctx.fillStyle=`rgb(${s.c[0]|0},${s.c[1]|0},${s.c[2]|0})`;
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,7);ctx.fill();ctx.globalAlpha=1;}
+      raf=requestAnimationFrame(frame);
+    };
+    raf=requestAnimationFrame(frame);
+    document.body.classList.add("wormcur");
+    return()=>{cancelAnimationFrame(raf);removeEventListener("mousemove",onMove);removeEventListener("mousedown",onDown);removeEventListener("resize",resize);document.body.classList.remove("wormcur");};
+  },[]);
+  return <canvas ref={cref} className="wormcanvas" aria-hidden="true"/>;
+}
+
+const CSS=`
+.wormcanvas{position:fixed;inset:0;z-index:9999;pointer-events:none}
+body.wormcur{cursor:none}
+body.wormcur input,body.wormcur textarea{cursor:text}
+.root{
+  --gene:#0891B2;--pheno:#DB2777;--mol:#7C3AED;
+  --cyan:#06B6D4;
+  --bg:#E9ECF1;--surface:#FFFFFF;--panel:#F3F5F9;
+  --line:#D3D9E4;--line2:#E3E7EF;
+  --ink:#0B1020;--muted:#5A6478;--faint:#8A93A6;
+  position:relative;z-index:1;
+  font-family:'Inter',system-ui,sans-serif;color:var(--ink);
+  max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,44px) 80px;
+  -webkit-font-smoothing:antialiased;
+}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px;opacity:.35;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 20%,transparent 75%)}
+.glow{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px);opacity:.5}
+.glow-a{top:-140px;left:-80px;width:420px;height:420px;background:radial-gradient(circle,#22D3EE55,transparent 70%)}
+.glow-b{top:-40px;right:-100px;width:380px;height:380px;background:radial-gradient(circle,#E879F955,transparent 70%)}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes flick{0%,100%{opacity:1}92%{opacity:1}94%{opacity:.6}96%{opacity:1}}
+
+/* language switcher — fixed top-right, topmost */
+.langbar{position:fixed;top:12px;right:14px;z-index:80;display:flex;gap:3px;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:9px;padding:3px;box-shadow:0 4px 16px rgba(11,16,32,.08)}
+.langbtn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 9px;border:none;background:transparent;color:var(--muted);cursor:pointer;border-radius:6px;transition:.12s}
+.langbtn:hover{color:var(--ink)}
+.langbtn.on{background:var(--ink);color:#fff}
+
+/* 3D animated hero background behind the wordmark */
+.hero3d{position:absolute;top:6px;left:-2%;width:104%;height:150px;z-index:0;pointer-events:none;opacity:.9;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.hero3d canvas{width:100%!important;height:100%!important;display:block}
+
+/* spotlight strip — most-cited paper per axis, below Run */
+.spotwrap{margin:16px 0 4px;animation:fadeup .4s ease both}
+.spotlabel{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px}
+.spotrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:820px){.spotrow{grid-template-columns:1fr}}
+.spotcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden;min-height:92px}
+.spotcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c);box-shadow:0 0 10px var(--c)}
+.spothead{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.spotdot{width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 6px var(--c)}
+.spotaxis{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.spotent{font-size:13px;font-weight:600;color:var(--c)}
+.spotpaper{display:block;text-decoration:none}
+.spottitle{font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.spotpaper:hover .spottitle{color:var(--c)}
+.spotmeta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);margin-top:5px}
+.spotload{display:flex;align-items:center;justify-content:center;height:36px;opacity:.6}
+.spotempty{font-size:12px;color:var(--faint)}
+
+.hero{position:relative;padding:40px 0 22px;margin-bottom:8px;animation:fadeup .5s ease both}
+.worm{position:absolute;top:24px;left:-4%;width:108%;height:96px;pointer-events:none;z-index:0}
+.wtrack{fill:none;stroke:var(--line);stroke-width:1.5}
+.wlead{fill:none;stroke:url(#wg);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:2600;stroke-dashoffset:2600;animation:draw 2.4s cubic-bezier(.4,0,.1,1) .2s forwards;filter:drop-shadow(0 0 6px #22D3EE88)}
+.herotop{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.wordmark{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(30px,5vw,46px);letter-spacing:-.5px;line-height:.9;display:flex;align-items:baseline;gap:2px;animation:flick 6s infinite}
+.wm-c{color:var(--ink)}
+.wm-b{color:var(--cyan);text-shadow:0 0 14px #22D3EE99,2px 0 #DB277733}
+.wm-tag{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--pheno);margin-left:9px;transform:translateY(-16px);letter-spacing:1px}
+.status{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 11px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.pill .pdot{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor}
+.pill.on{color:var(--gene);border-color:#7FD3E4;background:#ECFBFE;box-shadow:0 0 0 1px #7FD3E433,0 0 14px #22D3EE22}
+.pill.off{color:var(--pheno);border-color:#F3B6D3;background:#FDF0F7}
+.pill.wait{color:var(--faint)}
+.pill.semantic{color:var(--mol);border-color:#C6B8F5;background:#F3EFFE;box-shadow:0 0 14px #A78BFA22}
+.pill.muted{color:var(--faint)}
+.tagline{position:relative;z-index:1;margin:52px 0 0;font-size:15px;color:var(--muted);max-width:660px;line-height:1.5}
+.tagline b{color:var(--ink);font-weight:600}
+.kbstrip{position:relative;z-index:1;display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.stat{display:flex;flex-direction:column;line-height:1.05}
+.statn{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:22px;letter-spacing:-.5px}
+.statl{font-size:11px;color:var(--muted);margin-top:3px}
+.kbnote{font-size:12.5px;color:var(--muted);font-style:italic}
+.srcs{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);border:1px solid var(--line);background:var(--panel);padding:3px 8px;border-radius:5px}
+
+.controls{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:26px 0 12px;flex-wrap:wrap}
+.ctitle{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.ctlset{display:flex;gap:8px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{font-size:12px;font-family:'IBM Plex Mono',monospace;padding:7px 13px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:.12s}
+.seg button.on{background:var(--ink);color:#fff;box-shadow:inset 0 0 0 1px #ffffff22}
+.seg button:not(.on):hover{color:var(--ink)}
+
+.inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.inputs{grid-template-columns:1fr}}
+.field{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;position:relative;animation:fadeup .5s ease both;transition:box-shadow .2s,border-color .2s}
+.field::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:var(--c);box-shadow:0 0 10px var(--c)}
+.field:focus-within{border-color:color-mix(in srgb,var(--c) 50%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 30%,transparent),0 0 22px color-mix(in srgb,var(--c) 14%,transparent)}
+.fhead{display:flex;align-items:center;gap:9px;margin-bottom:12px;padding-left:8px}
+.fdot{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 12%,transparent),0 0 8px var(--c)}
+.ftitles{display:flex;flex-direction:column;line-height:1.1}
+.flabel{font-size:13.5px;font-weight:600}
+.fsub{font-size:10.5px;color:var(--faint);font-family:'IBM Plex Mono',monospace;margin-top:2px}
+.fcount{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;min-height:24px;margin-bottom:10px;padding-left:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:color-mix(in srgb,var(--c) 9%,white);border:1px solid color-mix(in srgb,var(--c) 32%,white);border-radius:7px;padding:4px 6px 4px 10px;font-size:13px;font-weight:500;color:color-mix(in srgb,var(--c) 55%,black);animation:fadeup .25s ease both}
+.cx{background:none;border:none;color:color-mix(in srgb,var(--c) 55%,white);font-size:15px;cursor:pointer;padding:0;line-height:1}
+.cx:hover{color:var(--c)}
+.empty{font-size:11.5px;color:var(--faint);font-family:'IBM Plex Mono',monospace}
+.expand{width:100%;display:flex;align-items:center;justify-content:center;gap:7px;margin:0 0 10px;font-size:11.5px;font-family:'IBM Plex Mono',monospace;padding:8px;border-radius:8px;border:1px dashed color-mix(in srgb,var(--c) 45%,white);background:color-mix(in srgb,var(--c) 6%,white);color:var(--c);cursor:pointer;transition:.15s}
+.expand:hover:not(:disabled){background:color-mix(in srgb,var(--c) 13%,white);box-shadow:0 0 14px color-mix(in srgb,var(--c) 20%,transparent)}
+.expand:disabled{opacity:.55;cursor:wait}
+.inpwrap{position:relative;padding-left:8px}
+.inp{width:100%;background:var(--panel);border:1px solid var(--line2);border-radius:8px;outline:none;color:var(--ink);font-size:13.5px;font-family:inherit;padding:9px 11px}
+.inp:focus{border-color:color-mix(in srgb,var(--c) 50%,white);background:#fff;box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 12%,transparent)}
+.inp::placeholder{color:#9AA3B4}
+.ac{position:absolute;left:8px;right:0;top:100%;margin-top:6px;z-index:30;list-style:none;padding:5px;background:var(--surface);border:1px solid var(--line);border-radius:11px;box-shadow:0 18px 44px rgba(11,16,32,.16);max-height:260px;overflow:auto}
+.ac li{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:7px;cursor:pointer}
+.ac li:hover{background:var(--panel)}
+.acname{font-size:13.5px;font-weight:500}.acdesc{font-size:10.5px;color:var(--muted);font-style:italic}
+.acid{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--faint);white-space:nowrap}
+
+.modebar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:22px 0 4px;flex-wrap:wrap}
+.modetext{font-size:13.5px;color:var(--muted)}.modetext b{color:var(--ink)}
+.modebtns{display:flex;gap:9px;align-items:center}
+.ghost{font-size:13px;padding:11px 17px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit}
+.ghost:hover{border-color:var(--muted);color:var(--ink)}
+.run{display:inline-flex;align-items:center;gap:9px;font-family:'Chakra Petch',sans-serif;font-size:14px;font-weight:600;letter-spacing:.3px;padding:11px 22px;border-radius:10px;border:none;cursor:pointer;color:#fff;background:linear-gradient(100deg,var(--gene),var(--mol));box-shadow:0 3px 16px rgba(124,58,237,.28),0 0 22px rgba(6,182,212,.18)}
+.run .arrow{transition:transform .2s}
+.run:hover:not(:disabled) .arrow{transform:translateX(3px)}
+.run:disabled{opacity:.4;cursor:not-allowed;background:#C2C9D6;box-shadow:none}
+.loading{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+.spin{width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite}
+.errbox{margin-top:18px;font-size:13px;color:#BE185D;background:#FDF0F7;border:1px solid #F3B6D3;border-radius:11px;padding:13px 15px}
+
+.result{margin-top:24px;animation:fadeup .5s ease both}
+.cohrow{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.orb{position:relative;width:82px;height:82px;flex-shrink:0;transform-style:preserve-3d;animation:orbfloat 5s ease-in-out infinite}
+@keyframes orbfloat{0%,100%{transform:translateY(0) rotateX(8deg) rotateZ(-2deg)}50%{transform:translateY(-4px) rotateX(12deg) rotateZ(2deg)}}
+.orb-ring{position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(from -90deg,var(--c2) 0deg,var(--c1) var(--deg),rgba(150,160,180,.18) var(--deg),rgba(150,160,180,.12) 360deg);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 12px),#000 calc(100% - 11px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 12px),#000 calc(100% - 11px));
+  filter:drop-shadow(0 3px 6px rgba(11,16,32,.28)) drop-shadow(0 0 10px var(--c1));
+  transition:background .9s cubic-bezier(.2,.8,.2,1)}
+.orb-core{position:absolute;inset:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 34% 28%,#ffffff 0%,#eef2f8 24%,#cdd6e4 62%,#aab6c9 100%);
+  box-shadow:inset 0 -6px 12px rgba(11,16,32,.22),inset 0 5px 10px rgba(255,255,255,.9),0 4px 10px rgba(11,16,32,.18)}
+.orb-num{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:19px;color:var(--c1);
+  text-shadow:0 1px 0 #fff,0 0 8px color-mix(in srgb,var(--c1) 45%,transparent)}
+.orb-gloss{position:absolute;left:20%;top:12%;width:44%;height:30%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(255,255,255,.9),rgba(255,255,255,0) 70%);filter:blur(1px)}
+.cohlab{display:flex;flex-direction:column}
+.cohk{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:16px}
+.cohd{font-size:11.5px;color:var(--muted);margin-top:3px}
+.hmlist{display:flex;flex-direction:column;gap:20px}
+.hmwrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 19px}
+.hmhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:13px;flex-wrap:wrap;gap:8px}
+.hmtitle{font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:600}
+.hmx{color:var(--faint);margin:0 8px;font-weight:400}
+.hmmean{font-size:11.5px;font-family:'IBM Plex Mono',monospace;color:var(--muted)}
+.hmgrid{overflow-x:auto;overflow-y:visible;padding-bottom:2px}
+.hm{border-collapse:separate;border-spacing:4px}
+.hm .corner{background:transparent}
+.hm .colh{font-size:11px;font-weight:600;vertical-align:bottom;padding:0 2px 7px;text-align:center;max-width:118px}
+.hm .colh span{display:inline-block;line-height:1.15}
+.hm .rowh{font-size:12px;font-weight:600;text-align:right;padding-right:11px;white-space:nowrap}
+.hm .cell{height:53px;text-align:center;cursor:pointer;position:relative;transition:transform .12s,filter .12s;
+  clip-path:polygon(9px 0,calc(100% - 9px) 0,100% 9px,100% calc(100% - 9px),calc(100% - 9px) 100%,9px 100%,0 calc(100% - 9px),0 9px);
+  filter:var(--gl,none)}
+.hm .cell .cnum{font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:700;letter-spacing:.3px}
+.hm .cell:hover{transform:scale(1.07);filter:var(--gl,none) brightness(1.05) saturate(1.08);z-index:2}
+.hm .cell.active{box-shadow:inset 0 0 0 2.5px #0B1020;z-index:2}
+.tip{position:fixed;z-index:60;background:#0B1020;color:#E6ECF5;border:1px solid #2A3350;border-radius:12px;padding:12px 13px;font-size:11.5px;min-width:230px;box-shadow:0 16px 44px rgba(0,0,0,.45),0 0 0 1px rgba(34,211,238,.12);pointer-events:none}
+.tiphead{font-weight:600;margin-bottom:9px;font-size:12px;color:#fff}.tiphead span{color:#5A6478;margin:0 4px}
+.tipko{font-size:11px;line-height:1.5;color:#B9C3D6;background:#131A2E;border:1px solid #2A3350;border-radius:8px;padding:7px 9px;margin-bottom:9px}
+.tipchain{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.tpp{display:flex;flex-direction:column;line-height:1.2}.tpp span{font-size:9px;color:#8A93A6;text-transform:uppercase;letter-spacing:.5px}
+.tpp b{font-family:'IBM Plex Mono',monospace;font-size:14px}
+.tpost{color:#22D3EE;text-shadow:0 0 10px #22D3EE66}
+.tarrow{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#A78BFA;text-align:center;white-space:nowrap}
+.tipbar{position:relative;height:4px;background:linear-gradient(90deg,#DB2777,#334,#06B6D4);border-radius:3px;margin:2px 0 9px}
+.tipbar span{position:absolute;top:50%;width:2px;height:11px;transform:translate(-50%,-50%)}
+.tp-prior{background:#8A93A6}.tp-post{background:#22D3EE;box-shadow:0 0 6px #22D3EE}
+.tiprow{display:flex;justify-content:space-between;gap:16px;padding:2px 0;color:#9AA3B4}
+.tiprow b{color:#E6ECF5;font-family:'IBM Plex Mono',monospace}
+.tiphint{margin-top:8px;padding-top:7px;border-top:1px solid #2A3350;font-size:10px;color:#22D3EE;text-align:right;letter-spacing:.3px}
+.evbox{margin-top:14px;background:linear-gradient(180deg,#FBFDFF,#F3F7FB);border:1px solid var(--line);border-radius:12px;padding:14px 16px;animation:fadeup .3s ease both;box-shadow:0 0 0 1px rgba(34,211,238,.08),0 8px 26px rgba(11,16,32,.06)}
+.evhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.evtitle{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:'Chakra Petch',sans-serif;font-size:15px;font-weight:600}
+.evx{color:var(--faint);font-weight:400}
+.evpost{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--gene);background:#ECFBFE;border:1px solid #A5E4F0;padding:2px 8px;border-radius:100px;box-shadow:0 0 10px rgba(6,182,212,.15)}
+.evmeta{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);font-weight:400;width:100%;margin-top:-2px}
+.evko{font-size:12.5px;line-height:1.6;color:var(--ink);background:linear-gradient(90deg,#EFF4FF,#FDEEF1);border:1px solid var(--line);border-radius:9px;padding:9px 12px;margin-bottom:12px}
+.evclose{flex-shrink:0;background:none;border:1px solid var(--line);border-radius:7px;width:26px;height:26px;color:var(--muted);font-size:16px;cursor:pointer;line-height:1}
+.evclose:hover{border-color:var(--pheno);color:var(--pheno)}
+.evload{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted);padding:8px 0}
+.evempty{font-size:12.5px;color:var(--muted);line-height:1.6;padding:6px 0}
+.evlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:ev}
+.evitem{counter-increment:ev;position:relative;padding-left:26px}
+.evitem::before{content:counter(ev);position:absolute;left:0;top:1px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#fff;background:linear-gradient(135deg,var(--gene),var(--mol));width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 8px rgba(6,182,212,.3)}
+.evi-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.evi-title{font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;line-height:1.35}
+.evi-title:hover{color:var(--gene);text-decoration:underline}
+.evi-cite{flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mol);white-space:nowrap}
+.evi-meta{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);margin:3px 0 5px}
+.evi-abs{font-size:12.5px;line-height:1.6;color:var(--muted)}
+.scalebar{display:flex;align-items:center;gap:8px;margin:16px 0 4px;font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.scalegrad{width:200px;height:9px;border-radius:5px;background:linear-gradient(90deg,rgb(49,54,149),rgb(69,117,180),rgb(171,217,233),rgb(255,255,191),rgb(253,174,97),rgb(239,59,44),rgb(176,26,31))}
+.scalecap{margin-left:8px;font-family:'Inter';font-style:italic;color:var(--faint)}
+
+.rankbox{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:19px}
+.rankhead{font-size:14px;color:var(--muted);margin-bottom:15px}.rankhead b{color:var(--ink)}
+.ranklist{display:flex;flex-direction:column;gap:8px}
+.rrow{display:grid;grid-template-columns:30px 1fr 210px 58px;gap:15px;align-items:center;background:var(--panel);border:1px solid var(--line2);border-radius:11px;padding:11px 15px;transition:border-color .15s,box-shadow .15s}
+.rrow:hover{border-color:color-mix(in srgb,var(--cyan) 40%,var(--line));box-shadow:0 0 16px rgba(6,182,212,.1)}
+@media(max-width:820px){.rrow{grid-template-columns:24px 1fr 58px}.rmini{display:none}}
+.rnum{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--faint);text-align:center}
+.rname{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:100px;font-weight:600}
+.tag.established{background:#ECFBFE;color:var(--gene)}.tag.hypothesis{background:#F3EFFE;color:var(--mol)}.tag.indirect{background:#EEF1F5;color:var(--muted)}
+.dir{font-size:9.5px;font-weight:600;padding:2px 8px;border-radius:100px}
+.dir.up{background:#FDE7F1;color:#DB2777}.dir.down{background:#E6F6FB;color:#0891B2}.dir.mixed{background:#F1EBFD;color:var(--mol)}
+.rbar{height:7px;background:#E1E6EF;border-radius:5px;overflow:hidden}
+.rbar span{display:block;height:100%;border-radius:5px;transition:width .8s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 8px currentColor}
+.rmini{display:flex;flex-direction:column;gap:6px}
+.arm .armbar{height:5px;background:#E1E6EF;border-radius:4px;overflow:hidden}
+.arm .armbar span{display:block;height:100%;background:var(--faint)}
+.armlab{font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-top:2px}
+.rscore{font-family:'Chakra Petch',sans-serif;font-size:17px;font-weight:700;text-align:right}
+
+.examples{margin-top:28px}
+.exlabel{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:1px}
+.exrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}
+.exrow button{font-size:12px;font-family:'IBM Plex Mono',monospace;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:.15s}
+.exrow button:hover{border-color:var(--cyan);color:var(--gene);background:#ECFBFE;box-shadow:0 0 14px rgba(6,182,212,.15)}
+.exrow button.exweak{border-style:dashed;color:var(--muted);border-color:#C3CBD6}
+.exrow button.exweak:hover{border-color:#2E6BE6;color:#2E6BE6;background:#EEF3FF;box-shadow:0 0 14px rgba(46,107,230,.14)}
+.methods{margin-top:28px;border-top:1px solid var(--line);padding-top:16px}
+.mtoggle{background:none;border:none;color:var(--muted);font-size:13px;font-family:'IBM Plex Mono',monospace;cursor:pointer;padding:2px 0}
+.mbody{margin-top:10px;font-size:13px;line-height:1.75;color:var(--muted);max-width:780px}
+.mbody b{color:var(--ink)}.mbody p{margin:0 0 11px}
+.foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--faint);font-family:'IBM Plex Mono',monospace}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.wlead{stroke-dashoffset:0}}
+`;
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
