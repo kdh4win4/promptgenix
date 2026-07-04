@@ -6,9 +6,55 @@
   <title>PromptGenix – AI-Native Infrastructure for Biomedical Discovery</title>
   <meta name="description" content="PromptGenix: evidence-weighted hypothesis intelligence engine for biomedical research. Bayesian inference, RNA-Seq, flow cytometry, multi-omics analysis." />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23B8965A'/><text x='16' y='22' text-anchor='middle' font-size='16' font-weight='900' fill='%23fff' font-family='sans-serif'>PG</text></svg>" />
-  <script type="module" crossorigin src="/assets/index-880952b3.js"></script>
+  <style>
+    .goog-te-banner-frame, .goog-te-balloon-frame, #goog-gt-tt, .goog-te-spinner-pos { display:none !important; }
+    .skiptranslate { display:none !important; }
+    body { top:0 !important; }
+    font { background:none !important; box-shadow:none !important; }
+    #google_translate_element { position:absolute; left:-9999px; top:-9999px; height:0; overflow:hidden; }
+  </style>
+  <script>
+  (function(){
+    // Guard: Google Translate rewrites text nodes into <font> wrappers, which can make
+    // React's removeChild/insertBefore throw. These no-op the mismatch instead of crashing.
+    if (typeof Node === "function" && Node.prototype) {
+      var _rc = Node.prototype.removeChild;
+      Node.prototype.removeChild = function(child){
+        if (child.parentNode !== this) return child;
+        return _rc.apply(this, arguments);
+      };
+      var _ib = Node.prototype.insertBefore;
+      Node.prototype.insertBefore = function(newNode, referenceNode){
+        if (referenceNode && referenceNode.parentNode !== this) return newNode;
+        return _ib.apply(this, arguments);
+      };
+    }
+    function domains(){
+      var h = location.hostname, out = ["", "."+h];
+      var parts = h.split("."); if (parts.length>=2) out.push("."+parts.slice(-2).join("."));
+      return out;
+    }
+    function setCookie(v){ domains().forEach(function(d){ document.cookie="googtrans="+v+";path=/"+(d?";domain="+d:""); }); }
+    function clearCookie(){ domains().forEach(function(d){ document.cookie="googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/"+(d?";domain="+d:""); }); }
+    var m = document.cookie.match(/googtrans=\/[^\/]*\/([^;]+)/);
+    window.pgLang = m ? decodeURIComponent(m[1]) : "en";
+    window.pgSetLang = function(code){
+      if (!code || code==="en") clearCookie(); else setCookie("/en/"+code);
+      location.reload();
+    };
+    window.googleTranslateElementInit = function(){
+      new google.translate.TranslateElement(
+        { pageLanguage:"en", includedLanguages:"en,es,ja,zh-CN,ko,fr,de", autoDisplay:false },
+        "google_translate_element"
+      );
+    };
+  })();
+  </script>
+  <script type="module" crossorigin src="/assets/index-6a2015c3.js"></script>
 </head>
 <body>
   <div id="root"></div>
+  <div id="google_translate_element"></div>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
