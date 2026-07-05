@@ -15,8 +15,8 @@
   </style>
   <script>
   (function(){
-    // Guard: Google Translate rewrites text nodes into <font> wrappers, which can make
-    // React's removeChild/insertBefore throw. These no-op the mismatch instead of crashing.
+    // 1) Guard: Google Translate rewrites text nodes into <font> wrappers, which can make
+    //    React's removeChild/insertBefore throw. No-op the mismatch instead of crashing.
     if (typeof Node === "function" && Node.prototype) {
       var _rc = Node.prototype.removeChild;
       Node.prototype.removeChild = function(child){
@@ -29,6 +29,71 @@
         return _ib.apply(this, arguments);
       };
     }
+
+    // 2) Brand protection: keep these tokens in English in every language.
+    //    Wraps each occurrence in a .notranslate span BEFORE Google Translate runs.
+    //    Registered on documentElement from <head> so it fires ahead of GT's observer.
+    var BRAND = /(CelegansBERT|PromptGenix|Celegans)/g;   // CelegansBERT before Celegans
+    function shielded(node){
+      var el = node.nodeType === 3 ? node.parentNode : node;
+      while (el && el.nodeType === 1){
+        var cn = (el.className && el.className.baseVal!=null) ? el.className.baseVal : (el.className||"");
+        if (typeof cn === "string" && (cn.indexOf("notranslate")>-1 || cn.indexOf("pg-nt")>-1 || cn.indexOf("goog")>-1 || cn.indexOf("skiptranslate")>-1)) return true;
+        if (el.getAttribute && el.getAttribute("translate") === "no") return true;
+        var tag = el.tagName;
+        if (tag==="SCRIPT"||tag==="STYLE"||tag==="TEXTAREA"||tag==="SELECT"||tag==="OPTION"||tag==="FONT") return true;
+        el = el.parentNode;
+      }
+      return false;
+    }
+    function wrapNode(tn){
+      var text = tn.nodeValue;
+      if (!text) return;
+      BRAND.lastIndex = 0;
+      if (!BRAND.test(text)) return;
+      if (shielded(tn)) return;
+      var frag = document.createDocumentFragment(), last = 0, m;
+      BRAND.lastIndex = 0;
+      while ((m = BRAND.exec(text))){
+        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var s = document.createElement("span");
+        s.className = "notranslate pg-nt";
+        s.setAttribute("translate","no");
+        s.textContent = m[0];
+        frag.appendChild(s);
+        last = m.index + m[0].length;
+      }
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      if (tn.parentNode) tn.parentNode.replaceChild(frag, tn);
+    }
+    function scan(root){
+      try {
+        if (!root) return;
+        if (root.nodeType === 3){ wrapNode(root); return; }
+        if (root.nodeType !== 1) return;
+        if (root.tagName==="SCRIPT"||root.tagName==="STYLE") return;
+        var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+        var list = [], n;
+        while ((n = w.nextNode())) list.push(n);
+        for (var i=0;i<list.length;i++) wrapNode(list[i]);
+      } catch(e){}
+    }
+    var mo = new MutationObserver(function(muts){
+      for (var i=0;i<muts.length;i++){
+        var mu = muts[i];
+        if (mu.type === "childList"){
+          for (var j=0;j<mu.addedNodes.length;j++) scan(mu.addedNodes[j]);
+        } else if (mu.type === "characterData"){
+          wrapNode(mu.target);
+        }
+      }
+    });
+    try { mo.observe(document.documentElement, { childList:true, subtree:true, characterData:true }); } catch(e){}
+    function initialScan(){ scan(document.body); }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialScan);
+    else initialScan();
+
+    // 3) Custom language switch (drives Google Translate via cookie + reload).
     function domains(){
       var h = location.hostname, out = ["", "."+h];
       var parts = h.split("."); if (parts.length>=2) out.push("."+parts.slice(-2).join("."));
@@ -36,8 +101,8 @@
     }
     function setCookie(v){ domains().forEach(function(d){ document.cookie="googtrans="+v+";path=/"+(d?";domain="+d:""); }); }
     function clearCookie(){ domains().forEach(function(d){ document.cookie="googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/"+(d?";domain="+d:""); }); }
-    var m = document.cookie.match(/googtrans=\/[^\/]*\/([^;]+)/);
-    window.pgLang = m ? decodeURIComponent(m[1]) : "en";
+    var mm = document.cookie.match(/googtrans=\/[^\/]*\/([^;]+)/);
+    window.pgLang = mm ? decodeURIComponent(mm[1]) : "en";
     window.pgSetLang = function(code){
       if (!code || code==="en") clearCookie(); else setCookie("/en/"+code);
       location.reload();
