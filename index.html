@@ -115,10 +115,123 @@
     };
   })();
   </script>
-  <script type="module" crossorigin src="/assets/index-0896d13e.js"></script>
+  <script type="module" crossorigin src="/assets/index-d9f98126.js"></script>
 </head>
 <body>
   <div id="root"></div>
+  <script>
+function pgMountVortex(host){
+  if(!host || host.__pgv) return function(){};
+  host.__pgv = true;
+  var cv = document.createElement("canvas");
+  cv.className = "pg-vortex-cv";
+  cv.style.cssText = "display:block;width:100%;height:100%";
+  host.appendChild(cv);
+  var ctx = cv.getContext("2d");
+  var W = 1, H = 1, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  function resize(){
+    var r = host.getBoundingClientRect();
+    W = Math.max(1, r.width); H = Math.max(1, r.height);
+    cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  var WORDS = ["AI","Bio","Gene","DNA","RNA","ML","Omics","Bayes","HLA","Protein","Cell",
+               "Peptide","Genome","Immune","Vaccine","Signal","Model","Neuron","Data",
+               "Discovery","CRISPR","Variant","Pathway","Cluster","Assay","Cohort"];
+  var COLORS = [[34,211,238],[139,123,255],[244,114,182],[124,255,180]];
+  var N = 44;
+  var parts = [];
+  function spawn(seeded){
+    return {
+      word: WORDS[(Math.random()*WORDS.length)|0],
+      ang: Math.random()*6.283,
+      rad: 0.55 + Math.random()*0.5,
+      y: seeded ? Math.random() : (1.02 + Math.random()*0.13),
+      spin: 0.45 + Math.random()*0.85,
+      rise: 0.05 + Math.random()*0.06,
+      size: 12 + Math.random()*15,
+      col: COLORS[(Math.random()*COLORS.length)|0],
+      dust: Math.random() < 0.42
+    };
+  }
+  for(var i=0;i<N;i++) parts.push(spawn(true));
+
+  var t0 = performance.now(), raf = 0, visible = true;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function frame(now){
+    if(!cv.isConnected){ cleanup(); return; }
+    raf = requestAnimationFrame(frame);
+    if(!visible || document.hidden){ t0 = now; return; }
+    var dt = Math.min(0.05, (now - t0) / 1000); t0 = now;
+
+    ctx.clearRect(0, 0, W, H);
+    var cx = W * 0.5, focal = 1.18;
+    var list = [];
+    for(var k=0;k<parts.length;k++){
+      var p = parts[k];
+      p.ang += dt * p.spin * 1.15;
+      p.y -= dt * p.rise;
+      if(p.y < -0.14){ parts[k] = spawn(false); continue; }
+      var rr = p.rad * (0.34 + 0.66 * p.y);   // narrows toward the top (tornado)
+      var x3 = Math.sin(p.ang) * rr;
+      var z3 = Math.cos(p.ang) * rr;
+      var persp = focal / (focal - z3);
+      var sx = cx + x3 * (W * 0.44) * persp;
+      var sy = p.y * H;
+      var depth = (z3 + 1) / 2;                 // 0 back .. 1 front
+      var edge = Math.min(1, p.y * 4.5) * Math.min(1, (1.08 - p.y) * 3.2);
+      var alpha = (0.16 + 0.84 * depth) * Math.max(0, edge);
+      list.push({ p: p, sx: sx, sy: sy, scale: persp, alpha: alpha });
+    }
+    list.sort(function(a,b){ return a.scale - b.scale; });
+    ctx.globalCompositeOperation = "lighter";
+    for(var d=0; d<list.length; d++){
+      var o = list[d], c = o.p.col;
+      if(o.alpha <= 0.01) continue;
+      if(o.p.dust){
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + (o.alpha * 0.7) + ")";
+        ctx.arc(o.sx, o.sy, Math.max(0.6, 1.7 * o.scale), 0, 6.283);
+        ctx.fill();
+      } else {
+        var fs = o.p.size * o.scale;
+        ctx.font = "700 " + fs.toFixed(1) + "px 'Space Grotesk',Outfit,sans-serif";
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.shadowColor = "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + o.alpha + ")";
+        ctx.shadowBlur = 15 * o.scale;
+        ctx.fillStyle = "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + o.alpha + ")";
+        ctx.fillText(o.p.word, o.sx, o.sy);
+        ctx.shadowBlur = 0;
+      }
+    }
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  var io = null;
+  try {
+    io = new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }, { threshold: 0.01 });
+    io.observe(host);
+  } catch(e){}
+
+  function cleanup(){
+    cancelAnimationFrame(raf);
+    window.removeEventListener("resize", resize);
+    if(io) io.disconnect();
+    if(cv.parentNode) cv.parentNode.removeChild(cv);
+    host.__pgv = false;
+  }
+
+  if(reduce){ frame(performance.now()); return cleanup; }  // one static frame
+  raf = requestAnimationFrame(frame);
+  return cleanup;
+}
+
+(function(){function m(){var el=document.getElementById("pg-vortex");if(el&&!el.__pgv)pgMountVortex(el);}setInterval(m,300);if(document.readyState!=="loading")m();else document.addEventListener("DOMContentLoaded",m);})();
+  </script>
   <div id="google_translate_element"></div>
   <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
