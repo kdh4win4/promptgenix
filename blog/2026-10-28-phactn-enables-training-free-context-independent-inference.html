@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PHACTn enables training-free, context-independent inference of nucleotide variant tolerance across the genome — PromptGenix Notes</title>
+<meta name="description" content="A training-free, GPU-free method infers variant tolerance genome-wide from phylogeny alone, using four interpretable parameters. The method is appealing; the benchmark it is scored on has a circularity problem of its own.">
+<meta name="author" content="Dohoon (Roy) Kim">
+<link rel="canonical" href="https://promptgenix.org/blog/2026-10-28-phactn-enables-training-free-context-independent-inference.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHACTn enables training-free, context-independent inference of nucleotide variant tolerance across the genome — PromptGenix Notes">
+<meta property="og:description" content="A training-free, GPU-free method infers variant tolerance genome-wide from phylogeny alone, using four interpretable parameters. The method is appealing; the benchmark it is scored on has a circularity problem of its own.">
+<meta property="og:url" content="https://promptgenix.org/blog/2026-10-28-phactn-enables-training-free-context-independent-inference.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/pgx-mark-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* Design tokens lifted from promptgenix.org so /blog/ reads as the same site.
+   The main site is dark-only; a blog that flipped to light on a light-mode
+   machine would look like a different property one click away. */
+:root{
+  --bg:#0a0e2a; --bg-2:#0e1338; --card:#141a44; --deep:#08081c;
+  --ink:#eaf0ff; --ink-dim:#f4f6fc;
+  --muted:#9aa6cc; --line:#20295e;
+  --cyan:#22d3ee; --violet:#8b7bff; --violet-2:#6d5afa; --pink:#f472b6;
+  --display:'Space Grotesk','Outfit',system-ui,sans-serif;
+  --sans:'Outfit','Inter',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:18px/1.72 var(--sans);
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+
+header.site{border-bottom:1px solid var(--line);padding:20px 0;margin-bottom:46px;
+  background:linear-gradient(180deg,var(--deep),transparent)}
+header.site .row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+header.site a.brand{color:var(--ink);text-decoration:none;font-weight:600;
+  letter-spacing:-.01em;font-family:var(--display);font-size:17px}
+header.site a.home{color:var(--muted);text-decoration:none;font-size:13px;
+  font-family:var(--sans);margin-left:auto}
+header.site a.home:hover{color:var(--cyan)}
+header.site .tag{color:var(--muted);font-size:13.5px;margin-top:6px;width:100%}
+
+h1{font-family:var(--display);font-size:36px;line-height:1.18;margin:0 0 12px;
+  letter-spacing:-.02em;font-weight:600}
+h2{font-family:var(--display);font-size:23px;margin:44px 0 12px;line-height:1.3;
+  letter-spacing:-.01em;font-weight:600}
+h3{font-family:var(--display);font-size:19px;margin:30px 0 8px;font-weight:600}
+p{margin:0 0 18px}
+.meta{color:var(--muted);font-size:13px;margin-bottom:30px;
+  font-family:var(--mono);letter-spacing:.01em}
+.standfirst{font-size:20px;line-height:1.6;color:var(--ink-dim);opacity:.78;
+  margin:0 0 34px}
+a{color:var(--cyan);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:#8febff}
+strong{color:#fff;font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--bg-2);
+  color:#b9aeff;padding:2px 6px;border-radius:4px}
+pre{background:var(--deep);border:1px solid var(--line);padding:16px 18px;
+  border-radius:8px;overflow-x:auto;font-size:14px}
+pre code{background:none;padding:0;color:var(--ink)}
+blockquote{margin:24px 0;padding:4px 0 4px 20px;border-left:2px solid var(--violet);
+  color:var(--muted)}
+ul,ol{padding-left:22px}
+li{margin-bottom:7px}
+hr{border:0;border-top:1px solid var(--line);margin:38px 0}
+
+/* The commentary block is the reason this site exists; it is styled to be
+   unmistakably separate from the generated summary above it. */
+.commentary{background:var(--card);border:1px solid var(--violet-2);
+  border-radius:10px;padding:24px 26px;margin:42px 0;
+  box-shadow:0 0 0 1px rgba(109,90,250,.12),0 10px 34px -22px rgba(109,90,250,.6)}
+.commentary .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--violet);margin-bottom:12px}
+.commentary p:last-child{margin-bottom:0}
+
+.sources{font-size:14.5px;color:var(--muted);padding-left:20px}
+.sources li{margin-bottom:7px}
+.tags{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:30px;
+  letter-spacing:.06em;text-transform:uppercase}
+.byline{border-top:1px solid var(--line);margin-top:48px;padding-top:22px;
+  font-size:14.5px;color:var(--muted);line-height:1.6}
+.byline strong{color:var(--ink)}
+.ad{margin:40px 0;min-height:1px}
+
+ul.index{list-style:none;padding:0;margin:0}
+ul.index li{border-bottom:1px solid var(--line);padding:26px 0}
+ul.index li:last-child{border-bottom:0}
+ul.index a{text-decoration:none;font-family:var(--display);font-size:22px;
+  font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.3;
+  display:inline-block}
+ul.index a:hover{color:var(--cyan)}
+ul.index .d{font-family:var(--mono);font-size:11.5px;color:var(--muted);
+  display:block;margin-bottom:7px;letter-spacing:.04em}
+ul.index p{margin:9px 0 0;color:var(--muted);font-size:16px;line-height:1.6}
+
+footer.site{margin:70px 0 48px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--muted)}
+@media (max-width:600px){
+  h1{font-size:28px} h2{font-size:21px}
+  body{font-size:17px} .standfirst{font-size:18px}
+  .commentary{padding:20px}
+}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <div class="row">
+    <a class="brand" href="/blog/">PromptGenix Notes</a>
+    <a class="home" href="https://promptgenix.org">← PromptGenix</a>
+  </div>
+  <div class="tag">Notes on AI, bioinformatics, and drug discovery — from someone who runs the pipelines.</div>
+</div></header>
+<div class="wrap">
+<article>
+<h1>PHACTn enables training-free, context-independent inference of nucleotide variant tolerance across the genome</h1>
+<div class="meta">2026-10-28 &middot; Dohoon (Roy) Kim</div>
+<p class="standfirst">A training-free, GPU-free method infers variant tolerance genome-wide from phylogeny alone, using four interpretable parameters. The method is appealing; the benchmark it is scored on has a circularity problem of its own.</p>
+<h3>What it changes at the bench</h3>
+<p>If validated, offers a computationally cheap, interpretable alternative to GPU-heavy language models for prioritizing non-coding variants in rare disease and GWAS follow-up workflows. However, all benchmarks are retrospective on known pathogenic/benign variant databases—no prospective clinical or functional validation yet, so no immediate change to practice.</p>
+<h3>Where this sits</h3>
+<ul><li><strong>Maturity:</strong> in silico only — nothing has been run at a bench</li><li><strong>Evidence:</strong> a preprint</li><li><strong>Independently verified:</strong> no</li><li><strong>Domain:</strong> omics</li></ul>
+<h3>Limitations</h3>
+<ol><li>ClinVar and OMIM benchmarks are retrospective and subject to ascertainment bias toward well-studied variants/genes. 2) No prospective experimental validation of novel predictions. 3) 'Outperforms all evaluated tools' is author-reported; no third-party replication. 4) Baseline selection not described—possible cherry-picking. 5) No ablation showing contribution of each of the 4 parameters. 6) Non-coding variant ground truth is notoriously noisy; performance on truly novel regulatory variants is unknown. 7) No assessment of demographic bias in the phylogenetic alignment itself. 8) 'State-of-the-art' claim limited to 'informative range of alignment-based inference'—unclear how much of genome this covers.</li></ol>
+<div class="commentary">
+  <div class="label">My take</div>
+  <p>The thing I'd want defended here is the benchmark choice, not the method.</p>
+<p>PHACTn opens by charging machine-learning classifiers with data circularity — they learn from labels that were assigned with help from the very features they then learn. That critique is fair. It also applies to this paper's own evaluation. A substantial share of non-coding ClinVar entries reach their classification partly through ACMG's computational-evidence criterion, and the predictors supplying that evidence are conservation-based. Scoring a phylogenetic method against those labels measures agreement with conservation at least as much as it measures accuracy. That isn't fatal, but it is the same objection the paper makes about everyone else, and the abstract doesn't acknowledge it.</p>
+<p>The second line to read slowly is "within the informative range of alignment-based inference." That qualifier is carrying weight. The non-coding variants most of us actually need prioritized — GWAS hits sitting in enhancers, primate-specific regulatory elements — are concentrated exactly where mammalian alignments stop being informative. A method can be state of the art inside that range and still miss the cases that sent you looking in the first place. How much of the genome that range covers is the number I'd check first.</p>
+<p>What does persuade me: four parameters, no training, no GPU. An auditable method you can run on a laptop and explain to a clinical geneticist is worth more than a couple of AUC points, and this group's protein-level PHACT has a track record behind it. If the code reproduces, benchmark it on your own variant set rather than waiting for a third party to.</p>
+<p>One more thing. There is not a single number in the abstract. For a paper claiming it outperforms all evaluated tools, that is a strange omission — and it is why the benchmark row this draft came from reads "no numeric value given."</p>
+</div>
+
+<h2>Sources</h2><ul class="sources"><li><a href="https://doi.org/10.64898/2026.09.08.750126" rel="noopener nofollow">PHACTn enables training-free, context-independent inference of nucleotide variant tolerance across the genome</a> — biorxiv</li></ul>
+<div class="tags">variant-effect-prediction &middot; non-coding &middot; phylogenetics &middot; preprint</div>
+<div class="byline">
+  <strong>Dohoon (Roy) Kim</strong> — Computational biologist, 12+ years. Formerly WRAIR/MHRP (HIV vaccine research). CTO, PromptGenix LLC. Adjunct, Machine Learning in Bioinformatics, Georgetown University.
+   <a href="https://orcid.org/0000-0002-5794-6222" rel="noopener">ORCID</a>
+</div>
+</article>
+<footer class="site">
+  &copy; 2026 PromptGenix &middot;
+  <a href="https://promptgenix.org">promptgenix.org</a>
+</footer>
+</div>
+</body>
+</html>
