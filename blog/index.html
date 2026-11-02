@@ -18,14 +18,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 
 <style>
-/* Design tokens lifted from promptgenix.org so /blog/ reads as the same site.
-   The main site is dark-only; a blog that flipped to light on a light-mode
-   machine would look like a different property one click away. */
+/* Palette extends promptgenix.org's own tokens, pushed into neon for the blog.
+   The site is dark-only, so /blog/ is too — a light flip one click from the
+   main site would read as a different property.
+
+   The page has two voices: a generated summary and Roy's verdict. Colour is
+   what separates them. The title runs hot (cyan -> violet -> pink); the
+   standfirst runs cool behind a cyan hairline; the verdict block is the only
+   element allowed real presence. Body copy stays plain and unglowing, because
+   it has to be read for several minutes at a time. */
 :root{
-  --bg:#0a0e2a; --bg-2:#0e1338; --card:#141a44; --deep:#08081c;
-  --ink:#eaf0ff; --ink-dim:#f4f6fc;
-  --muted:#9aa6cc; --line:#20295e;
-  --cyan:#22d3ee; --violet:#8b7bff; --violet-2:#6d5afa; --pink:#f472b6;
+  --bg:#0a0e2a; --bg-2:#0e1338; --card:#141a44; --deep:#07081a;
+  --ink:#eaf0ff; --cool:#c3cdf0;
+  --muted:#8e9ac4; --line:#1e2757;
+  --cyan:#2ee9f5; --violet:#9d8bff; --pink:#ff6ae0; --lime:#7cff6b;
   --display:'Space Grotesk','Outfit',system-ui,sans-serif;
   --sans:'Outfit','Inter',system-ui,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -33,83 +39,168 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font:18px/1.72 var(--sans);
-  -webkit-font-smoothing:antialiased}
-.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  font:18px/1.72 var(--sans);-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 420px at 12% -8%, rgba(46,233,245,.09), transparent 60%),
+    radial-gradient(780px 380px at 92% 4%, rgba(157,139,255,.10), transparent 62%);
+  background-repeat:no-repeat}
+#spark{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
 
 header.site{border-bottom:1px solid var(--line);padding:20px 0;margin-bottom:46px;
-  background:linear-gradient(180deg,var(--deep),transparent)}
+  background:linear-gradient(180deg,var(--deep),transparent);position:relative;z-index:1}
 header.site .row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 header.site a.brand{color:var(--ink);text-decoration:none;font-weight:600;
   letter-spacing:-.01em;font-family:var(--display);font-size:17px}
-header.site a.home{color:var(--muted);text-decoration:none;font-size:13px;
-  font-family:var(--sans);margin-left:auto}
+header.site a.brand:hover{color:var(--cyan)}
+header.site a.home{color:var(--muted);text-decoration:none;font-size:13px;margin-left:auto}
 header.site a.home:hover{color:var(--cyan)}
 header.site .tag{color:var(--muted);font-size:13.5px;margin-top:6px;width:100%}
 
-h1{font-family:var(--display);font-size:36px;line-height:1.18;margin:0 0 12px;
-  letter-spacing:-.02em;font-weight:600}
-h2{font-family:var(--display);font-size:23px;margin:44px 0 12px;line-height:1.3;
-  letter-spacing:-.01em;font-weight:600}
-h3{font-family:var(--display);font-size:19px;margin:30px 0 8px;font-weight:600}
+/* The title is the one hot element on the page. */
+h1{font-family:var(--display);font-size:38px;line-height:1.14;margin:0 0 14px;
+  letter-spacing:-.025em;font-weight:600;
+  background:linear-gradient(104deg,var(--cyan) 4%,var(--violet) 48%,var(--pink) 94%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 22px rgba(157,139,255,.28))}
+h2{font-family:var(--display);font-size:22px;margin:46px 0 12px;line-height:1.3;
+  letter-spacing:-.01em;font-weight:600;color:var(--cyan);
+  text-shadow:0 0 18px rgba(46,233,245,.22)}
+h3{font-family:var(--display);font-size:19px;margin:34px 0 10px;font-weight:600;
+  color:var(--cyan);text-shadow:0 0 16px rgba(46,233,245,.18)}
+h4{font-family:var(--display);font-size:17px;margin:26px 0 8px;font-weight:600;
+  color:var(--violet)}
 p{margin:0 0 18px}
-.meta{color:var(--muted);font-size:13px;margin-bottom:30px;
-  font-family:var(--mono);letter-spacing:.01em}
-.standfirst{font-size:20px;line-height:1.6;color:var(--ink-dim);opacity:.78;
-  margin:0 0 34px}
+strong{color:var(--cyan);font-weight:600}
+
+/* Cool, rule-marked, and in a different register from the title. */
+.standfirst{font-size:19.5px;line-height:1.62;color:var(--cool);
+  margin:0 0 34px;padding-left:18px;position:relative}
+.standfirst::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:2px;
+  background:linear-gradient(180deg,var(--cyan),rgba(46,233,245,.08))}
+.meta{color:var(--muted);font-size:12.5px;margin:0 0 26px;
+  font-family:var(--mono);letter-spacing:.02em}
+.meta .d{color:var(--cyan)}
+.meta .sep{display:inline-block;width:1px;height:10px;margin:0 10px -1px;
+  background:var(--line)}
+
 a{color:var(--cyan);text-decoration-thickness:1px;text-underline-offset:3px}
-a:hover{color:#8febff}
-strong{color:#fff;font-weight:600}
+a:hover{color:#8ff6ff}
 code{font-family:var(--mono);font-size:.86em;background:var(--bg-2);
-  color:#b9aeff;padding:2px 6px;border-radius:4px}
+  color:var(--violet);padding:2px 6px;border-radius:4px;
+  border:1px solid rgba(157,139,255,.16)}
 pre{background:var(--deep);border:1px solid var(--line);padding:16px 18px;
   border-radius:8px;overflow-x:auto;font-size:14px}
-pre code{background:none;padding:0;color:var(--ink)}
+pre code{background:none;padding:0;border:0;color:var(--ink)}
 blockquote{margin:24px 0;padding:4px 0 4px 20px;border-left:2px solid var(--violet);
-  color:var(--muted)}
+  color:var(--cool)}
 ul,ol{padding-left:22px}
 li{margin-bottom:7px}
-hr{border:0;border-top:1px solid var(--line);margin:38px 0}
+hr{border:0;height:1px;margin:38px 0;
+  background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
 
-/* The commentary block is the reason this site exists; it is styled to be
-   unmistakably separate from the generated summary above it. */
-.commentary{background:var(--card);border:1px solid var(--violet-2);
-  border-radius:10px;padding:24px 26px;margin:42px 0;
-  box-shadow:0 0 0 1px rgba(109,90,250,.12),0 10px 34px -22px rgba(109,90,250,.6)}
-.commentary .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--violet);margin-bottom:12px}
+/* The verdict. Everything above it is reproducible; this is not. */
+.commentary{position:relative;background:
+    linear-gradient(180deg,rgba(157,139,255,.07),rgba(20,26,68,.55));
+  border:1px solid rgba(157,139,255,.3);border-top:0;
+  border-radius:10px;padding:26px;margin:46px 0;
+  box-shadow:0 16px 46px -30px rgba(157,139,255,.9)}
+.commentary::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;
+  border-radius:10px 10px 0 0;
+  background:linear-gradient(90deg,var(--cyan),var(--violet) 52%,var(--pink))}
+.commentary .label{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  color:var(--lime);margin-bottom:14px}
 .commentary p:last-child{margin-bottom:0}
 
 .sources{font-size:14.5px;color:var(--muted);padding-left:20px}
 .sources li{margin-bottom:7px}
-.tags{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:30px;
-  letter-spacing:.06em;text-transform:uppercase}
+.tags{font-family:var(--mono);font-size:11.5px;margin-top:30px;
+  letter-spacing:.04em;display:flex;flex-wrap:wrap;gap:8px}
+.tags span{color:var(--muted);border:1px solid var(--line);border-radius:999px;
+  padding:3px 11px}
 .byline{border-top:1px solid var(--line);margin-top:48px;padding-top:22px;
   font-size:14.5px;color:var(--muted);line-height:1.6}
 .byline strong{color:var(--ink)}
 .ad{margin:40px 0;min-height:1px}
 
 ul.index{list-style:none;padding:0;margin:0}
-ul.index li{border-bottom:1px solid var(--line);padding:26px 0}
+ul.index li{border-bottom:1px solid var(--line);padding:26px 0 26px 20px;
+  border-left:2px solid transparent;transition:border-color .3s,box-shadow .3s}
 ul.index li:last-child{border-bottom:0}
-ul.index a{text-decoration:none;font-family:var(--display);font-size:22px;
-  font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.3;
-  display:inline-block}
-ul.index a:hover{color:var(--cyan)}
-ul.index .d{font-family:var(--mono);font-size:11.5px;color:var(--muted);
-  display:block;margin-bottom:7px;letter-spacing:.04em}
-ul.index p{margin:9px 0 0;color:var(--muted);font-size:16px;line-height:1.6}
+ul.index li:hover{border-left-color:var(--cyan);
+  box-shadow:-2px 0 20px -8px rgba(46,233,245,.55)}
+ul.index a{text-decoration:none;font-family:var(--display);font-size:23px;
+  font-weight:600;letter-spacing:-.018em;line-height:1.26;display:inline-block;
+  color:var(--ink);transition:color .25s}
+ul.index li:hover a{color:var(--cyan)}
+ul.index .d{font-family:var(--mono);font-size:11.5px;color:var(--cyan);
+  display:block;margin-bottom:8px;letter-spacing:.04em}
+ul.index p{margin:10px 0 0;color:var(--cool);font-size:16px;line-height:1.6}
 
 footer.site{margin:70px 0 48px;padding-top:20px;border-top:1px solid var(--line);
-  font-size:13px;color:var(--muted)}
+  font-size:13px;color:var(--muted);position:relative;z-index:1}
 @media (max-width:600px){
-  h1{font-size:28px} h2{font-size:21px}
-  body{font-size:17px} .standfirst{font-size:18px}
-  .commentary{padding:20px}
+  h1{font-size:28px} h2{font-size:20px}
+  body{font-size:17px} .standfirst{font-size:18px;padding-left:14px}
+  .commentary{padding:20px} ul.index a{font-size:20px}
+  ul.index li{padding-left:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  #spark{display:none}
 }
 </style>
 </head>
 <body>
+
+<canvas id="spark" aria-hidden="true"></canvas>
+<script>
+(function(){
+  var c = document.getElementById('spark');
+  if (!c) return;
+  // No cursor to follow on touch, and motion-sensitive readers opt out.
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var x = c.getContext('2d'), dots = [], dpr = Math.min(devicePixelRatio || 1, 2);
+  var HUES = ['46,233,245', '157,139,255', '255,106,224', '124,255,107'];
+  function size(){ c.width = innerWidth * dpr; c.height = innerHeight * dpr;
+                   c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px';
+                   x.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  size(); addEventListener('resize', size);
+
+  var last = 0;
+  addEventListener('mousemove', function(e){
+    var now = performance.now();
+    if (now - last < 18 || dots.length > 90) return;   // thin the trail out
+    last = now;
+    dots.push({ x: e.clientX + (Math.random()*10 - 5),
+                y: e.clientY + (Math.random()*10 - 5),
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: -0.18 - Math.random() * 0.3,
+                r: 1.0 + Math.random() * 2.2,
+                life: 1,
+                hue: HUES[(Math.random() * HUES.length) | 0] });
+  }, { passive: true });
+
+  (function tick(){
+    x.clearRect(0, 0, innerWidth, innerHeight);
+    for (var i = dots.length - 1; i >= 0; i--) {
+      var d = dots[i];
+      d.x += d.vx; d.y += d.vy; d.life -= 0.016;
+      if (d.life <= 0) { dots.splice(i, 1); continue; }
+      x.globalAlpha = d.life * 0.9;
+      x.fillStyle = 'rgba(' + d.hue + ',1)';
+      x.shadowBlur = 12; x.shadowColor = 'rgba(' + d.hue + ',.85)';
+      x.beginPath(); x.arc(d.x, d.y, d.r * d.life, 0, 6.2832); x.fill();
+    }
+    x.globalAlpha = 1; x.shadowBlur = 0;
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
+
 <header class="site"><div class="wrap">
   <div class="row">
     <a class="brand" href="/blog/">PromptGenix Notes</a>
@@ -118,7 +209,7 @@ footer.site{margin:70px 0 48px;padding-top:20px;border-top:1px solid var(--line)
   <div class="tag">Notes on AI, bioinformatics, and drug discovery — from someone who runs the pipelines.</div>
 </div></header>
 <div class="wrap">
-<h1>PromptGenix Notes</h1><p class="standfirst">Notes on AI, bioinformatics, and drug discovery — from someone who runs the pipelines.</p><ul class="index"><li><span class="d">2026-10-30</span><a href="/blog/2026-10-30-multivalent-adar1-recruitment-for-precise-rna-editing.html">Multivalent ADAR1 recruitment for precise RNA editing</a><p>Multivalent recruitment of endogenous ADAR1 p150 through its Za domain reports up to 100% A-to-I editing in vitro and 84% in vivo. The efficiency number is the one being advertised; the specificity number is the one that would settle it.</p></li><li><span class="d">2026-10-28</span><a href="/blog/2026-10-28-phactn-enables-training-free-context-independent-inference.html">PHACTn enables training-free, context-independent inference of nucleotide variant tolerance across the genome</a><p>A training-free, GPU-free method infers variant tolerance genome-wide from phylogeny alone, using four interpretable parameters. The method is appealing; the benchmark it is scored on has a circularity problem of its own.</p></li></ul>
+<h1>PromptGenix Notes</h1><ul class="index"><li><span class="d">2026-10-30</span><a href="/blog/2026-10-30-multivalent-adar1-recruitment-for-precise-rna-editing.html">Multivalent ADAR1 recruitment for precise RNA editing</a><p>Multivalent recruitment of endogenous ADAR1 p150 through its Za domain reports up to 100% A-to-I editing in vitro and 84% in vivo. The efficiency number is the one being advertised; the specificity number is the one that would settle it.</p></li><li><span class="d">2026-10-28</span><a href="/blog/2026-10-28-phactn-enables-training-free-context-independent-inference.html">PHACTn enables training-free, context-independent inference of nucleotide variant tolerance across the genome</a><p>A training-free, GPU-free method infers variant tolerance genome-wide from phylogeny alone, using four interpretable parameters. The method is appealing; the benchmark it is scored on has a circularity problem of its own.</p></li></ul>
 <footer class="site">
   &copy; 2026 PromptGenix &middot;
   <a href="https://promptgenix.org">promptgenix.org</a>
