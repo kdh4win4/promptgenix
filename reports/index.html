@@ -110,7 +110,7 @@
     <p>That claim is only worth what it delivers, so here are three public datasets
        run through the same pipeline. Every accession is public on purpose: check
        the output against the original papers before sending anything of your own.</p>
-    <p class="meta">GSE339362 · GSE135251 · GSE334796 — produced with no manual steps
+    <p class="meta">GSE135251 · GSE334796 · GSE339362 — produced with no manual steps
        between the input matrix and the finished document</p>
   </div>
 </section>
@@ -120,21 +120,6 @@
   <h2>What came out</h2>
   <p class="lede">Each report below is the unedited output of a single run. Nothing was
      removed because it was inconvenient, and nothing was added by hand.</p>
-
-  <div class="card">
-    <h3>Response to therapy, predicted before treatment starts</h3>
-    <span class="acc">GSE339362 · rectal cancer · 33 pre-treatment biopsies · 17 responders vs 16 non-responders</span>
-    <p>Only three genes clear FDR 0.05 — which is the honest answer at this sample size.
-       But HALLMARK E2F Targets (NES +2.81) and G2M Checkpoint (+2.72) come out top of
-       the pathway ranking.</p>
-    <p class="why">Those are the cell-cycle and DNA-repair programs the original authors
-       name in their own title. The pipeline ranked 5,642 gene sets and was told nothing
-       about what to look for.</p>
-    <div class="actions">
-      <a class="btn primary" href="/reports/gse339362.html">Open the report →</a>
-      <a class="btn ghost" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE339362" target="_blank" rel="noopener">GEO accession</a>
-    </div>
-  </div>
 
   <div class="card">
     <h3>A disease spectrum fitted as a trajectory, not two arms</h3>
@@ -165,6 +150,21 @@
       <a class="btn primary" href="/reports/gse334796-drug.html">Open the drug report →</a>
       <a class="btn ghost" href="/reports/gse334796-disease.html">The disease signature it reverses</a>
       <a class="btn ghost" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE334796" target="_blank" rel="noopener">GEO accession</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Response to therapy, predicted before treatment starts</h3>
+    <span class="acc">GSE339362 · rectal cancer · 33 pre-treatment biopsies · 17 responders vs 16 non-responders</span>
+    <p>The hardest of the three. Only three genes clear FDR 0.05 — the honest answer at this sample size.
+       But HALLMARK E2F Targets (NES +2.81) and G2M Checkpoint (+2.72) come out top of
+       the pathway ranking.</p>
+    <p class="why">Those are the cell-cycle and DNA-repair programs the original authors
+       name in their own title. The pipeline ranked 5,642 gene sets and was told nothing
+       about what to look for.</p>
+    <div class="actions">
+      <a class="btn primary" href="/reports/gse339362.html">Open the report →</a>
+      <a class="btn ghost" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE339362" target="_blank" rel="noopener">GEO accession</a>
     </div>
   </div>
 
