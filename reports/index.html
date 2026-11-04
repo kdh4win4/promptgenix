@@ -104,13 +104,13 @@
 <section class="hero">
   <div class="wrap">
     <p class="eyebrow">Sample reports</p>
-    <h1>Three published studies, <em>re-analysed end to end</em></h1>
+    <h1>Four published studies, <em>re-analysed end to end</em></h1>
     <p>Standard turnaround for bulk RNA-seq analysis is one to three weeks. This
        service returns a finished report in 72 hours — FASTQ in, interpretation out.</p>
-    <p>That claim is only worth what it delivers, so here are three public datasets
+    <p>That claim is only worth what it delivers, so here are four public datasets
        run through the same pipeline. Every accession is public on purpose: check
        the output against the original papers before sending anything of your own.</p>
-    <p class="meta">GSE135251 · GSE334796 · GSE339362 — produced with no manual steps
+    <p class="meta">GSE330085 · GSE135251 · GSE334796 · GSE339362 — produced with no manual steps
        between the input matrix and the finished document</p>
   </div>
 </section>
@@ -122,12 +122,27 @@
      removed because it was inconvenient, and nothing was added by hand.</p>
 
   <div class="card">
+    <h3>A strong signal, read end to end</h3>
+    <span class="acc">GSE330085 · cancer cachexia · mouse tibialis anterior · 4 per cell, balanced on sex</span>
+    <p>916 genes clear FDR 0.05 at two-fold or more — Lcn2, Mt1/Mt2, Serpina3n, S100a8,
+       the acute-phase signature cachexia is known for. IL6–JAK–STAT3 tops the pathway
+       ranking, which is the canonical cachexia axis, recovered without being asked for.</p>
+    <p class="why">Quality control flags that 41% of tested genes move and that part of
+       that shift could be normalisation rather than biology, with what to send next time
+       to settle it. A report that only tells you the good news is not quality control.</p>
+    <div class="actions">
+      <a class="btn primary" href="/reports/gse330085.html">Open the report →</a>
+      <a class="btn ghost" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE330085" target="_blank" rel="noopener">GEO accession</a>
+    </div>
+  </div>
+
+  <div class="card">
     <h3>A disease spectrum fitted as a trajectory, not two arms</h3>
     <span class="acc">GSE135251 · NAFLD liver biopsies · 216 patients · fibrosis stage 0–4</span>
     <p>Fibrosis stage is modelled as a slope rather than collapsed into early-versus-late,
        so no patient is discarded and the monotonicity itself becomes the evidence.
-       537 genes change consistently across the spectrum, led by LOXL4, LTBP2, ITGBL1
-       and THY1, with EMT rising and oxidative phosphorylation falling.</p>
+       789 genes change by two-fold or more across stages 0 to 4, led by STMN2, KRT23
+       and C6orf223, with EMT rising and oxidative phosphorylation falling.</p>
     <p class="why">Collapsing 216 staged patients into two groups throws away everyone in
        the middle. Most pipelines make you do exactly that.</p>
     <div class="actions">
@@ -140,7 +155,7 @@
     <h3>A drug effect too small to see gene by gene</h3>
     <span class="acc">GSE334796 · mouse skeletal muscle · 5 animals per arm · TPM, not counts</span>
     <p>The matrix is TPM, so the negative-binomial model does not apply and a linear model
-       with variance moderation is used instead. Exactly one gene survives correction.
+       with variance moderation is used instead. At two-fold, not one gene survives correction.
        But of the 229 pathways that moved with obesity, 194 move the opposite way under
        the drug — and 170 of those are no longer distinguishable from lean controls.</p>
     <p class="why">This is the honest shape of a small study: underpowered gene by gene,
@@ -156,7 +171,7 @@
   <div class="card">
     <h3>Response to therapy, predicted before treatment starts</h3>
     <span class="acc">GSE339362 · rectal cancer · 33 pre-treatment biopsies · 17 responders vs 16 non-responders</span>
-    <p>The hardest of the three. Only three genes clear FDR 0.05 — the honest answer at this sample size.
+    <p>The hardest of the four. Only three genes clear FDR 0.05 — the honest answer at this sample size.
        But HALLMARK E2F Targets (NES +2.81) and G2M Checkpoint (+2.72) come out top of
        the pathway ranking.</p>
     <p class="why">Those are the cell-cycle and DNA-repair programs the original authors
@@ -170,13 +185,13 @@
 
   <p class="lede" style="margin-top:26px">
      Prefer one page? <a href="/reports/all.html" style="color:var(--bronze);font-weight:600">
-     Read all three in a single document</a> — the same material as the PDF, with the
+     Read all four in a single document</a> — the same material as the PDF, with the
      volcanos, enrichment maps and figure downloads still live.</p>
 
   <div class="offer">
     <h2>Working together</h2>
     <p>Send FASTQ files and they go through STAR and RSEM to a count matrix and on to the
-       finished report. Send a count matrix and it starts there, as the three studies above
+       finished report. Send a count matrix and it starts there, as the four studies above
        did. Either way you get quality control with every flag explained in words, the
        differential expression model with its design written out, MSigDB Hallmark and GO
        enrichment, co-expression structure with bootstrap support, candidate upstream
@@ -186,9 +201,9 @@
 
     <div class="grid">
       <div><b>72 hours</b><span>from the moment your data passes intake QC — and intake QC is free</span></div>
-      <div><b>$900 + $150/sample</b><span>six samples $1,800 · twenty samples $3,900 · one contrast included</span></div>
-      <div><b>24-hour option</b><span>studies up to eight samples, +$500, arranged before you submit</span></div>
-      <div><b>First five projects</b><span>30% off in exchange for a named testimonial</span></div>
+      <div><b>$285 per sample</b><span>six samples $1,710 · twelve samples $3,420 · one contrast included</span></div>
+      <div><b>Three studies a week</b><span>so the 72 hours means 72 hours · need it sooner, ask</span></div>
+      <div><b>SAM.gov registered</b><span>active CAGE code — a federally funded lab can raise a purchase order without a vendor-onboarding detour</span></div>
     </div>
 
     <p>Ten years as a bioinformatician on the U.S. Military HIV Research Program at WRAIR,

@@ -8,6 +8,7 @@
        not know about them; keep this block when regenerating the file. -->
   <url><loc>https://promptgenix.org/reports/</loc><changefreq>monthly</changefreq></url>
   <url><loc>https://promptgenix.org/reports/all.html</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://promptgenix.org/reports/gse330085.html</loc><changefreq>yearly</changefreq></url>
   <url><loc>https://promptgenix.org/reports/gse135251.html</loc><changefreq>yearly</changefreq></url>
   <url><loc>https://promptgenix.org/reports/gse334796-drug.html</loc><changefreq>yearly</changefreq></url>
   <url><loc>https://promptgenix.org/reports/gse334796-disease.html</loc><changefreq>yearly</changefreq></url>
