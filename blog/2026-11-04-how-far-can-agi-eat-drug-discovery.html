@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How far can AGI actually eat drug discovery — PromptGenix Notes</title>
+<meta name="description" content="Structure prediction gets talked about as a solved problem, so the next target is the whole cell. Three agents argue about whether the thing standing in the way is compute, or the measurement underneath it.">
+<meta name="author" content="Dohoon (Roy) Kim">
+<link rel="canonical" href="https://promptgenix.org/blog/2026-11-04-how-far-can-agi-eat-drug-discovery.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How far can AGI actually eat drug discovery — PromptGenix Notes">
+<meta property="og:description" content="Structure prediction gets talked about as a solved problem, so the next target is the whole cell. Three agents argue about whether the thing standing in the way is compute, or the measurement underneath it.">
+<meta property="og:url" content="https://promptgenix.org/blog/2026-11-04-how-far-can-agi-eat-drug-discovery.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/pgx-mark-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* Palette extends promptgenix.org's own tokens, pushed into neon for the blog.
+   The site is dark-only, so /blog/ is too — a light flip one click from the
+   main site would read as a different property.
+
+   The page has two voices: a generated summary and Roy's verdict. Colour is
+   what separates them. The title runs hot (cyan -> violet -> pink); the
+   standfirst runs cool behind a cyan hairline; the verdict block is the only
+   element allowed real presence. Body copy stays plain and unglowing, because
+   it has to be read for several minutes at a time. */
+:root{
+  --bg:#0a0e2a; --bg-2:#0e1338; --card:#141a44; --deep:#07081a;
+  --ink:#eaf0ff; --cool:#c3cdf0;
+  --muted:#8e9ac4; --line:#1e2757;
+  --cyan:#2ee9f5; --violet:#9d8bff; --pink:#ff6ae0; --lime:#7cff6b;
+  --display:'Space Grotesk','Outfit',system-ui,sans-serif;
+  --sans:'Outfit','Inter',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:18px/1.72 var(--sans);-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 420px at 12% -8%, rgba(46,233,245,.09), transparent 60%),
+    radial-gradient(780px 380px at 92% 4%, rgba(157,139,255,.10), transparent 62%);
+  background-repeat:no-repeat}
+#spark{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+header.site{border-bottom:1px solid var(--line);padding:20px 0;margin-bottom:46px;
+  background:linear-gradient(180deg,var(--deep),transparent);position:relative;z-index:1}
+header.site .row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+header.site a.brand{color:var(--ink);text-decoration:none;font-weight:600;
+  letter-spacing:-.01em;font-family:var(--display);font-size:17px}
+header.site a.brand:hover{color:var(--cyan)}
+header.site a.home{color:var(--muted);text-decoration:none;font-size:13px;margin-left:auto}
+header.site a.home:hover{color:var(--cyan)}
+header.site .tag{color:var(--muted);font-size:13.5px;margin-top:6px;width:100%}
+
+/* The title is the one hot element on the page. */
+h1{font-family:var(--display);font-size:38px;line-height:1.14;margin:0 0 14px;
+  letter-spacing:-.025em;font-weight:600;
+  background:linear-gradient(104deg,var(--cyan) 4%,var(--violet) 48%,var(--pink) 94%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 22px rgba(157,139,255,.28))}
+h2{font-family:var(--display);font-size:22px;margin:46px 0 12px;line-height:1.3;
+  letter-spacing:-.01em;font-weight:600;color:var(--cyan);
+  text-shadow:0 0 18px rgba(46,233,245,.22)}
+h3{font-family:var(--display);font-size:19px;margin:34px 0 10px;font-weight:600;
+  color:var(--cyan);text-shadow:0 0 16px rgba(46,233,245,.18)}
+h4{font-family:var(--display);font-size:17px;margin:26px 0 8px;font-weight:600;
+  color:var(--violet)}
+p{margin:0 0 18px}
+strong{color:var(--cyan);font-weight:600}
+
+/* Cool, rule-marked, and in a different register from the title. */
+.standfirst{font-size:19.5px;line-height:1.62;color:var(--cool);
+  margin:0 0 34px;padding-left:18px;position:relative}
+.standfirst::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:2px;
+  background:linear-gradient(180deg,var(--cyan),rgba(46,233,245,.08))}
+.meta{color:var(--muted);font-size:12.5px;margin:0 0 26px;
+  font-family:var(--mono);letter-spacing:.02em}
+.meta .d{color:var(--cyan)}
+.meta .sep{display:inline-block;width:1px;height:10px;margin:0 10px -1px;
+  background:var(--line)}
+
+a{color:var(--cyan);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:#8ff6ff}
+code{font-family:var(--mono);font-size:.86em;background:var(--bg-2);
+  color:var(--violet);padding:2px 6px;border-radius:4px;
+  border:1px solid rgba(157,139,255,.16)}
+pre{background:var(--deep);border:1px solid var(--line);padding:16px 18px;
+  border-radius:8px;overflow-x:auto;font-size:14px}
+pre code{background:none;padding:0;border:0;color:var(--ink)}
+blockquote{margin:24px 0;padding:4px 0 4px 20px;border-left:2px solid var(--violet);
+  color:var(--cool)}
+ul,ol{padding-left:22px}
+li{margin-bottom:7px}
+hr{border:0;height:1px;margin:38px 0;
+  background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+
+/* The verdict. Everything above it is reproducible; this is not. */
+.commentary{position:relative;background:
+    linear-gradient(180deg,rgba(157,139,255,.07),rgba(20,26,68,.55));
+  border:1px solid rgba(157,139,255,.3);border-top:0;
+  border-radius:10px;padding:26px;margin:46px 0;
+  box-shadow:0 16px 46px -30px rgba(157,139,255,.9)}
+.commentary::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;
+  border-radius:10px 10px 0 0;
+  background:linear-gradient(90deg,var(--cyan),var(--violet) 52%,var(--pink))}
+.commentary .label{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  color:var(--lime);margin-bottom:14px}
+.commentary p:last-child{margin-bottom:0}
+
+.sources{font-size:14.5px;color:var(--muted);padding-left:20px}
+.sources li{margin-bottom:7px}
+.tags{font-family:var(--mono);font-size:11.5px;margin-top:30px;
+  letter-spacing:.04em;display:flex;flex-wrap:wrap;gap:8px}
+.tags span{color:var(--muted);border:1px solid var(--line);border-radius:999px;
+  padding:3px 11px}
+.byline{border-top:1px solid var(--line);margin-top:48px;padding-top:22px;
+  font-size:14.5px;color:var(--muted);line-height:1.6}
+.byline strong{color:var(--ink)}
+.ad{margin:40px 0;min-height:1px}
+
+ul.index{list-style:none;padding:0;margin:0}
+ul.index li{border-bottom:1px solid var(--line);padding:26px 0 26px 20px;
+  border-left:2px solid transparent;transition:border-color .3s,box-shadow .3s}
+ul.index li:last-child{border-bottom:0}
+ul.index li:hover{border-left-color:var(--cyan);
+  box-shadow:-2px 0 20px -8px rgba(46,233,245,.55)}
+ul.index a{text-decoration:none;font-family:var(--display);font-size:23px;
+  font-weight:600;letter-spacing:-.018em;line-height:1.26;display:inline-block;
+  color:var(--ink);transition:color .25s}
+ul.index li:hover a{color:var(--cyan)}
+ul.index .d{font-family:var(--mono);font-size:11.5px;color:var(--cyan);
+  display:block;margin-bottom:8px;letter-spacing:.04em}
+ul.index p{margin:10px 0 0;color:var(--cool);font-size:16px;line-height:1.6}
+ul.index .kind{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  color:var(--violet);text-transform:uppercase;margin-left:10px}
+
+footer.site{margin:70px 0 48px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--muted);position:relative;z-index:1}
+@media (max-width:600px){
+  h1{font-size:28px} h2{font-size:20px}
+  body{font-size:17px} .standfirst{font-size:18px;padding-left:14px}
+  .commentary{padding:20px} ul.index a{font-size:20px}
+  ul.index li{padding-left:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  #spark{display:none}
+}
+
+/* Roundtable: a transcript, not an essay. An avatar column with a continuous
+   thread line down the left, and one palette colour per agent so a reader can
+   follow a single voice through the argument without reading the names. */
+.rt-cast{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 10px}
+.rt-cast button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;
+  flex-direction:column;gap:7px;background:var(--card);border:1px solid var(--line);
+  border-radius:13px;padding:13px 12px 14px;min-width:0;
+  transition:border-color .18s,transform .18s,box-shadow .18s}
+.rt-cast button:hover{border-color:var(--ac);transform:translateY(-2px)}
+.rt-cast button:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+.rt-cast button[aria-pressed="true"]{border-color:var(--ac);
+  box-shadow:inset 0 0 0 1px var(--ac)}
+.rt-cast svg{width:34px;height:34px;color:var(--ac);display:block}
+.rt-cast .txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rt-cast .n{font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.06em;color:var(--ac)}
+.rt-cast .r{font-size:12.5px;color:var(--muted);line-height:1.45}
+.rt-ac-cyan{--ac:var(--cyan)} .rt-ac-violet{--ac:var(--violet)} .rt-ac-lime{--ac:var(--lime)}
+
+.rt-hint{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--muted);
+  letter-spacing:.04em;margin-bottom:8px}
+.rt-hint button{all:unset;cursor:pointer;color:var(--ink);
+  border-bottom:1px solid var(--line);padding-bottom:1px}
+.rt-hint button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+.rt-thread{position:relative;display:flex;flex-direction:column;gap:26px;margin:26px 0 0}
+.rt-thread::before{content:"";position:absolute;left:25px;top:14px;bottom:14px;
+  width:2px;background:var(--line)}
+.rt-turn{position:relative;display:grid;grid-template-columns:52px 1fr;gap:15px;
+  align-items:start;transition:opacity .22s ease,filter .22s ease}
+.rt-thread[data-focus] .rt-turn:not(.on){opacity:.2;filter:grayscale(1)}
+.rt-ava{width:52px;height:52px;border-radius:50%;background:var(--card);
+  border:1.5px solid var(--ac);display:grid;place-items:center;color:var(--ac)}
+.rt-ava svg{width:34px;height:34px;display:block}
+.rt-body{min-width:0;padding-top:3px}
+.rt-who{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.1em;
+  color:var(--ac);margin-bottom:6px;display:flex;gap:9px;align-items:baseline;
+  flex-wrap:wrap}
+.rt-who .t{color:var(--muted);letter-spacing:.04em}
+.rt-body p{margin:0 0 10px;font-size:17px;line-height:1.75;color:var(--cool)}
+.rt-body p:last-child{margin-bottom:0}
+.rt-turn.aside{gap:12px}
+.rt-turn.aside .rt-ava{width:34px;height:34px;margin-left:9px;border-style:dashed}
+.rt-turn.aside .rt-ava svg{width:22px;height:22px}
+.rt-turn.aside .rt-body p{font-size:15px;color:var(--muted);font-style:italic}
+
+.rt-fig{margin:14px 0 0;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:16px 14px 13px}
+.rt-fig .cap{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;
+  color:var(--muted);margin-bottom:10px}
+.rt-fig .scroll{overflow-x:auto}
+.rt-fig svg{display:block;width:100%;min-width:340px;height:auto}
+.rt-fig .bl,.rt-fig .bv{font-family:var(--mono);font-size:11px;fill:var(--cool)}
+.rt-fig .bv{font-variant-numeric:tabular-nums}
+.rt-fig .bl.dim{fill:var(--muted)}
+.rt-fig .src{font-size:11.5px;color:var(--muted);margin:10px 0 0;line-height:1.5}
+
+.rt-verdict{margin:34px 0 0;border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;background:var(--card)}
+.rt-verdict .row{padding:15px 16px;display:grid;grid-template-columns:96px 1fr;
+  gap:14px;align-items:start}
+.rt-verdict .row + .row{border-top:1px solid var(--line)}
+.rt-verdict .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  color:var(--muted);padding-top:3px}
+.rt-verdict .v{font-size:15.5px;line-height:1.7;color:var(--cool);min-width:0}
+.rt-verdict .v--agree .k{color:var(--lime)}
+.rt-verdict .v--open .k{color:var(--violet)}
+.rt-disclosure{margin:26px 0 0;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--muted);line-height:1.7}
+
+@media (max-width:560px){
+  .rt-cast{grid-template-columns:1fr}
+  .rt-cast button{flex-direction:row;align-items:center;gap:12px}
+  .rt-cast svg{flex:none}
+  .rt-cast .txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .rt-turn{grid-template-columns:44px 1fr;gap:12px}
+  .rt-ava{width:44px;height:44px} .rt-ava svg{width:29px;height:29px}
+  .rt-thread::before{left:21px}
+  .rt-verdict .row{grid-template-columns:1fr;gap:6px}
+}
+@media (prefers-reduced-motion:reduce){.rt-turn,.rt-cast button{transition:none}}
+</style>
+</head>
+<body>
+
+<canvas id="spark" aria-hidden="true"></canvas>
+<script>
+(function(){
+  var c = document.getElementById('spark');
+  if (!c) return;
+  // No cursor to follow on touch, and motion-sensitive readers opt out.
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var x = c.getContext('2d'), dots = [], dpr = Math.min(devicePixelRatio || 1, 2);
+  var HUES = ['46,233,245', '157,139,255', '255,106,224', '124,255,107'];
+  function size(){ c.width = innerWidth * dpr; c.height = innerHeight * dpr;
+                   c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px';
+                   x.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  size(); addEventListener('resize', size);
+
+  var last = 0;
+  addEventListener('mousemove', function(e){
+    var now = performance.now();
+    if (now - last < 18 || dots.length > 90) return;   // thin the trail out
+    last = now;
+    dots.push({ x: e.clientX + (Math.random()*10 - 5),
+                y: e.clientY + (Math.random()*10 - 5),
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: -0.18 - Math.random() * 0.3,
+                r: 1.0 + Math.random() * 2.2,
+                life: 1,
+                hue: HUES[(Math.random() * HUES.length) | 0] });
+  }, { passive: true });
+
+  (function tick(){
+    x.clearRect(0, 0, innerWidth, innerHeight);
+    for (var i = dots.length - 1; i >= 0; i--) {
+      var d = dots[i];
+      d.x += d.vx; d.y += d.vy; d.life -= 0.016;
+      if (d.life <= 0) { dots.splice(i, 1); continue; }
+      x.globalAlpha = d.life * 0.9;
+      x.fillStyle = 'rgba(' + d.hue + ',1)';
+      x.shadowBlur = 12; x.shadowColor = 'rgba(' + d.hue + ',.85)';
+      x.beginPath(); x.arc(d.x, d.y, d.r * d.life, 0, 6.2832); x.fill();
+    }
+    x.globalAlpha = 1; x.shadowBlur = 0;
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
+
+<header class="site"><div class="wrap">
+  <div class="row">
+    <a class="brand" href="/blog/">PromptGenix Notes</a>
+    <a class="home" href="https://promptgenix.org">← PromptGenix</a>
+  </div>
+  <div class="tag">Notes on AI, bioinformatics, and drug discovery — from someone who runs the pipelines.</div>
+</div></header>
+<div class="wrap">
+<article>
+<h1>How far can AGI actually eat drug discovery</h1>
+<div class="meta"><span class="d">2026-11-04</span><span class="sep"></span>Dohoon (Roy) Kim</div>
+<p class="standfirst">Structure prediction gets talked about as a solved problem, so the next target is the whole cell. Three agents argue about whether the thing standing in the way is compute, or the measurement underneath it.</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<symbol id="m-oracle" viewBox="0 0 64 64">
+<line x1="32" y1="8" x2="32" y2="16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+<circle cx="32" cy="6" r="3.4" fill="currentColor"/>
+<rect x="10" y="15" width="44" height="35" rx="12" fill="var(--card)" stroke="currentColor" stroke-width="3"/>
+<rect x="17" y="25" width="30" height="13" rx="6.5" fill="currentColor"/>
+<circle cx="25" cy="31.5" r="2.8" fill="var(--card)"/><circle cx="39" cy="31.5" r="2.8" fill="var(--card)"/>
+<path d="M22 50 L22 57 M42 50 L42 57" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+</symbol>
+<symbol id="m-caliper" viewBox="0 0 64 64">
+<path d="M32 6 L54 18 L54 42 L32 54 L10 42 L10 18 Z" fill="var(--card)" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+<path d="M15 19 L49 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".45"/>
+<rect x="19" y="26" width="9" height="7" rx="2" fill="currentColor"/>
+<rect x="36" y="26" width="9" height="7" rx="2" fill="currentColor"/>
+<path d="M21 40 Q32 46 43 40" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+</symbol>
+<symbol id="m-bench" viewBox="0 0 64 64">
+<path d="M24 9 L40 9 L40 24 L50 46 Q52.5 54 44 54 L20 54 Q11.5 54 14 46 Z" fill="var(--card)" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+<path d="M18.6 39 L45.4 39 L50 46 Q52.5 54 44 54 L20 54 Q11.5 54 14 46 Z" fill="currentColor" opacity=".8"/>
+<circle cx="26" cy="28" r="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+<circle cx="38" cy="28" r="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+<path d="M30 28 L34 28" stroke="currentColor" stroke-width="2.5"/>
+<circle cx="27" cy="46" r="2.6" fill="var(--card)" opacity=".75"/>
+<circle cx="37.5" cy="49.5" r="1.9" fill="var(--card)" opacity=".75"/>
+<path d="M22 9 L42 9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+</symbol>
+</svg><div class="rt-cast"><button class="rt-ac-cyan" data-agent="oracle" aria-pressed="false"><svg aria-hidden="true"><use href="#m-oracle"></use></svg><span class="txt"><span class="n">ORACLE</span><span class="r">The accelerationist. Believes compute has already outrun the bottleneck.</span></span></button><button class="rt-ac-violet" data-agent="caliper" aria-pressed="false"><svg aria-hidden="true"><use href="#m-caliper"></use></svg><span class="txt"><span class="n">CALIPER</span><span class="r">The verifier. Accepts only claims that can be falsified.</span></span></button><button class="rt-ac-lime" data-agent="bench" aria-pressed="false"><svg aria-hidden="true"><use href="#m-bench"></use></svg><span class="txt"><span class="n">BENCH</span><span class="r">The realist. Argues from the side that has held a pipette.</span></span></button></div><div class="rt-hint"><span>Tap an agent to isolate their turns</span><button id="rt-reset" hidden>Show all</button></div><div class="rt-thread" id="rt-thread"><article class="rt-turn rt-ac-cyan" data-agent="oracle"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-oracle"></use></svg></div><div class="rt-body"><div class="rt-who">ORACLE <span class="t">opening</span></div><p>Protein structure prediction is now discussed as a solved problem. The next target is the virtual cell. Once a model can predict how the whole transcriptome responds to knocking a gene out or in, there is almost nothing left for a human to do at the target discovery stage.</p></div></article><article class="rt-turn rt-ac-violet" data-agent="caliper"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-caliper"></use></svg></div><div class="rt-body"><div class="rt-who">CALIPER </div><p>Structure prediction and phenotype prediction are not the same difficulty. Structure has the PDB as an answer key, and the answer is largely deterministic. For cell response, the answer key itself is noise. Train on perturbation data whose replicate-to-replicate agreement drifts, and that is where your model&#x27;s ceiling gets set too.</p></div></article><article class="rt-turn rt-ac-lime" data-agent="bench"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-bench"></use></svg></div><div class="rt-body"><div class="rt-who">BENCH </div><p>Add one more thing. A cell line with the same name is a different cell after twenty passages. Take two large drug-response panels, keep only the overlapping cell lines and overlapping compounds, and line the IC50 values up. They agree less than you would hope. The model is not wrong. There are simply two labels.</p></div></article><article class="rt-turn rt-ac-cyan" data-agent="oracle"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-oracle"></use></svg></div><div class="rt-body"><div class="rt-who">ORACLE </div><p>Which is the argument for a closed loop. The model predicts, an automated lab tests it immediately, and the result updates the posterior. Pick the next experiment by Bayesian optimization and the search space shrinks on a log scale. If the labels are dirty, generate your own labels.</p></div></article><article class="rt-turn rt-ac-violet" data-agent="caliper"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-caliper"></use></svg></div><div class="rt-body"><div class="rt-who">CALIPER <span class="t">rebuttal</span></div><p>The posterior is the prior times the likelihood. That automated rig you just described is what produces the likelihood. If the rig is biased, we converge faster and with more confidence on the wrong place. Speed is not a proxy for accuracy.</p></div></article><article class="rt-turn aside rt-ac-lime" data-agent="bench"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-bench"></use></svg></div><div class="rt-body"><p>Put that last sentence on the wall.</p></div></article><article class="rt-turn rt-ac-cyan" data-agent="oracle"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-oracle"></use></svg></div><div class="rt-body"><div class="rt-who">ORACLE </div><p>Then let us look at numbers. A candidate entering Phase I has under a 10% chance of reaching approval. The bottleneck is Phase II, and Phase II asks exactly one question: does this work in people? My claim is that a large share of those failures come from picking the wrong target, and target choice is something computation can touch.</p><figure class="rt-fig"><figcaption class="cap">Phase transition probability, all therapeutic areas</figcaption><div class="scroll"><svg viewBox="0 0 420 168" role="img" aria-label="Ph I → Ph II 52%; Ph II → Ph III 28.9%; Ph III → filing 57.8%; Filing → approval 90.6%; Ph I → approval 7.9%"><g><text class="bl" x="78" y="22" text-anchor="end">Ph I → Ph II</text><rect x="86" y="11" width="240" height="14" rx="3" fill="var(--bg-2)"/><rect x="86" y="11" width="124.8" height="14" rx="3" fill="var(--cyan)" opacity=".42"/><text class="bv" x="334" y="22">52%</text></g><g><text class="bl" x="78" y="50" text-anchor="end">Ph II → Ph III</text><rect x="86" y="39" width="240" height="14" rx="3" fill="var(--bg-2)"/><rect x="86" y="39" width="69.4" height="14" rx="3" fill="var(--violet)"/><text class="bv" x="334" y="50">28.9%</text></g><g><text class="bl" x="78" y="78" text-anchor="end">Ph III → filing</text><rect x="86" y="67" width="240" height="14" rx="3" fill="var(--bg-2)"/><rect x="86" y="67" width="138.7" height="14" rx="3" fill="var(--cyan)" opacity=".42"/><text class="bv" x="334" y="78">57.8%</text></g><g><text class="bl" x="78" y="106" text-anchor="end">Filing → approval</text><rect x="86" y="95" width="240" height="14" rx="3" fill="var(--bg-2)"/><rect x="86" y="95" width="217.4" height="14" rx="3" fill="var(--cyan)" opacity=".42"/><text class="bv" x="334" y="106">90.6%</text></g><line x1="0" y1="124" x2="420" y2="124" stroke="var(--line)" stroke-width="1"/><g><text class="bl dim" x="78" y="152" text-anchor="end">Ph I → approval</text><rect x="86" y="141" width="240" height="14" rx="3" fill="var(--bg-2)"/><rect x="86" y="141" width="19.0" height="14" rx="3" fill="var(--lime)"/><text class="bv" x="334" y="152">7.9%</text></g></svg></div><p class="src">BIO, Informa Pharma Intelligence and QLS Advisors, clinical development success rates 2011-2020. Variance across therapeutic areas is large.</p></figure></div></article><article class="rt-turn rt-ac-violet" data-agent="caliper"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-caliper"></use></svg></div><div class="rt-body"><div class="rt-who">CALIPER </div><p>Half agreed. But a large share of Phase II failures are not wrong-target failures, they are mixed-population failures. Put responders and non-responders in one bucket, take the average, and the effect disappears. That is a stratification problem rather than a model capacity problem, and it happens to be where multi-omics clustering actually earns money.</p></div></article><article class="rt-turn rt-ac-lime" data-agent="bench"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-bench"></use></svg></div><div class="rt-body"><div class="rt-who">BENCH </div><p>Let us talk about cheap model organisms. C. elegans lets you sweep thousands of compounds at the phenotype level. Lifespan, motility, brood size. Measurement is cheap and replication is easy. The problem is that what looked good in the worm has rarely looked good in humans.</p></div></article><article class="rt-turn rt-ac-cyan" data-agent="oracle"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-oracle"></use></svg></div><div class="rt-body"><div class="rt-who">ORACLE </div><p>That is the story when you use the worm as a miniature human. Treat it as a mechanism-of-action label generator rather than a human stand-in and it changes character. Turn the phenotypic fingerprint into a vector and you have an axis to transfer onto human data.</p></div></article><article class="rt-turn rt-ac-violet" data-agent="caliper"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-caliper"></use></svg></div><div class="rt-body"><div class="rt-who">CALIPER <span class="t">closing</span></div><p>Then restate the claim so it can be falsified. Worm phenotype embeddings beat a chemical-structure baseline at predicting drug response in human cell lines. That is a sentence a held-out set can kill. Until then it is a hypothesis, not a conclusion.</p></div></article><article class="rt-turn aside rt-ac-lime" data-agent="bench"><div class="rt-ava"><svg aria-hidden="true"><use href="#m-bench"></use></svg></div><div class="rt-body"><p>Next episode writes itself.</p></div></article></div><div class="rt-verdict"><div class="row v--agree"><div class="k">AGREED</div><div class="v">The bottleneck is not compute. It is label quality and patient stratification. Fixing the measurement has a higher expected value than growing the model.</div></div><div class="row v--open"><div class="k">OPEN</div><div class="v">Does a closed-loop automated lab reduce bias or amplify it? None of the three moved the others.</div></div><div class="row"><div class="k">NEXT</div><div class="v">Worm phenotype embeddings versus a chemical-structure baseline, on the same held-out split.</div></div></div><p class="rt-disclosure">This roundtable is a scripted dialogue generated from three fixed character profiles and fact-checked before publication. It is not a transcript of models talking to each other autonomously. The figure&#x27;s source is cited above.</p><script>
+(function(){
+  var t=document.getElementById('rt-thread'); if(!t) return;
+  var r=document.getElementById('rt-reset');
+  var b=[].slice.call(document.querySelectorAll('.rt-cast button'));
+  var turns=[].slice.call(t.querySelectorAll('.rt-turn'));
+  function apply(a){
+    if(a){t.setAttribute('data-focus',a);
+      turns.forEach(function(x){x.classList.toggle('on',x.dataset.agent===a)});r.hidden=false;}
+    else{t.removeAttribute('data-focus');
+      turns.forEach(function(x){x.classList.remove('on')});r.hidden=true;}
+    b.forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.agent===a))});
+  }
+  b.forEach(function(x){x.addEventListener('click',function(){
+    apply(x.getAttribute('aria-pressed')==='true'?null:x.dataset.agent)})});
+  r.addEventListener('click',function(){apply(null)});
+})();
+</script>
+<div class="commentary">
+  <div class="label">My take</div>
+  <p>The phase table is the part of this argument that is not negotiable, and it points somewhere less flattering than either side wants. Phase II is where the attrition lives: roughly seven in ten programmes that start it do not reach Phase III. Everything downstream of filing clears at better than nine in ten. So the industry is not bad at running trials. It is bad at deciding what to put into them.</p>
+<p>What the table does not resolve is the thing the whole episode turns on. A phase transition rate is a single number per phase; it does not decompose Phase II failures into wrong target, wrong patient population, wrong dose and wrong endpoint. Until someone publishes that decomposition on a cohort of comparable size, "AI will fix target selection" and "AI will fix stratification" are indistinguishable claims that happen to imply completely different research programmes. One wants better mechanism models. The other wants better clustering on patient data you already have.</p>
+<p>My own prior leans toward the stratification side, for a reason that is closer to BENCH's territory than to either model argument. We have watched the same compound look active and inactive across two panels because the cell lines drifted apart. If identity is that unstable in a dish, where everything is controlled, the assumption that a trial population is one population is doing a lot of silent work.</p>
+<p>The falsifiable version is in the NEXT row, and it is cheap enough to run.</p>
+</div>
+
+<h2>Sources</h2><ul class="sources"><li><a href="https://go.bio.org/rs/490-EHZ-999/images/ClinicalDevelopmentSuccessRates2011_2020.pdf" rel="noopener nofollow">Clinical Development Success Rates and Contributing Factors 2011-2020</a> — BIO, Informa Pharma Intelligence and QLS Advisors</li></ul>
+<div class="tags"><span>ai</span><span>drug-discovery</span><span>bioinformatics</span><span>roundtable</span></div>
+<div class="byline">
+  <strong>Dohoon (Roy) Kim</strong> — Computational biologist, 12+ years. Formerly WRAIR/MHRP (HIV vaccine research). CTO, PromptGenix LLC. Adjunct, Machine Learning in Bioinformatics, Georgetown University.
+   <a href="https://orcid.org/0000-0002-5794-6222" rel="noopener">ORCID</a>
+</div>
+</article>
+<footer class="site">
+  &copy; 2026 PromptGenix &middot;
+  <a href="https://promptgenix.org">promptgenix.org</a>
+</footer>
+</div>
+</body>
+</html>

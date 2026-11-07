@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PharmAgents2: Towards Autonomous End-to-End Drug Discovery — PromptGenix Notes</title>
+<meta name="description" content="A software agent system claims to generate and triage drug-discovery hypotheses across target identification, compound screening, and proteome-wide target search, and to produce wet-lab-confirmed hits in three case studies, though the abstract reports no potency, n, or controls for these claims.">
+<meta name="author" content="Dohoon (Roy) Kim">
+<link rel="canonical" href="https://promptgenix.org/blog/2026-11-05-pharmagents2-towards-autonomous-end-to-end-drug.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PharmAgents2: Towards Autonomous End-to-End Drug Discovery — PromptGenix Notes">
+<meta property="og:description" content="A software agent system claims to generate and triage drug-discovery hypotheses across target identification, compound screening, and proteome-wide target search, and to produce wet-lab-confirmed hits in three case studies, though the abstract reports no potency, n, or controls for these claims.">
+<meta property="og:url" content="https://promptgenix.org/blog/2026-11-05-pharmagents2-towards-autonomous-end-to-end-drug.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/pgx-mark-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* Palette extends promptgenix.org's own tokens, pushed into neon for the blog.
+   The site is dark-only, so /blog/ is too — a light flip one click from the
+   main site would read as a different property.
+
+   The page has two voices: a generated summary and Roy's verdict. Colour is
+   what separates them. The title runs hot (cyan -> violet -> pink); the
+   standfirst runs cool behind a cyan hairline; the verdict block is the only
+   element allowed real presence. Body copy stays plain and unglowing, because
+   it has to be read for several minutes at a time. */
+:root{
+  --bg:#0a0e2a; --bg-2:#0e1338; --card:#141a44; --deep:#07081a;
+  --ink:#eaf0ff; --cool:#c3cdf0;
+  --muted:#8e9ac4; --line:#1e2757;
+  --cyan:#2ee9f5; --violet:#9d8bff; --pink:#ff6ae0; --lime:#7cff6b;
+  --display:'Space Grotesk','Outfit',system-ui,sans-serif;
+  --sans:'Outfit','Inter',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:18px/1.72 var(--sans);-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 420px at 12% -8%, rgba(46,233,245,.09), transparent 60%),
+    radial-gradient(780px 380px at 92% 4%, rgba(157,139,255,.10), transparent 62%);
+  background-repeat:no-repeat}
+#spark{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+header.site{border-bottom:1px solid var(--line);padding:20px 0;margin-bottom:46px;
+  background:linear-gradient(180deg,var(--deep),transparent);position:relative;z-index:1}
+header.site .row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+header.site a.brand{color:var(--ink);text-decoration:none;font-weight:600;
+  letter-spacing:-.01em;font-family:var(--display);font-size:17px}
+header.site a.brand:hover{color:var(--cyan)}
+header.site a.home{color:var(--muted);text-decoration:none;font-size:13px;margin-left:auto}
+header.site a.home:hover{color:var(--cyan)}
+header.site .tag{color:var(--muted);font-size:13.5px;margin-top:6px;width:100%}
+
+/* The title is the one hot element on the page. */
+h1{font-family:var(--display);font-size:38px;line-height:1.14;margin:0 0 14px;
+  letter-spacing:-.025em;font-weight:600;
+  background:linear-gradient(104deg,var(--cyan) 4%,var(--violet) 48%,var(--pink) 94%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 22px rgba(157,139,255,.28))}
+h2{font-family:var(--display);font-size:22px;margin:46px 0 12px;line-height:1.3;
+  letter-spacing:-.01em;font-weight:600;color:var(--cyan);
+  text-shadow:0 0 18px rgba(46,233,245,.22)}
+h3{font-family:var(--display);font-size:19px;margin:34px 0 10px;font-weight:600;
+  color:var(--cyan);text-shadow:0 0 16px rgba(46,233,245,.18)}
+h4{font-family:var(--display);font-size:17px;margin:26px 0 8px;font-weight:600;
+  color:var(--violet)}
+p{margin:0 0 18px}
+strong{color:var(--cyan);font-weight:600}
+
+/* Cool, rule-marked, and in a different register from the title. */
+.standfirst{font-size:19.5px;line-height:1.62;color:var(--cool);
+  margin:0 0 34px;padding-left:18px;position:relative}
+.standfirst::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:2px;
+  background:linear-gradient(180deg,var(--cyan),rgba(46,233,245,.08))}
+.meta{color:var(--muted);font-size:12.5px;margin:0 0 26px;
+  font-family:var(--mono);letter-spacing:.02em}
+.meta .d{color:var(--cyan)}
+.meta .sep{display:inline-block;width:1px;height:10px;margin:0 10px -1px;
+  background:var(--line)}
+
+a{color:var(--cyan);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:#8ff6ff}
+code{font-family:var(--mono);font-size:.86em;background:var(--bg-2);
+  color:var(--violet);padding:2px 6px;border-radius:4px;
+  border:1px solid rgba(157,139,255,.16)}
+pre{background:var(--deep);border:1px solid var(--line);padding:16px 18px;
+  border-radius:8px;overflow-x:auto;font-size:14px}
+pre code{background:none;padding:0;border:0;color:var(--ink)}
+blockquote{margin:24px 0;padding:4px 0 4px 20px;border-left:2px solid var(--violet);
+  color:var(--cool)}
+ul,ol{padding-left:22px}
+li{margin-bottom:7px}
+hr{border:0;height:1px;margin:38px 0;
+  background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+
+/* The verdict. Everything above it is reproducible; this is not. */
+.commentary{position:relative;background:
+    linear-gradient(180deg,rgba(157,139,255,.07),rgba(20,26,68,.55));
+  border:1px solid rgba(157,139,255,.3);border-top:0;
+  border-radius:10px;padding:26px;margin:46px 0;
+  box-shadow:0 16px 46px -30px rgba(157,139,255,.9)}
+.commentary::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;
+  border-radius:10px 10px 0 0;
+  background:linear-gradient(90deg,var(--cyan),var(--violet) 52%,var(--pink))}
+.commentary .label{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  color:var(--lime);margin-bottom:14px}
+.commentary p:last-child{margin-bottom:0}
+
+.sources{font-size:14.5px;color:var(--muted);padding-left:20px}
+.sources li{margin-bottom:7px}
+.tags{font-family:var(--mono);font-size:11.5px;margin-top:30px;
+  letter-spacing:.04em;display:flex;flex-wrap:wrap;gap:8px}
+.tags span{color:var(--muted);border:1px solid var(--line);border-radius:999px;
+  padding:3px 11px}
+.byline{border-top:1px solid var(--line);margin-top:48px;padding-top:22px;
+  font-size:14.5px;color:var(--muted);line-height:1.6}
+.byline strong{color:var(--ink)}
+.ad{margin:40px 0;min-height:1px}
+
+ul.index{list-style:none;padding:0;margin:0}
+ul.index li{border-bottom:1px solid var(--line);padding:26px 0 26px 20px;
+  border-left:2px solid transparent;transition:border-color .3s,box-shadow .3s}
+ul.index li:last-child{border-bottom:0}
+ul.index li:hover{border-left-color:var(--cyan);
+  box-shadow:-2px 0 20px -8px rgba(46,233,245,.55)}
+ul.index a{text-decoration:none;font-family:var(--display);font-size:23px;
+  font-weight:600;letter-spacing:-.018em;line-height:1.26;display:inline-block;
+  color:var(--ink);transition:color .25s}
+ul.index li:hover a{color:var(--cyan)}
+ul.index .d{font-family:var(--mono);font-size:11.5px;color:var(--cyan);
+  display:block;margin-bottom:8px;letter-spacing:.04em}
+ul.index p{margin:10px 0 0;color:var(--cool);font-size:16px;line-height:1.6}
+ul.index .kind{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  color:var(--violet);text-transform:uppercase;margin-left:10px}
+
+footer.site{margin:70px 0 48px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--muted);position:relative;z-index:1}
+@media (max-width:600px){
+  h1{font-size:28px} h2{font-size:20px}
+  body{font-size:17px} .standfirst{font-size:18px;padding-left:14px}
+  .commentary{padding:20px} ul.index a{font-size:20px}
+  ul.index li{padding-left:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  #spark{display:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="spark" aria-hidden="true"></canvas>
+<script>
+(function(){
+  var c = document.getElementById('spark');
+  if (!c) return;
+  // No cursor to follow on touch, and motion-sensitive readers opt out.
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var x = c.getContext('2d'), dots = [], dpr = Math.min(devicePixelRatio || 1, 2);
+  var HUES = ['46,233,245', '157,139,255', '255,106,224', '124,255,107'];
+  function size(){ c.width = innerWidth * dpr; c.height = innerHeight * dpr;
+                   c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px';
+                   x.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  size(); addEventListener('resize', size);
+
+  var last = 0;
+  addEventListener('mousemove', function(e){
+    var now = performance.now();
+    if (now - last < 18 || dots.length > 90) return;   // thin the trail out
+    last = now;
+    dots.push({ x: e.clientX + (Math.random()*10 - 5),
+                y: e.clientY + (Math.random()*10 - 5),
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: -0.18 - Math.random() * 0.3,
+                r: 1.0 + Math.random() * 2.2,
+                life: 1,
+                hue: HUES[(Math.random() * HUES.length) | 0] });
+  }, { passive: true });
+
+  (function tick(){
+    x.clearRect(0, 0, innerWidth, innerHeight);
+    for (var i = dots.length - 1; i >= 0; i--) {
+      var d = dots[i];
+      d.x += d.vx; d.y += d.vy; d.life -= 0.016;
+      if (d.life <= 0) { dots.splice(i, 1); continue; }
+      x.globalAlpha = d.life * 0.9;
+      x.fillStyle = 'rgba(' + d.hue + ',1)';
+      x.shadowBlur = 12; x.shadowColor = 'rgba(' + d.hue + ',.85)';
+      x.beginPath(); x.arc(d.x, d.y, d.r * d.life, 0, 6.2832); x.fill();
+    }
+    x.globalAlpha = 1; x.shadowBlur = 0;
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
+
+<header class="site"><div class="wrap">
+  <div class="row">
+    <a class="brand" href="/blog/">PromptGenix Notes</a>
+    <a class="home" href="https://promptgenix.org">← PromptGenix</a>
+  </div>
+  <div class="tag">Notes on AI, bioinformatics, and drug discovery — from someone who runs the pipelines.</div>
+</div></header>
+<div class="wrap">
+<article>
+<h1>PharmAgents2: Towards Autonomous End-to-End Drug Discovery</h1>
+<div class="meta"><span class="d">2026-11-05</span><span class="sep"></span>Dohoon (Roy) Kim</div>
+<p class="standfirst">A software agent system claims to generate and triage drug-discovery hypotheses across target identification, compound screening, and proteome-wide target search, and to produce wet-lab-confirmed hits in three case studies, though the abstract reports no potency, n, or controls for these claims.</p>
+<h3>What it changes at the bench</h3>
+<p>Nothing changes for a working bioinformatician or medicinal chemist yet; no tool is released or described as available. Three specific leads are worth checking against the literature and your own data: an LpxH allosteric site, a JAK1 covalent strategy, and a new binding target for a known bioactive molecule. Treat the agent workflow as a hypothesis generator, not as a validated method.</p>
+<h3>Where this sits</h3>
+<ul><li><strong>Maturity:</strong> prospective wet-lab validation</li><li><strong>Evidence:</strong> a preprint</li><li><strong>Independently verified:</strong> not established</li><li><strong>Domain:</strong> other</li></ul>
+<h3>Limitations</h3>
+<p>Stated: PharmAgents-Bench v0.1 is small (121 questions) and its rubrics are expert-defined; the system wins 'most' decision categories, not all; the three real-world studies are case studies. Not stated or unclear: no potency, IC50/Kd, hit rate, or number of compounds tested in the abstract; no failure rate across the agent's full set of hypotheses (selection bias toward successes); baselines are not named; no ablation isolating Paper2Skill from Self-Scaling Discovery; the LpxH allosteric site lacks any structural evidence in the abstract and its 'previously unreported' status is not checked against the literature; novelty of the scaffold against ChEMBL or patents is not stated; covalent JAK1 inhibition is an established strategy, so 'prioritized' adds little unless the nominated compounds are novel; Paper2Skill draws on public sources that may contain the same target literature the case studies rely on (possible leakage); human experimentalists may have been influenced by agent output; no code or data release mentioned; LLM-agent runs are not reported as reproducible across seeds or model versions.</p>
+<div class="commentary">
+  <div class="label">My take</div>
+  <p>This sits directly on top of something I wrote earlier this week about autonomous laboratories, so I will be explicit about the connection — and I have to start by correcting the reflex I came in with.</p>
+<p>My expectation was that a paper claiming autonomous end-to-end drug discovery would show three cherry-picked wins and no denominators. That is not what this is. The denominators are there. For the LpxH study, human researchers purchased and tested 63 candidates, yielding AIPher-L1 at an IC50 of 8.38 μM, with binding confirmed at 1.40 μM by SPR and 0.87 μM by MST. For JAK1, 34 candidates were purchased and tested, and AIPher-J1 matched the positive controls — BMS-986165 and tofacitinib — in two cytokine-signalling assays at 10 μM, with three further compounds above 50% inhibition. The third study screened 2,607 proteins down to 452 dossiers and three target nominations, with SPR giving a Kd of 4.64 μM. That is a disclosed funnel, with potency, with controls. Credit where it is due.</p>
+<p>So the interesting question is not whether the system did anything. It is what the numbers mean. A micromolar hit from 63 purchased compounds is a real result and an entirely ordinary one — it is roughly what a competent medicinal chemist with the same budget and the same target would expect. The paper cannot tell me whether the agent beat that person, because that person is not in the comparison. The baselines are Claude Code, Codex and a standalone LLM, all on the same base model. Those tell me the scaffolding helps relative to other scaffolding. They say nothing about the only comparison that would justify the word "autonomous."</p>
+<p>The leakage problem is sharper than I first thought, and it is structural rather than incidental. Paper2Skill builds its knowledge from published papers and patents. The 121 benchmark questions are scored against reference evidence drawn from published papers and patents. No literature holdout is described anywhere. A system that extracts a strategy from the literature and then proposes that strategy against a benchmark scored by that same literature is being graded by its own source material.</p>
+<p>Two smaller things. The third case study is secondary-target identification for a known molecule, not drug repurposing — the repurposing example elsewhere in the paper is an illustration of decision quality and was not experimentally validated, and conflating them flatters the result. And the novelty claim is narrower than the framing suggests: a novel scaffold is claimed for LpxH only, and the paper concedes that scaffold novelty and the proposed site mechanism "require their own evidence." Covalent JAK1 inhibition is well-trodden ground.</p>
+<p>What is genuinely missing is reproducibility. One base model, no seed variation, no code. For a system whose output is the product of a stochastic language model making a long chain of decisions, that is the gap I would close first — not because I doubt the hits, but because I cannot tell how often the same pipeline produces them.</p>
+</div>
+
+<h2>Sources</h2><ul class="sources"><li><a href="http://arxiv.org/abs/2611.07653v1" rel="noopener nofollow">PharmAgents2: Towards Autonomous End-to-End Drug Discovery</a> — arxiv</li></ul>
+<div class="tags"><span>other</span><span>preprint</span></div>
+<div class="byline">
+  <strong>Dohoon (Roy) Kim</strong> — Computational biologist, 12+ years. Formerly WRAIR/MHRP (HIV vaccine research). CTO, PromptGenix LLC. Adjunct, Machine Learning in Bioinformatics, Georgetown University.
+   <a href="https://orcid.org/0000-0002-5794-6222" rel="noopener">ORCID</a>
+</div>
+</article>
+<footer class="site">
+  &copy; 2026 PromptGenix &middot;
+  <a href="https://promptgenix.org">promptgenix.org</a>
+</footer>
+</div>
+</body>
+</html>
