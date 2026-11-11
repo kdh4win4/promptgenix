@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>When Can You Trust Neural Critics? Auditing Mutual Information Estimates of Higher-Order Epistasis in Protein Language Models — PromptGenix Notes</title>
+<meta name="description" content="A group audits its own method: the neural mutual-information estimators used to claim ESM-2 selectively loses higher-order epistatic information. Most of the instability turns out to come from the statistic rather than the estimator — and at larger representation dimensionalities even a stabilised estimator recovers too little signal to support an order-resolved claim.">
+<meta name="author" content="Dohoon (Roy) Kim">
+<link rel="canonical" href="https://promptgenix.org/blog/2026-11-10-when-can-you-trust-neural-critics.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="When Can You Trust Neural Critics? Auditing Mutual Information Estimates of Higher-Order Epistasis in Protein Language Models — PromptGenix Notes">
+<meta property="og:description" content="A group audits its own method: the neural mutual-information estimators used to claim ESM-2 selectively loses higher-order epistatic information. Most of the instability turns out to come from the statistic rather than the estimator — and at larger representation dimensionalities even a stabilised estimator recovers too little signal to support an order-resolved claim.">
+<meta property="og:url" content="https://promptgenix.org/blog/2026-11-10-when-can-you-trust-neural-critics.html">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/pgx-mark-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* Palette extends promptgenix.org's own tokens, pushed into neon for the blog.
+   The site is dark-only, so /blog/ is too — a light flip one click from the
+   main site would read as a different property.
+
+   The page has two voices: a generated summary and Roy's verdict. Colour is
+   what separates them. The title runs hot (cyan -> violet -> pink); the
+   standfirst runs cool behind a cyan hairline; the verdict block is the only
+   element allowed real presence. Body copy stays plain and unglowing, because
+   it has to be read for several minutes at a time. */
+:root{
+  --bg:#0a0e2a; --bg-2:#0e1338; --card:#141a44; --deep:#07081a;
+  --ink:#eaf0ff; --cool:#c3cdf0;
+  --muted:#8e9ac4; --line:#1e2757;
+  --cyan:#2ee9f5; --violet:#9d8bff; --pink:#ff6ae0; --lime:#7cff6b;
+  --display:'Space Grotesk','Outfit',system-ui,sans-serif;
+  --sans:'Outfit','Inter',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:18px/1.72 var(--sans);-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 420px at 12% -8%, rgba(46,233,245,.09), transparent 60%),
+    radial-gradient(780px 380px at 92% 4%, rgba(157,139,255,.10), transparent 62%);
+  background-repeat:no-repeat}
+#spark{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+header.site{border-bottom:1px solid var(--line);padding:20px 0;margin-bottom:46px;
+  background:linear-gradient(180deg,var(--deep),transparent);position:relative;z-index:1}
+header.site .row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+header.site a.brand{color:var(--ink);text-decoration:none;font-weight:600;
+  letter-spacing:-.01em;font-family:var(--display);font-size:17px}
+header.site a.brand:hover{color:var(--cyan)}
+header.site a.home{color:var(--muted);text-decoration:none;font-size:13px;margin-left:auto}
+header.site a.home:hover{color:var(--cyan)}
+header.site .tag{color:var(--muted);font-size:13.5px;margin-top:6px;width:100%}
+
+/* The title is the one hot element on the page. */
+h1{font-family:var(--display);font-size:38px;line-height:1.14;margin:0 0 14px;
+  letter-spacing:-.025em;font-weight:600;
+  background:linear-gradient(104deg,var(--cyan) 4%,var(--violet) 48%,var(--pink) 94%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 22px rgba(157,139,255,.28))}
+h2{font-family:var(--display);font-size:22px;margin:46px 0 12px;line-height:1.3;
+  letter-spacing:-.01em;font-weight:600;color:var(--cyan);
+  text-shadow:0 0 18px rgba(46,233,245,.22)}
+h3{font-family:var(--display);font-size:19px;margin:34px 0 10px;font-weight:600;
+  color:var(--cyan);text-shadow:0 0 16px rgba(46,233,245,.18)}
+h4{font-family:var(--display);font-size:17px;margin:26px 0 8px;font-weight:600;
+  color:var(--violet)}
+p{margin:0 0 18px}
+strong{color:var(--cyan);font-weight:600}
+
+/* Cool, rule-marked, and in a different register from the title. */
+.standfirst{font-size:19.5px;line-height:1.62;color:var(--cool);
+  margin:0 0 34px;padding-left:18px;position:relative}
+.standfirst::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:2px;
+  background:linear-gradient(180deg,var(--cyan),rgba(46,233,245,.08))}
+.meta{color:var(--muted);font-size:12.5px;margin:0 0 26px;
+  font-family:var(--mono);letter-spacing:.02em}
+.meta .d{color:var(--cyan)}
+.meta .sep{display:inline-block;width:1px;height:10px;margin:0 10px -1px;
+  background:var(--line)}
+
+a{color:var(--cyan);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:#8ff6ff}
+code{font-family:var(--mono);font-size:.86em;background:var(--bg-2);
+  color:var(--violet);padding:2px 6px;border-radius:4px;
+  border:1px solid rgba(157,139,255,.16)}
+pre{background:var(--deep);border:1px solid var(--line);padding:16px 18px;
+  border-radius:8px;overflow-x:auto;font-size:14px}
+pre code{background:none;padding:0;border:0;color:var(--ink)}
+blockquote{margin:24px 0;padding:4px 0 4px 20px;border-left:2px solid var(--violet);
+  color:var(--cool)}
+ul,ol{padding-left:22px}
+li{margin-bottom:7px}
+hr{border:0;height:1px;margin:38px 0;
+  background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+
+/* The verdict. Everything above it is reproducible; this is not. */
+.commentary{position:relative;background:
+    linear-gradient(180deg,rgba(157,139,255,.07),rgba(20,26,68,.55));
+  border:1px solid rgba(157,139,255,.3);border-top:0;
+  border-radius:10px;padding:26px;margin:46px 0;
+  box-shadow:0 16px 46px -30px rgba(157,139,255,.9)}
+.commentary::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;
+  border-radius:10px 10px 0 0;
+  background:linear-gradient(90deg,var(--cyan),var(--violet) 52%,var(--pink))}
+.commentary .label{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  color:var(--lime);margin-bottom:14px}
+.commentary p:last-child{margin-bottom:0}
+
+.sources{font-size:14.5px;color:var(--muted);padding-left:20px}
+.sources li{margin-bottom:7px}
+.tags{font-family:var(--mono);font-size:11.5px;margin-top:30px;
+  letter-spacing:.04em;display:flex;flex-wrap:wrap;gap:8px}
+.tags span{color:var(--muted);border:1px solid var(--line);border-radius:999px;
+  padding:3px 11px}
+.byline{border-top:1px solid var(--line);margin-top:48px;padding-top:22px;
+  font-size:14.5px;color:var(--muted);line-height:1.6}
+.byline strong{color:var(--ink)}
+.ad{margin:40px 0;min-height:1px}
+
+ul.index{list-style:none;padding:0;margin:0}
+ul.index li{border-bottom:1px solid var(--line);padding:26px 0 26px 20px;
+  border-left:2px solid transparent;transition:border-color .3s,box-shadow .3s}
+ul.index li:last-child{border-bottom:0}
+ul.index li:hover{border-left-color:var(--cyan);
+  box-shadow:-2px 0 20px -8px rgba(46,233,245,.55)}
+ul.index a{text-decoration:none;font-family:var(--display);font-size:23px;
+  font-weight:600;letter-spacing:-.018em;line-height:1.26;display:inline-block;
+  color:var(--ink);transition:color .25s}
+ul.index li:hover a{color:var(--cyan)}
+ul.index .d{font-family:var(--mono);font-size:11.5px;color:var(--cyan);
+  display:block;margin-bottom:8px;letter-spacing:.04em}
+ul.index p{margin:10px 0 0;color:var(--cool);font-size:16px;line-height:1.6}
+ul.index .kind{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  color:var(--violet);text-transform:uppercase;margin-left:10px}
+
+footer.site{margin:70px 0 48px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--muted);position:relative;z-index:1}
+@media (max-width:600px){
+  h1{font-size:28px} h2{font-size:20px}
+  body{font-size:17px} .standfirst{font-size:18px;padding-left:14px}
+  .commentary{padding:20px} ul.index a{font-size:20px}
+  ul.index li{padding-left:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  #spark{display:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="spark" aria-hidden="true"></canvas>
+<script>
+(function(){
+  var c = document.getElementById('spark');
+  if (!c) return;
+  // No cursor to follow on touch, and motion-sensitive readers opt out.
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var x = c.getContext('2d'), dots = [], dpr = Math.min(devicePixelRatio || 1, 2);
+  var HUES = ['46,233,245', '157,139,255', '255,106,224', '124,255,107'];
+  function size(){ c.width = innerWidth * dpr; c.height = innerHeight * dpr;
+                   c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px';
+                   x.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  size(); addEventListener('resize', size);
+
+  var last = 0;
+  addEventListener('mousemove', function(e){
+    var now = performance.now();
+    if (now - last < 18 || dots.length > 90) return;   // thin the trail out
+    last = now;
+    dots.push({ x: e.clientX + (Math.random()*10 - 5),
+                y: e.clientY + (Math.random()*10 - 5),
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: -0.18 - Math.random() * 0.3,
+                r: 1.0 + Math.random() * 2.2,
+                life: 1,
+                hue: HUES[(Math.random() * HUES.length) | 0] });
+  }, { passive: true });
+
+  (function tick(){
+    x.clearRect(0, 0, innerWidth, innerHeight);
+    for (var i = dots.length - 1; i >= 0; i--) {
+      var d = dots[i];
+      d.x += d.vx; d.y += d.vy; d.life -= 0.016;
+      if (d.life <= 0) { dots.splice(i, 1); continue; }
+      x.globalAlpha = d.life * 0.9;
+      x.fillStyle = 'rgba(' + d.hue + ',1)';
+      x.shadowBlur = 12; x.shadowColor = 'rgba(' + d.hue + ',.85)';
+      x.beginPath(); x.arc(d.x, d.y, d.r * d.life, 0, 6.2832); x.fill();
+    }
+    x.globalAlpha = 1; x.shadowBlur = 0;
+    requestAnimationFrame(tick);
+  })();
+})();
+</script>
+
+<header class="site"><div class="wrap">
+  <div class="row">
+    <a class="brand" href="/blog/">PromptGenix Notes</a>
+    <a class="home" href="https://promptgenix.org">← PromptGenix</a>
+  </div>
+  <div class="tag">Notes on AI, bioinformatics, and drug discovery — from someone who runs the pipelines.</div>
+</div></header>
+<div class="wrap">
+<article>
+<h1>When Can You Trust Neural Critics? Auditing Mutual Information Estimates of Higher-Order Epistasis in Protein Language Models</h1>
+<div class="meta"><span class="d">2026-11-10</span><span class="sep"></span>Dohoon (Roy) Kim</div>
+<p class="standfirst">A group audits its own method: the neural mutual-information estimators used to claim ESM-2 selectively loses higher-order epistatic information. Most of the instability turns out to come from the statistic rather than the estimator — and at larger representation dimensionalities even a stabilised estimator recovers too little signal to support an order-resolved claim.</p>
+<h3>What it changes at the bench</h3>
+<p>Nothing wet-lab. What changes is the standard of evidence for a specific and increasingly common kind of claim: that a protein language model's representations encode dependence <em>at a particular order</em> — pairwise, third-order, and so on. The paper's deliverable is a diagnostic protocol to run before reporting such a claim, and its finding is that such a claim is hard to support at the representation dimensionality and sample size tested.</p>
+<h3>What they did</h3>
+<p>The prior work asked whether ESM-2 selectively loses third- and fourth-order epistatic information relative to first- and second-order, on the four-site GB1 landscape. An initial production run reported a negative retention contrast of −0.107. An independent replication using identical code, data and critic seeds reduced it to −0.017, and the sign changed across otherwise reasonable evaluation-pairing choices (−0.011 to +0.015). That is what this paper sets out to explain.</p>
+<p>Variational MI estimators are known to have variance scaling at least exponentially in the true MI value, whatever the estimator family. Rather than cite that bound and move on, the authors measure the instability's structure directly on ESM-2 representations and the GB1 landscape across three axes: variance across critic seeds within a fixed run and pairing scheme, matched differences between independently executed runs, and matched differences between evaluation-pairing schemes on the same trained checkpoint.</p>
+<p>They then ask whether swapping the estimator fixes it, testing three alternatives to DV/MINE at matched representation dimensionality. Finally they extend the diagnostic to the dimensionalities of two further protein language models — 4,096 and 5,120 dimensions — using synthetic channels with known analytic MI rather than model representations, so that estimator behaviour can be separated from the biological question.</p>
+<p>Notably, the method under audit is the authors' own prior work.</p>
+<h3>What they found</h3>
+<p><strong>The instability is not bias.</strong> Across runs they find no systematic bias, with a magnitude comparable to ordinary cross-seed retraining variability — plus a pairing-scheme sensitivity that independently reproduces an effect found in their own cross-estimator check.</p>
+<p><strong>Most of it was the statistic, not the estimator.</strong> This is the paper's primary result and the one that rescues the original protocol: the instability is substantially attributable to the ratio-of-maximum construction of the original statistic rather than to the estimator or the data. Swapping in a direct mean-difference statistic is stable by one to two orders of magnitude on the same cells. In the authors' words, "a change in statistic, not estimator, resolves most of the instability."</p>
+<p><strong>Changing estimator helps too, at matched dimensionality.</strong> Two of three alternatives become stable across seeds, runs and pairing schemes on ESM-2 under the new statistic; one does not. InfoNCE is the interesting failure: it recovers a strong synthetic signal with low cross-seed variability (SD 0.0305 against a 0.08 threshold) yet still shows sign-flipping instability on the real, weaker GB1 signal. Its problem is specific to the weak, noisy regime the actual biology sits in — not general insensitivity.</p>
+<p><strong>Stability is not sufficiency.</strong> Run blind at 4,096 and 5,120 dimensions, all three estimator families — including both that had stabilised at matched dimensionality — recover materially less signal than the strong-signal margin requires. The ordering of signals is correct and the seed-level estimates are stable. The magnitude is not there.</p>
+<p><strong>The signal is recoverable, with privileged information.</strong> A control critic told the true signal direction, which also reduces its input to one dimension, recovers 93.3% of the analytic MI at 5,120 dimensions and 98.7% at 4,096 dimensions at gain 1.5 (108% and 94% at gain 1.0). The authors are explicit that because this control changes both what the critic knows <em>and</em> its input dimensionality, it does not by itself identify which of the two causes blind estimation to fail.</p>
+<h3>Where this sits</h3>
+<ul><li><strong>Maturity:</strong> methodological audit, in silico</li><li><strong>Evidence:</strong> a preprint, 6 November 2026</li><li><strong>Domain:</strong> protein language models / information-theoretic interpretability</li></ul>
+<h3>Limitations</h3>
+<p>The authors draw the boundary themselves, and it matters: this is an audit of a measurement practice, not a claim that protein language models do or do not retain higher-order information. The generalisation experiment used synthetic channels at two models' dimensionalities, with no model representations involved, so it bounds what blind neural critics can resolve at that dimensionality and sample size — not what those models encode. Real-data <em>critic</em> runs exist for ESM-2 only; the evidence from ESM-1v and ProtT5's own representations is a ridge probe under an IID split, which finds held-out R² declining with interaction order in both. So the trained-critic evidence is single-model, though the paper does touch three model families on the one landscape. The oracle control is confounded by design, as stated. And they report one case where identical software and seed gave different critic output across execution environments, offered as a caution about reproducibility rather than a result about hardware.</p>
+<div class="commentary">
+  <div class="label">My take</div>
+  <p>A group published a method for tracking order-resolved epistatic information through ESM-2, and reported that the model selectively loses higher-order information. Then a replication with identical code, data and seeds cut that number from −0.107 to −0.017, with the sign flipping depending on how you paired the evaluation. So they wrote this paper, which asks whether their own estimator could have detected what they had reported. I want to start there, because it is rarer than it should be and it is the reason I trust the rest of the paper.</p>
+<p>Two things come out of it. The first is reassuring for the original protocol and easy to miss: most of the instability came from the <em>statistic</em>, not the estimator — a ratio-of-maximum construction that a direct mean-difference alternative beats by one to two orders of magnitude. Fixing an analysis by fixing the summary statistic rather than the machinery is the cheapest good outcome available, and it is the kind of thing you only find by auditing.</p>
+<p>The second is the one I have gotten wrong myself: <strong>stability is not sufficiency.</strong> Two of the three alternative estimators became stable — consistent across seeds, across runs, across pairing schemes. If you were checking your own work the way most of us check it, you would stop there and report the number. Then the same estimators, run blind at four and five thousand dimensions, recover far less signal than the claim needs, while still ordering the signals correctly and still looking stable. A reproducible measurement of the wrong magnitude is the most dangerous kind, because every diagnostic you would normally run comes back clean.</p>
+<p>The InfoNCE detail is the one I would want a student to sit with. It handles a strong synthetic signal with a cross-seed SD of 0.0305 and then sign-flips on real GB1. Not broken in general — broken in the weak, noisy regime where the actual biology lives. Validating an estimator on a strong synthetic signal and then deploying it on a real fitness landscape is a standard move, and this is a clean demonstration that the validation does not transfer.</p>
+<p>I want to be careful about what this does and does not say, because the authors are careful and the temptation to over-read is obvious. The headline failure at 4,096 and 5,120 dimensions came from <strong>synthetic channels at those dimensionalities, not from the models' own representations.</strong> So this is a bound on what blind neural critics can resolve at that dimensionality and sample size. It is not evidence that ESM-2 or anything else discards third-order structure. The paper says so in as many words, and anyone citing it as "protein language models don't encode higher-order epistasis" will be misusing it.</p>
+<p>What it does mean, for me, is that a particular sentence has become unsafe to write without showing your work: <em>the model encodes dependence at order k</em>. That sentence has been appearing in interpretability papers for a while on the strength of an MI estimate, and this paper demonstrates that the estimator can be stable, correctly ordered, and still short of the magnitude the claim requires. The oracle control — 93.3% and 98.7% recovery when the critic is handed the signal direction — is what makes the result bite, because on that synthetic channel the analytic signal was demonstrably there and the blind estimator did not reach it. The authors are careful that this control also collapses its input to one dimension, so it does not separate the knowledge advantage from the dimensionality, and they note the sweep that would have separated them was not run.</p>
+<p>This is the third paper I have written about this month whose finding reduces to the same thing: the measurement cannot carry the claim being made from it. A decoder scoring no better than ridge regression away from its training distribution, an ADMET benchmark that cannot separate its own leader, and now an estimator that is stable and insufficient at the same time. I do not think that is a coincidence of what crossed my desk. I think methodological auditing is becoming the most valuable work in computational biology, and it is still mostly being done by the people who built the method — which is honourable, and not a substitute for someone else checking.</p>
+</div>
+
+<h2>Sources</h2><ul class="sources"><li><a href="https://arxiv.org/abs/2611.09046" rel="noopener nofollow">When Can You Trust Neural Critics? Auditing Mutual Information Estimates of Higher-Order Epistasis in Protein Language Models</a> — Rahimimovassagh, Karwowski &amp; Yousefi, University of Central Florida, arXiv, 6 November 2026</li><li><a href="https://arxiv.org/abs/2610.00672" rel="noopener nofollow">ORBIT-FMIB: Tracking order-resolved epistatic information through ESM-2</a> — Rahimimovassagh et al., arXiv, 2026 — the prior method this paper audits</li></ul>
+<div class="tags"><span>protein language models</span><span>epistasis</span><span>mutual information</span><span>interpretability</span><span>methodology</span></div>
+<div class="byline">
+  <strong>Dohoon (Roy) Kim</strong> — Computational biologist, 12+ years. Formerly WRAIR/MHRP (HIV vaccine research). CTO, PromptGenix LLC. Adjunct, Machine Learning in Bioinformatics, Georgetown University.
+   <a href="https://orcid.org/0000-0002-5794-6222" rel="noopener">ORCID</a>
+</div>
+</article>
+<footer class="site">
+  &copy; 2026 PromptGenix &middot;
+  <a href="https://promptgenix.org">promptgenix.org</a>
+</footer>
+</div>
+</body>
+</html>
